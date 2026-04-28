@@ -1,59 +1,177 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Salsalator</title>
-  <link rel="stylesheet" href="../styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Salsalator — Kyran Walker</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../css/styles.css">
 </head>
 
 <body>
 
+  <!-- NAV -->
   <nav>
-    <a href="../index.html">← Back Home</a>
+    <a href="../index.html" class="nav-logo">Kyran<span>.</span></a>
+
+    <ul class="nav-links" id="navLinks">
+      <li><a href="../index.html#services">Services</a></li>
+      <li><a href="../projects.html">Projects</a></li>
+      <li><a href="../index.html#contact" class="nav-cta">Hire Me</a></li>
+    </ul>
+
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
   </nav>
 
-  <header class="project-hero">
+  <!-- PAGE HEADER -->
+  <div class="project-detail-hero">
+    <a href="../projects.html" class="back-link">← Projects</a>
     <h1>Salsalator 🌶️</h1>
-    <p>Calculate exactly how much salsa you need for any party</p>
-  </header>
+    <p>Calculate exactly how much salsa you need for any party — pick your salsas, set your crowd size, done.</p>
+  </div>
 
-  <section class="project-demo">
-    <h2>Try it</h2>
+  <!-- APP -->
+  <div class="app-wrapper">
 
-    <div id="app">
+    <!-- CONTROLS -->
+    <div class="app-panel">
+      <h2>Settings</h2>
 
-      <label>
-        Number of people:
-        <input type="number" id="people" value="5">
-      </label>
+      <div>
+        <p class="field-label">Number of people</p>
+        <input type="number" id="people" value="5" min="1" />
+      </div>
 
-      <label>
-        Portion size:
+      <div>
+        <p class="field-label">Portion size</p>
         <select id="portion">
           <option value="0.5">Light</option>
           <option value="1" selected>Normal</option>
           <option value="1.5">Heavy</option>
         </select>
-      </label>
+      </div>
 
-      <h3>Salsas</h3>
+      <div>
+        <p class="field-label">Salsas</p>
+        <div class="checkbox-group">
+          <label class="checkbox-label">
+            <input type="checkbox" value="pico" checked> Pico de Gallo
+          </label>
+          <label class="checkbox-label">
+            <input type="checkbox" value="guac"> Guacamole
+          </label>
+          <label class="checkbox-label">
+            <input type="checkbox" value="pineapple"> Pineapple Salsa
+          </label>
+        </div>
+      </div>
 
-      <label><input type="checkbox" value="pico" checked> Pico de Gallo</label>
-      <label><input type="checkbox" value="guac"> Guacamole</label>
-      <label><input type="checkbox" value="pineapple"> Pineapple Salsa</label>
+      <div>
+        <p class="field-label">Preferences</p>
+        <div class="checkbox-group">
+          <label class="checkbox-label">
+            <input type="checkbox" id="coriander" checked> Include coriander
+          </label>
+        </div>
+      </div>
 
-      <label>
-        Include coriander?
-        <input type="checkbox" id="coriander" checked>
-      </label>
-
-      <button onclick="runCalculator()">Calculate</button>
-
-      <pre id="output"></pre>
-
+      <button class="btn-primary" style="width:100%; justify-content:center;" onclick="runCalculator()">
+        Calculate →
+      </button>
     </div>
-  </section>
+
+    <!-- RESULTS -->
+    <div class="results-panel" id="resultsPanel">
+      <h2>Ingredients</h2>
+      <p class="results-empty" id="resultsEmpty">Hit calculate to see your shopping list.</p>
+      <div id="resultsContent"></div>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <span>© 2026 Kyran Walker</span>
+    <span>Built with HTML · CSS · JS</span>
+  </footer>
 
   <script src="../js/salsalator.js"></script>
+  <script>
+    const hamburger = document.getElementById('hamburger');
+    const navLinks  = document.getElementById('navLinks');
+    hamburger.addEventListener('click', () => navLinks.classList.toggle('open'));
+    navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
+
+    function runCalculator() {
+      const people      = Number(document.getElementById('people').value);
+      const portionSize = Number(document.getElementById('portion').value);
+
+      const selectedSalsas = Array.from(
+        document.querySelectorAll('input[type="checkbox"]:checked')
+      ).map(el => el.value).filter(v => v !== 'coriander');
+
+      const includeCoriander = document.getElementById('coriander').checked;
+      const spiceLevels = { pico: 1, guac: 1, pineapple: 1 };
+
+      const result = calculateIngredients({ people, portionSize, selectedSalsas, includeCoriander, spiceLevels });
+
+      const empty   = document.getElementById('resultsEmpty');
+      const content = document.getElementById('resultsContent');
+
+      if (Object.keys(result).length === 0) {
+        empty.style.display = 'block';
+        empty.textContent = 'Select at least one salsa.';
+        content.innerHTML = '';
+        return;
+      }
+
+      empty.style.display = 'none';
+      content.innerHTML = '';
+
+      const units = {
+        tomatoes:   'g',
+        onion:      'g',
+        lime:       lime => lime === 1 ? 'lime' : 'limes',
+        coriander:  'g',
+        chilli:     'g',
+        avocado:    avocado => avocado === 1 ? 'avocado' : 'avocados',
+        pineapple:  'g',
+      };
+
+      for (const [salsaName, ingredients] of Object.entries(result)) {
+        const block = document.createElement('div');
+        block.className = 'salsa-result';
+
+        const title = document.createElement('div');
+        title.className = 'salsa-result-name';
+        title.textContent = salsaName;
+        block.appendChild(title);
+
+        for (const [item, amount] of Object.entries(ingredients)) {
+          const row = document.createElement('div');
+          row.className = 'ingredient-row';
+
+          const unitDef = units[item];
+          const unit = typeof unitDef === 'function' ? unitDef(amount) : (unitDef || '');
+          const display = Number.isInteger(amount) ? amount : amount.toFixed(1);
+
+          row.innerHTML = `
+            <span class="ingredient-name">${item}</span>
+            <span class="ingredient-amount">${display}${unit ? ' ' + unit : ''}</span>
+          `;
+          block.appendChild(row);
+        }
+
+        content.appendChild(block);
+      }
+    }
+  </script>
+
 </body>
 </html>

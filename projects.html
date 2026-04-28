@@ -1,27 +1,73 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Projects</title>
-  <link rel="stylesheet" href="/styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Projects — Kyran Walker</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/styles.css">
 </head>
 
 <body>
 
-<nav>
-  <a href="/">Home</a>
-</nav>
+  <!-- NAV -->
+  <nav>
+    <a href="index.html" class="nav-logo">Kyran<span>.</span></a>
 
-<section class="project-hero">
-  <h1>Projects</h1>
-</section>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html#services">Services</a></li>
+      <li><a href="projects.html">Projects</a></li>
+      <li><a href="index.html#contact" class="nav-cta">Hire Me</a></li>
+    </ul>
 
-<section class="section">
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
 
-  <a href="/projects/salsalator.html">
-    🌶️ Salsalator — Salsa calculator
-  </a>
+  <!-- PAGE HEADER -->
+  <div class="projects-hero">
+    <p class="section-label">What I've built</p>
+    <h1 class="section-title" style="margin-bottom: 1rem;">Projects</h1>
+    <p style="color: var(--muted); font-size: 1.05rem; line-height: 1.7; max-width: 480px;">
+      A collection of things I've made — tools, experiments, and ideas I wanted to exist in the world.
+    </p>
+  </div>
 
-</section>
+  <!-- PROJECTS GRID -->
+  <section class="section">
+    <div class="projects-grid">
+
+      <a href="projects/salsalator.html" class="project-card">
+        <div class="project-card-icon">🌶️</div>
+        <div class="project-card-title">Salsalator</div>
+        <p class="project-card-desc">
+          A salsa calculator that scales ingredient quantities for any number of guests — with support for multiple salsa types, spice levels, and dietary preferences.
+        </p>
+        <span class="project-card-tag">Try it</span>
+      </a>
+
+      <!-- Add more project cards here as you build them -->
+
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <span>© 2026 Kyran Walker</span>
+    <span>Built with HTML · CSS · JS</span>
+  </footer>
+
+  <script>
+    const hamburger = document.getElementById('hamburger');
+    const navLinks  = document.getElementById('navLinks');
+    hamburger.addEventListener('click', () => navLinks.classList.toggle('open'));
+    navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
+  </script>
 
 </body>
 </html>
