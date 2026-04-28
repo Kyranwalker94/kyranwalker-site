@@ -9,8 +9,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
 
-  <!-- ✅ FIXED PATH -->
-  <link rel="stylesheet" href="/css/styles.css">
+  <!-- MAIN STYLESHEET -->
+  <link rel="stylesheet" href="css/styles.css">
 </head>
 
 <body>
@@ -44,12 +44,12 @@
         </h1>
 
         <p class="hero-sub">
-          I build things for the web — clean code, thoughtful design, and projects I actually enjoy making.
+          I build things for the web — clean code, thoughtful design, and projects I'm proud to put my name on.
         </p>
 
         <div class="hero-actions">
-          <a href="#projects" class="btn-primary">View Projects</a>
-          <a href="#services" class="btn-ghost">What I Do</a>
+          <a href="#projects" class="btn-primary">See My Projects</a>
+          <a href="#contact" class="btn-ghost">Get In Touch</a>
         </div>
       </div>
 
@@ -66,7 +66,7 @@
               <div class="badge-dot"></div>
               <div class="badge-text">
                 <strong>Open to Opportunities</strong>
-                Let’s build something great
+                Let's build something great
               </div>
             </div>
           </div>
@@ -90,65 +90,51 @@
 
     <div class="stat">
       <div class="stat-number">20+</div>
-      <div class="stat-label">Projects Built</div>
+      <div class="stat-label">Projects Completed</div>
     </div>
 
     <div class="stat">
-      <div class="stat-number">∞</div>
-      <div class="stat-label">Curiosity</div>
+      <div class="stat-number">100%</div>
+      <div class="stat-label">Passion Driven</div>
     </div>
   </div>
 
   <!-- SERVICES -->
   <section class="section" id="services">
     <p class="section-label">What I do</p>
-    <h2 class="section-title">Services</h2>
+    <h2 class="section-title">Services I Offer</h2>
 
     <div class="services-grid">
       <div class="service-card">
         <div class="service-icon">🌐</div>
         <div class="service-name">Web Development</div>
-        <p class="service-desc">Clean, fast, responsive websites built from scratch.</p>
+        <p class="service-desc">
+          Clean, fast, and responsive websites built from scratch — no bloated templates, just code that works.
+        </p>
       </div>
 
       <div class="service-card">
         <div class="service-icon">🎨</div>
         <div class="service-name">UI / UX Design</div>
-        <p class="service-desc">Simple, thoughtful interfaces designed for clarity.</p>
+        <p class="service-desc">
+          Interfaces that are intuitive and visually sharp — designed with the user in mind at every step.
+        </p>
       </div>
 
       <div class="service-card">
         <div class="service-icon">⚙️</div>
         <div class="service-name">Problem Solving</div>
-        <p class="service-desc">Turning messy ideas into working systems.</p>
+        <p class="service-desc">
+          Got a technical challenge? I enjoy digging into problems and finding elegant solutions.
+        </p>
       </div>
     </div>
   </section>
 
-  <!-- PROJECTS (HUB ONLY) -->
-  <section class="section" id="projects">
-    <p class="section-label">Work</p>
-    <h2 class="section-title">Projects</h2>
-
-    <p class="hero-sub">
-      A small collection of tools and experiments I’ve built while learning and exploring ideas.
-    </p>
-
-    <div class="hero-actions">
-      <a href="/projects/salsalator.html" class="btn-primary">
-        Salsalator → Calculator Tool
-      </a>
-
-      <a href="#" class="btn-ghost">
-        More coming soon
-      </a>
-    </div>
-  </section>
-
-  <!-- CONTACT CTA -->
+  <!-- CTA -->
   <div class="cta-band" id="contact">
     <h2 class="cta-band-title">
-      Got a project in mind? <span>Let’s talk.</span>
+      Got a project in mind? <span>Let's talk.</span>
     </h2>
 
     <a href="mailto:hello@kyranwalker.com" class="btn-primary">
@@ -162,7 +148,6 @@
     <span>Built with HTML · CSS · JS</span>
   </footer>
 
-  <!-- NAV SCRIPT -->
   <script>
     const hamburger = document.getElementById('hamburger');
     const navLinks = document.getElementById('navLinks');
@@ -172,9 +157,7 @@
     });
 
     navLinks.querySelectorAll('a').forEach(a => {
-      a.addEventListener('click', () => {
-        navLinks.classList.remove('open');
-      });
+      a.addEventListener('click', () => navLinks.classList.remove('open'));
     });
   </script>
 
