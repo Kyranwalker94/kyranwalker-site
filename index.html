@@ -1,49 +1,182 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Kyran Walker</title>
-  <link rel="stylesheet" href="css/styles.css">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+
+  <!-- ✅ FIXED PATH -->
+  <link rel="stylesheet" href="/css/styles.css">
 </head>
 
 <body>
 
   <!-- NAV -->
   <nav>
-    <a class="nav-logo" href="/">Your<span>Site</span></a>
+    <a href="#" class="nav-logo">Kyran<span>.</span></a>
 
-    <ul class="nav-links">
-      <li><a href="/projects/salsalator.html">Salsalator</a></li>
-      <li><a href="/projects.html">Projects</a></li>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#services">Services</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#contact" class="nav-cta">Hire Me</a></li>
     </ul>
+
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
   </nav>
 
   <!-- HERO -->
-  <section class="hero">
+  <section style="position:relative;">
+    <div class="hero">
 
-    <div class="hero-left">
-      <h1 class="hero-title">
-        Building small <span class="accent">tools</span><br>
-        that actually help.
-      </h1>
+      <div class="hero-left">
+        <p class="hero-eyebrow">Available for new projects</p>
 
-      <p class="hero-sub">
-        I design and build interactive web tools — starting with things like calculators,
-        experiments, and small utility apps.
-      </p>
+        <h1 class="hero-title">
+          Hi, I'm<br>
+          <span class="accent">Kyran</span><br>
+          <span class="accent2">Walker</span>
+        </h1>
 
-      <div class="hero-actions">
-        <a class="btn-primary" href="/projects/salsalator.html">
-          Try Salsalator
-        </a>
+        <p class="hero-sub">
+          I build things for the web — clean code, thoughtful design, and projects I actually enjoy making.
+        </p>
 
-        <a class="btn-ghost" href="/projects.html">
-          View Projects
-        </a>
+        <div class="hero-actions">
+          <a href="#projects" class="btn-primary">View Projects</a>
+          <a href="#services" class="btn-ghost">What I Do</a>
+        </div>
       </div>
+
+      <div class="hero-right">
+        <div class="hero-card">
+          <div class="hero-card-inner">
+            <img
+              class="hero-img"
+              src="https://kyranwalker.com/wp-content/uploads/2021/03/20180202_050942447_iOS.jpg"
+              alt="Kyran Walker"
+            />
+
+            <div class="hero-card-badge">
+              <div class="badge-dot"></div>
+              <div class="badge-text">
+                <strong>Open to Opportunities</strong>
+                Let’s build something great
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
 
+    <div class="scroll-hint">
+      <span>Scroll</span>
+      <div class="scroll-arrow"></div>
+    </div>
   </section>
+
+  <!-- STATS -->
+  <div class="stats-band">
+    <div class="stat">
+      <div class="stat-number">5+</div>
+      <div class="stat-label">Years Experience</div>
+    </div>
+
+    <div class="stat">
+      <div class="stat-number">20+</div>
+      <div class="stat-label">Projects Built</div>
+    </div>
+
+    <div class="stat">
+      <div class="stat-number">∞</div>
+      <div class="stat-label">Curiosity</div>
+    </div>
+  </div>
+
+  <!-- SERVICES -->
+  <section class="section" id="services">
+    <p class="section-label">What I do</p>
+    <h2 class="section-title">Services</h2>
+
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-icon">🌐</div>
+        <div class="service-name">Web Development</div>
+        <p class="service-desc">Clean, fast, responsive websites built from scratch.</p>
+      </div>
+
+      <div class="service-card">
+        <div class="service-icon">🎨</div>
+        <div class="service-name">UI / UX Design</div>
+        <p class="service-desc">Simple, thoughtful interfaces designed for clarity.</p>
+      </div>
+
+      <div class="service-card">
+        <div class="service-icon">⚙️</div>
+        <div class="service-name">Problem Solving</div>
+        <p class="service-desc">Turning messy ideas into working systems.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS (HUB ONLY) -->
+  <section class="section" id="projects">
+    <p class="section-label">Work</p>
+    <h2 class="section-title">Projects</h2>
+
+    <p class="hero-sub">
+      A small collection of tools and experiments I’ve built while learning and exploring ideas.
+    </p>
+
+    <div class="hero-actions">
+      <a href="/projects/salsalator.html" class="btn-primary">
+        Salsalator → Calculator Tool
+      </a>
+
+      <a href="#" class="btn-ghost">
+        More coming soon
+      </a>
+    </div>
+  </section>
+
+  <!-- CONTACT CTA -->
+  <div class="cta-band" id="contact">
+    <h2 class="cta-band-title">
+      Got a project in mind? <span>Let’s talk.</span>
+    </h2>
+
+    <a href="mailto:hello@kyranwalker.com" class="btn-primary">
+      Get In Touch →
+    </a>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <span>© 2026 Kyran Walker</span>
+    <span>Built with HTML · CSS · JS</span>
+  </footer>
+
+  <!-- NAV SCRIPT -->
+  <script>
+    const hamburger = document.getElementById('hamburger');
+    const navLinks = document.getElementById('navLinks');
+
+    hamburger.addEventListener('click', () => {
+      navLinks.classList.toggle('open');
+    });
+
+    navLinks.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', () => {
+        navLinks.classList.remove('open');
+      });
+    });
+  </script>
 
 </body>
 </html>
