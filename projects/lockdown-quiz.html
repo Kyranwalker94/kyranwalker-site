@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lockdown Quiz — Kyran Walker</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+
+  <nav>
+    <a href="../index.html" class="nav-logo">Kyran<span>.</span></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="../index.html#services">Services</a></li>
+      <li><a href="../projects.html">Projects</a></li>
+      <li><a href="../index.html#contact" class="nav-cta">Hire Me</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <div class="project-detail-hero">
+    <a href="../projects.html" class="back-link">← Projects</a>
+    <div class="project-detail-tags">
+      <span class="project-tag">Game</span>
+      <span class="project-tag">Scratch</span>
+    </div>
+    <h1>Lockdown Quiz 🎯</h1>
+    <p>A family quiz game built in Scratch during lockdown — with specialist categories, score tracking, and Twitch streaming support.</p>
+  </div>
+
+  <div class="project-detail-body">
+    <div class="project-detail-content">
+
+      <div class="content-block">
+        <h2>About the project</h2>
+        <p>When lockdown started I wanted to keep the family connected and having fun, so I built this quiz game in Scratch. The format is designed for a quizmaster's assistant who streams the quiz live on Twitch — questions go out via WhatsApp, players answer, and then the results are entered into the game before the next question is released. The game tallies scores automatically and reads out questions.</p>
+        <p>There are 6 categories and players pick a specialist category before the game starts. Correct answers in specialist categories earn a bonus 5 points — but a wrong answer costs 5 points.</p>
+      </div>
+
+      <div class="content-block">
+        <h2>Quizzes</h2>
+        <div class="quiz-grid">
+          <div class="quiz-card"><span class="quiz-num">Quiz 1</span><span>6 players · 42 questions</span></div>
+          <div class="quiz-card"><span class="quiz-num">Quiz 2</span><span>7 players · 42 questions</span></div>
+          <div class="quiz-card"><span class="quiz-num">Quiz 3</span><span>6 players · 30 questions</span></div>
+          <div class="quiz-card"><span class="quiz-num">Quiz 4</span><span>7 players · 42 questions</span></div>
+          <div class="quiz-card"><span class="quiz-num">Quiz 5</span><span>6 players · 30 questions</span></div>
+        </div>
+      </div>
+
+      <div class="content-block">
+        <h2>Features</h2>
+        <ul class="content-list">
+          <li>Supports up to 7 players per quiz</li>
+          <li>6 categories with specialist selection</li>
+          <li>Bonus/penalty scoring in specialist rounds</li>
+          <li>Automatic score tally</li>
+          <li>Twitch streaming compatible format</li>
+          <li>WhatsApp question distribution workflow</li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="project-detail-sidebar">
+      <div class="sidebar-card">
+        <h3>Details</h3>
+        <div class="sidebar-row"><span>Year</span><span>2020</span></div>
+        <div class="sidebar-row"><span>Built with</span><span>Scratch</span></div>
+        <div class="sidebar-row"><span>Max players</span><span>7</span></div>
+        <div class="sidebar-row"><span>Quizzes made</span><span>5</span></div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <span>© 2026 Kyran Walker</span>
+    <span>Built with HTML · CSS · JS</span>
+  </footer>
+
+  <script>
+    const hamburger = document.getElementById('hamburger');
+    const navLinks  = document.getElementById('navLinks');
+    hamburger.addEventListener('click', () => navLinks.classList.toggle('open'));
+    navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
+  </script>
+</body>
+</html>

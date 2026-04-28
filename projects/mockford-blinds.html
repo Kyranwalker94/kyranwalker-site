@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mockford Blinds — Kyran Walker</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+
+  <nav>
+    <a href="../index.html" class="nav-logo">Kyran<span>.</span></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="../index.html#services">Services</a></li>
+      <li><a href="../projects.html">Projects</a></li>
+      <li><a href="../index.html#contact" class="nav-cta">Hire Me</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <div class="project-detail-hero">
+    <a href="../projects.html" class="back-link">← Projects</a>
+    <div class="project-detail-tags">
+      <span class="project-tag">Web</span>
+      <span class="project-tag">IRL</span>
+      <span class="project-tag status-done">Completed</span>
+    </div>
+    <h1>Mockford Blinds 🪟</h1>
+    <p>Designed and built a website, ran digital ads, and helped run the family business — generating over £70,000 in sales.</p>
+  </div>
+
+  <div class="project-detail-body">
+    <div class="project-detail-content">
+
+      <div class="callout">
+        * Mockford Blinds is no longer operating.
+      </div>
+
+      <div class="content-block">
+        <h2>About the project</h2>
+        <p>Mockford Blinds was a family business supplying handmade interior blinds and awnings to the Eastbourne and Seaford area — run by my grandparents.</p>
+        <p>In early 2020 they asked me to design and build a website for the business and help with other areas. I designed and built <strong>mockfordblinds.co.uk</strong> from scratch and set up Google and Facebook ad campaigns to drive traffic. The enquiries started coming in almost immediately.</p>
+      </div>
+
+      <div class="content-block">
+        <img
+          src="https://kyranwalker.com/wp-content/uploads/2020/04/for-web.gif"
+          alt="Mockford Blinds 3D awning mockup"
+          class="content-img"
+        />
+      </div>
+
+      <div class="content-block">
+        <h2>Going deeper</h2>
+        <p>Due to the surge in business — and the challenges the pandemic brought — my grandparents asked me to support the business more directly for a year. I agreed and got stuck in across all areas: updating Xero to maintain the books, learning to manufacture vertical blinds, fitting various blind and awning types on-site, and handling customer relations.</p>
+        <p>The star product was exterior awnings. I focused the advertising on these and used 3D modelling to create photorealistic mockups showing clients exactly what an awning would look like installed on their property — a powerful sales tool.</p>
+        <p>In the first 9 months, the business made over <strong>£70,000 in sales</strong>.</p>
+      </div>
+
+      <div class="content-block">
+        <div class="image-grid">
+          <img src="https://kyranwalker.com/wp-content/uploads/2024/08/5.jpg" alt="Mockford Blinds installation" class="grid-img" />
+          <img src="https://kyranwalker.com/wp-content/uploads/2024/08/4.jpg" alt="Mockford Blinds installation" class="grid-img" />
+          <img src="https://kyranwalker.com/wp-content/uploads/2024/08/3.jpg" alt="Mockford Blinds installation" class="grid-img" />
+          <img src="https://kyranwalker.com/wp-content/uploads/2024/08/2.jpg" alt="Mockford Blinds installation" class="grid-img" />
+          <img src="https://kyranwalker.com/wp-content/uploads/2024/08/1.jpg" alt="Mockford Blinds installation" class="grid-img" />
+        </div>
+      </div>
+
+      <div class="content-block">
+        <h2>What I did</h2>
+        <ul class="content-list">
+          <li>Designed and built the company website from scratch</li>
+          <li>Set up and managed Google Ads and Facebook Ads campaigns</li>
+          <li>Created 3D awning mockups to use as a sales tool</li>
+          <li>Maintained accounts and bookkeeping in Xero</li>
+          <li>Learned to manufacture vertical blinds</li>
+          <li>Fitted blinds and awnings on-site across the Eastbourne and Seaford area</li>
+          <li>Generated over £70,000 in sales in the first 9 months</li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="project-detail-sidebar">
+      <div class="sidebar-card">
+        <h3>Details</h3>
+        <div class="sidebar-row"><span>Year</span><span>2020</span></div>
+        <div class="sidebar-row"><span>Role</span><span>Web, Ads, Operations</span></div>
+        <div class="sidebar-row"><span>Sales generated</span><span>£70,000+</span></div>
+        <div class="sidebar-row"><span>Tools</span><span>WordPress, Xero, Google Ads, Facebook Ads, SketchUp</span></div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <span>© 2026 Kyran Walker</span>
+    <span>Built with HTML · CSS · JS</span>
+  </footer>
+
+  <script>
+    const hamburger = document.getElementById('hamburger');
+    const navLinks  = document.getElementById('navLinks');
+    hamburger.addEventListener('click', () => navLinks.classList.toggle('open'));
+    navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
+  </script>
+</body>
+</html>

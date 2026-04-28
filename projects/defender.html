@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DEFENDER — Kyran Walker</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+
+  <nav>
+    <a href="../index.html" class="nav-logo">Kyran<span>.</span></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="../index.html#services">Services</a></li>
+      <li><a href="../projects.html">Projects</a></li>
+      <li><a href="../index.html#contact" class="nav-cta">Hire Me</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <div class="project-detail-hero">
+    <a href="../projects.html" class="back-link">← Projects</a>
+    <div class="project-detail-tags">
+      <span class="project-tag">IRL</span>
+      <span class="project-tag status-active">In Progress</span>
+    </div>
+    <h1>DEFENDER 🚙</h1>
+    <p>Restoring and converting a 2008 Land Rover Defender 110 into a fully capable expedition and camper vehicle.</p>
+  </div>
+
+  <div class="project-detail-body">
+    <div class="project-detail-content">
+
+      <div class="content-block">
+        <h2>About the project</h2>
+        <p>In September 2023 I bought a 2008 Land Rover Defender 110. It was in okay condition but definitely needed work. The plan is to fully restore the truck — every part replaced so it'll last — and build it out as a camper and expedition vehicle, with the long-term goal of an extended overland trip.</p>
+        <img
+          src="https://kyranwalker.com/wp-content/uploads/2024/08/Defender-1024x742.png"
+          alt="The Defender"
+          class="content-img"
+        />
+      </div>
+
+      <div class="content-block">
+        <h2>MOT History</h2>
+        <div class="mot-card">
+          <div class="mot-result pass">PASS</div>
+          <div class="mot-details">
+            <div class="sidebar-row"><span>Date</span><span>13 December 2022</span></div>
+            <div class="sidebar-row"><span>Mileage</span><span>100,227 miles</span></div>
+            <div class="sidebar-row"><span>Expiry</span><span>13 December 2023</span></div>
+          </div>
+          <div class="mot-advisories">
+            <p class="field-label" style="margin-bottom:0.5rem;">Advisories</p>
+            <ul class="content-list">
+              <li>Rear prop shaft UJ worn</li>
+              <li>Front diff pinion seal leaking</li>
+              <li>Shock absorbers slightly worn bush on both rear uppers</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="content-block">
+        <h2>Service Record</h2>
+        <div class="data-table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr><th>Date</th><th>Mileage</th><th>Company</th><th>Details</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>26/09/2008</td><td>12,888</td><td>SHB Group</td><td>Service</td></tr>
+              <tr><td>22/01/2009</td><td>24,203</td><td>SHB Group</td><td>Service</td></tr>
+              <tr><td>12/01/2010</td><td>29,928</td><td>SHB Group</td><td>Service</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="content-block">
+        <h2>Projects</h2>
+
+        <div class="project-log-item">
+          <div class="project-log-header">
+            <span class="project-log-title">Project 1 — LED Exterior Lighting Upgrade</span>
+            <span class="project-tag status-wip">In Progress</span>
+          </div>
+          <p>Upgrading all exterior lighting to LED and fitting protective grills across all external lights.</p>
+          <p class="field-label" style="margin:1rem 0 0.5rem;">Parts list</p>
+          <ul class="content-list">
+            <li>LED Headlights</li>
+            <li>LED Upgrade kit</li>
+            <li>LED Number plate light</li>
+          </ul>
+          <p class="field-label" style="margin:1rem 0 0.5rem;">Notes</p>
+          <ul class="content-list">
+            <li>Headlights done but 1 LED strip on driver side is broken — need to return</li>
+            <li>Rear brake lights not yet completed</li>
+            <li>Number plate light not connected — need to 3D print stand-off or use original</li>
+          </ul>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="project-detail-sidebar">
+      <div class="sidebar-card">
+        <h3>Details</h3>
+        <div class="sidebar-row"><span>Vehicle</span><span>2008 Land Rover Defender 110</span></div>
+        <div class="sidebar-row"><span>Acquired</span><span>September 2023</span></div>
+        <div class="sidebar-row"><span>Status</span><span>Ongoing restoration</span></div>
+        <div class="sidebar-row"><span>Goal</span><span>Expedition & camper build</span></div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <span>© 2026 Kyran Walker</span>
+    <span>Built with HTML · CSS · JS</span>
+  </footer>
+
+  <script>
+    const hamburger = document.getElementById('hamburger');
+    const navLinks  = document.getElementById('navLinks');
+    hamburger.addEventListener('click', () => navLinks.classList.toggle('open'));
+    navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
+  </script>
+</body>
+</html>

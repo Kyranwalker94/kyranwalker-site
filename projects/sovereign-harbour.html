@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sovereign Harbour — Kyran Walker</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+
+  <nav>
+    <a href="../index.html" class="nav-logo">Kyran<span>.</span></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="../index.html#services">Services</a></li>
+      <li><a href="../projects.html">Projects</a></li>
+      <li><a href="../index.html#contact" class="nav-cta">Hire Me</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <div class="project-detail-hero">
+    <a href="../projects.html" class="back-link">← Projects</a>
+    <div class="project-detail-tags">
+      <span class="project-tag">3D</span>
+      <span class="project-tag">Animation</span>
+    </div>
+    <h1>Sovereign Harbour 🏗️</h1>
+    <p>3D modelling and animation of the Sovereign Harbour area in Eastbourne — built in SketchUp, rendered in Blender and SimLab.</p>
+  </div>
+
+  <div class="project-detail-body">
+    <div class="project-detail-content">
+
+      <div class="content-block">
+        <h2>About the project</h2>
+        <p>During 2020 I was learning as much about 3D modelling and animation as I could. Living in the Sovereign Harbour area of Eastbourne at the time, I decided to model the area and use it to test out different scene-building and animation techniques.</p>
+        <p>All scenes and the majority of models were built in SketchUp, then exported to Blender and SimLab for animation and rendering.</p>
+      </div>
+
+      <div class="content-block">
+        <h2>Animation 1 — Blender</h2>
+        <p>A short animation made in Blender — the concept was to eventually become an animated TV show opening credits sequence. This final draft doesn't yet feature characters, but shows what I learned about animating objects, moving cameras, and tracking subjects through a scene.</p>
+      </div>
+
+      <div class="content-block">
+        <h2>Animation 2 — SimLab (Interactive / VR)</h2>
+        <p>This second animation shows the interior of my flat at the time, complete with furniture models. Imported into SimLab, I was able to assign click-triggered animations to objects like doors, making it possible to walk through the space as if it were a video game. The demo also ran in VR.</p>
+      </div>
+
+      <div class="content-block">
+        <h2>What I learned</h2>
+        <ul class="content-list">
+          <li>SketchUp for architectural modelling from scratch</li>
+          <li>Exporting and lighting scenes in Blender</li>
+          <li>Camera movement and object animation in Blender</li>
+          <li>Interactive 3D walkthroughs in SimLab</li>
+          <li>VR-ready scene setup</li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="project-detail-sidebar">
+      <div class="sidebar-card">
+        <h3>Details</h3>
+        <div class="sidebar-row"><span>Year</span><span>2020</span></div>
+        <div class="sidebar-row"><span>Modelled in</span><span>SketchUp</span></div>
+        <div class="sidebar-row"><span>Animated in</span><span>Blender, SimLab</span></div>
+        <div class="sidebar-row"><span>VR support</span><span>Yes</span></div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <span>© 2026 Kyran Walker</span>
+    <span>Built with HTML · CSS · JS</span>
+  </footer>
+
+  <script>
+    const hamburger = document.getElementById('hamburger');
+    const navLinks  = document.getElementById('navLinks');
+    hamburger.addEventListener('click', () => navLinks.classList.toggle('open'));
+    navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
+  </script>
+</body>
+</html>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pokémon Snap — Kyran Walker</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+
+  <nav>
+    <a href="../index.html" class="nav-logo">Kyran<span>.</span></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="../index.html#services">Services</a></li>
+      <li><a href="../projects.html">Projects</a></li>
+      <li><a href="../index.html#contact" class="nav-cta">Hire Me</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <div class="project-detail-hero">
+    <a href="../projects.html" class="back-link">← Projects</a>
+    <div class="project-detail-tags">
+      <span class="project-tag">Game</span>
+      <span class="project-tag">Scratch</span>
+      <span class="project-tag">CS50</span>
+    </div>
+    <h1>Pokémon Snap ⚡</h1>
+    <p>A 2-player Scratch game built for CS50 week one — match your Pokémon, hit your number first, first to 10 wins.</p>
+  </div>
+
+  <div class="project-detail-body">
+    <div class="project-detail-content">
+
+      <div class="content-block">
+        <h2>About the project</h2>
+        <p>Built for the first week of CS50, this is a 2-player reaction game played on a single keyboard. Both players take turns sending out a Pokémon — when both players' Pokémon match, a number appears on screen. The first player to press their corresponding number wins the round, and their Pokémon plays its sound from the show. First to 10 points wins the game.</p>
+      </div>
+
+      <div class="content-block">
+        <h2>How to play</h2>
+        <div class="controls-grid">
+          <div class="control-card">
+            <div class="control-player">Player 1</div>
+            <div class="sidebar-row"><span>Next Pokémon</span><span class="key">Q</span></div>
+            <div class="sidebar-row"><span>Snap</span><span class="key">1 2 3 4 5</span></div>
+          </div>
+          <div class="control-card">
+            <div class="control-player">Player 2</div>
+            <div class="sidebar-row"><span>Next Pokémon</span><span class="key">P</span></div>
+            <div class="sidebar-row"><span>Snap</span><span class="key">6 7 8 9 0</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="content-block">
+        <h2>What I learned</h2>
+        <ul class="content-list">
+          <li>Core programming logic in Scratch</li>
+          <li>Handling simultaneous keyboard inputs for two players on one device</li>
+          <li>Randomisation and matching logic</li>
+          <li>Score tracking and win conditions</li>
+          <li>Audio triggering on game events</li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="project-detail-sidebar">
+      <div class="sidebar-card">
+        <h3>Details</h3>
+        <div class="sidebar-row"><span>Built with</span><span>Scratch</span></div>
+        <div class="sidebar-row"><span>Players</span><span>2 (shared keyboard)</span></div>
+        <div class="sidebar-row"><span>Win condition</span><span>First to 10 points</span></div>
+        <div class="sidebar-row"><span>Context</span><span>CS50 Week 1</span></div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <span>© 2026 Kyran Walker</span>
+    <span>Built with HTML · CSS · JS</span>
+  </footer>
+
+  <script>
+    const hamburger = document.getElementById('hamburger');
+    const navLinks  = document.getElementById('navLinks');
+    hamburger.addEventListener('click', () => navLinks.classList.toggle('open'));
+    navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
+  </script>
+</body>
+</html>
