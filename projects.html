@@ -4,59 +4,144 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Projects — Kyran Walker</title>
-
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
-
   <link rel="stylesheet" href="css/styles.css">
 </head>
-
 <body>
 
-  <!-- NAV -->
   <nav>
     <a href="index.html" class="nav-logo">Kyran<span>.</span></a>
-
     <ul class="nav-links" id="navLinks">
       <li><a href="index.html#services">Services</a></li>
       <li><a href="projects.html">Projects</a></li>
       <li><a href="index.html#contact" class="nav-cta">Hire Me</a></li>
     </ul>
-
     <button class="hamburger" id="hamburger" aria-label="Toggle menu">
       <span></span><span></span><span></span>
     </button>
   </nav>
 
-  <!-- PAGE HEADER -->
   <div class="projects-hero">
     <p class="section-label">What I've built</p>
-    <h1 class="section-title" style="margin-bottom: 1rem;">Projects</h1>
-    <p style="color: var(--muted); font-size: 1.05rem; line-height: 1.7; max-width: 480px;">
-      A collection of things I've made — tools, experiments, and ideas I wanted to exist in the world.
+    <h1 class="section-title" style="margin-bottom:1rem;">Projects</h1>
+    <p style="color:var(--muted);font-size:1.05rem;line-height:1.7;max-width:480px;">
+      A collection of things I've made — tools, games, 3D work, websites, and ideas I wanted to exist in the world.
     </p>
   </div>
 
-  <!-- PROJECTS GRID -->
   <section class="section">
-    <div class="projects-grid">
 
-      <a href="projects/salsalator.html" class="project-card">
-        <div class="project-card-icon">🌶️</div>
-        <div class="project-card-title">Salsalator</div>
-        <p class="project-card-desc">
-          A salsa calculator that scales ingredient quantities for any number of guests — with support for multiple salsa types, spice levels, and dietary preferences.
-        </p>
-        <span class="project-card-tag">Try it</span>
+    <!-- Filter tabs -->
+    <div class="filter-tabs" id="filterTabs">
+      <button class="filter-tab active" data-filter="all">All</button>
+      <button class="filter-tab" data-filter="web">Web</button>
+      <button class="filter-tab" data-filter="game">Games</button>
+      <button class="filter-tab" data-filter="3d">3D</button>
+      <button class="filter-tab" data-filter="irl">IRL</button>
+    </div>
+
+    <div class="projects-grid" id="projectsGrid">
+
+      <a href="projects/wordle.html" class="project-card" data-tags="web game">
+        <div class="project-card-icon">🟩</div>
+        <div class="project-card-title">Wordle</div>
+        <p class="project-card-desc">A fully playable Wordle clone with score tracking and a leaderboard, built from scratch.</p>
+        <div class="project-card-footer">
+          <span class="project-tag">Web</span>
+          <span class="project-tag">Game</span>
+          <span class="project-card-tag">View project</span>
+        </div>
       </a>
 
-      <!-- Add more project cards here as you build them -->
+      <a href="projects/defender.html" class="project-card" data-tags="irl">
+        <div class="project-card-icon">🚙</div>
+        <div class="project-card-title">DEFENDER</div>
+        <p class="project-card-desc">Restoring and building out a 2008 Land Rover Defender 110 as a camper and expedition vehicle.</p>
+        <div class="project-card-footer">
+          <span class="project-tag">IRL</span>
+          <span class="project-card-tag">View project</span>
+        </div>
+      </a>
+
+      <a href="projects/sovereign-harbour.html" class="project-card" data-tags="3d">
+        <div class="project-card-icon">🏗️</div>
+        <div class="project-card-title">Sovereign Harbour</div>
+        <p class="project-card-desc">3D modelling and animation of the Sovereign Harbour area in Eastbourne, built in SketchUp and Blender.</p>
+        <div class="project-card-footer">
+          <span class="project-tag">3D</span>
+          <span class="project-tag">Animation</span>
+          <span class="project-card-tag">View project</span>
+        </div>
+      </a>
+
+      <a href="projects/mockford-blinds.html" class="project-card" data-tags="web irl">
+        <div class="project-card-icon">🪟</div>
+        <div class="project-card-title">Mockford Blinds</div>
+        <p class="project-card-desc">Designed and built a website, ran Google and Facebook ads, and helped grow the family business — making over £70k in sales.</p>
+        <div class="project-card-footer">
+          <span class="project-tag">Web</span>
+          <span class="project-tag">IRL</span>
+          <span class="project-card-tag">View project</span>
+        </div>
+      </a>
+
+      <a href="projects/lockdown-quiz.html" class="project-card" data-tags="game">
+        <div class="project-card-icon">🎯</div>
+        <div class="project-card-title">Lockdown Quiz</div>
+        <p class="project-card-desc">A Scratch-built family quiz game with specialist categories, score tracking, and Twitch streaming support — made during lockdown.</p>
+        <div class="project-card-footer">
+          <span class="project-tag">Game</span>
+          <span class="project-card-tag">View project</span>
+        </div>
+      </a>
+
+      <a href="projects/salsalator.html" class="project-card" data-tags="web">
+        <div class="project-card-icon">🌶️</div>
+        <div class="project-card-title">Salsalator</div>
+        <p class="project-card-desc">A salsa calculator that scales ingredient quantities for any party — with spice level controls and live results.</p>
+        <div class="project-card-footer">
+          <span class="project-tag">Web</span>
+          <span class="project-card-tag">View project</span>
+        </div>
+      </a>
+
+      <a href="projects/shepherds-way.html" class="project-card" data-tags="3d">
+        <div class="project-card-icon">🏠</div>
+        <div class="project-card-title">Shepherds Way</div>
+        <p class="project-card-desc">A 3D modelled house animation showing different ground floor renovation options.</p>
+        <div class="project-card-footer">
+          <span class="project-tag">3D</span>
+          <span class="project-tag">Animation</span>
+          <span class="project-card-tag">View project</span>
+        </div>
+      </a>
+
+      <a href="projects/cabinet.html" class="project-card" data-tags="3d web">
+        <div class="project-card-icon">🗄️</div>
+        <div class="project-card-title">Cabinet</div>
+        <p class="project-card-desc">A 3D modelled cabinet with an interactive web demo for displaying 3D models in the browser.</p>
+        <div class="project-card-footer">
+          <span class="project-tag">3D</span>
+          <span class="project-tag">Web</span>
+          <span class="project-card-tag">View project</span>
+        </div>
+      </a>
+
+      <a href="projects/pokemon-snap.html" class="project-card" data-tags="game">
+        <div class="project-card-icon">⚡</div>
+        <div class="project-card-title">Pokémon Snap</div>
+        <p class="project-card-desc">A 2-player Scratch game built for CS50 — match your Pokémon, hit your number first, first to 10 wins.</p>
+        <div class="project-card-footer">
+          <span class="project-tag">Game</span>
+          <span class="project-card-tag">View project</span>
+        </div>
+      </a>
 
     </div>
   </section>
 
-  <!-- FOOTER -->
   <footer>
     <span>© 2026 Kyran Walker</span>
     <span>Built with HTML · CSS · JS</span>
@@ -67,6 +152,19 @@
     const navLinks  = document.getElementById('navLinks');
     hamburger.addEventListener('click', () => navLinks.classList.toggle('open'));
     navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
+
+    // Filter tabs
+    document.querySelectorAll('.filter-tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        const filter = tab.dataset.filter;
+        document.querySelectorAll('.project-card').forEach(card => {
+          const tags = card.dataset.tags || '';
+          card.style.display = (filter === 'all' || tags.includes(filter)) ? '' : 'none';
+        });
+      });
+    });
   </script>
 
 </body>
