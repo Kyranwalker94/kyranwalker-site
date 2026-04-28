@@ -10,6 +10,43 @@
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="../css/styles.css">
+
+  <style>
+    .spice-row {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.5rem 0 0.25rem 2rem;
+    }
+
+    .spice-row input[type="range"] {
+      flex: 1;
+      appearance: none;
+      height: 3px;
+      border-radius: 2px;
+      background: var(--border);
+      outline: none;
+      cursor: pointer;
+    }
+
+    .spice-row input[type="range"]::-webkit-slider-thumb {
+      appearance: none;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: var(--accent);
+      cursor: pointer;
+    }
+
+    .spice-label {
+      font-size: 0.78rem;
+      color: var(--muted);
+      min-width: 60px;
+      text-align: right;
+    }
+
+    .spice-emoji { font-size: 0.85rem; min-width: 20px; }
+  </style>
 </head>
 
 <body>
@@ -17,13 +54,11 @@
   <!-- NAV -->
   <nav>
     <a href="../index.html" class="nav-logo">Kyran<span>.</span></a>
-
     <ul class="nav-links" id="navLinks">
       <li><a href="../index.html#services">Services</a></li>
       <li><a href="../projects.html">Projects</a></li>
       <li><a href="../index.html#contact" class="nav-cta">Hire Me</a></li>
     </ul>
-
     <button class="hamburger" id="hamburger" aria-label="Toggle menu">
       <span></span><span></span><span></span>
     </button>
@@ -33,7 +68,7 @@
   <div class="project-detail-hero">
     <a href="../projects.html" class="back-link">← Projects</a>
     <h1>Salsalator 🌶️</h1>
-    <p>Calculate exactly how much salsa you need for any party — pick your salsas, set your crowd size, done.</p>
+    <p>Calculate exactly how much salsa you need for any party — pick your salsas, set your crowd size, adjust the heat.</p>
   </div>
 
   <!-- APP -->
@@ -45,30 +80,52 @@
 
       <div>
         <p class="field-label">Number of people</p>
-        <input type="number" id="people" value="5" min="1" />
+        <input type="number" id="people" value="5" min="1" max="500" />
       </div>
 
       <div>
-        <p class="field-label">Portion size</p>
+        <p class="field-label">Appetite</p>
         <select id="portion">
           <option value="0.5">Light</option>
           <option value="1" selected>Normal</option>
-          <option value="1.5">Heavy</option>
+          <option value="1.5">Hungry crowd</option>
         </select>
       </div>
 
       <div>
-        <p class="field-label">Salsas</p>
+        <p class="field-label">Salsas &amp; heat</p>
         <div class="checkbox-group">
+
           <label class="checkbox-label">
-            <input type="checkbox" value="pico" checked> Pico de Gallo
+            <input class="salsa-checkbox" type="checkbox" value="pico" checked>
+            Pico de Gallo
           </label>
+          <div class="spice-row">
+            <span class="spice-emoji">🌶️</span>
+            <input class="spice-slider" type="range" data-salsa="pico" min="0.5" max="3" step="0.5" value="1" />
+            <span class="spice-label" id="spice-label-pico">Normal</span>
+          </div>
+
           <label class="checkbox-label">
-            <input type="checkbox" value="guac"> Guacamole
+            <input class="salsa-checkbox" type="checkbox" value="guac">
+            Guacamole
           </label>
+          <div class="spice-row">
+            <span class="spice-emoji">🌶️</span>
+            <input class="spice-slider" type="range" data-salsa="guac" min="0.5" max="3" step="0.5" value="1" />
+            <span class="spice-label" id="spice-label-guac">Normal</span>
+          </div>
+
           <label class="checkbox-label">
-            <input type="checkbox" value="pineapple"> Pineapple Salsa
+            <input class="salsa-checkbox" type="checkbox" value="pineapple">
+            Pineapple Salsa
           </label>
+          <div class="spice-row">
+            <span class="spice-emoji">🌶️</span>
+            <input class="spice-slider" type="range" data-salsa="pineapple" min="0.5" max="3" step="0.5" value="1" />
+            <span class="spice-label" id="spice-label-pineapple">Normal</span>
+          </div>
+
         </div>
       </div>
 
@@ -76,20 +133,18 @@
         <p class="field-label">Preferences</p>
         <div class="checkbox-group">
           <label class="checkbox-label">
-            <input type="checkbox" id="coriander" checked> Include coriander
+            <input type="checkbox" id="coriander" checked>
+            Include coriander
           </label>
         </div>
       </div>
 
-      <button class="btn-primary" style="width:100%; justify-content:center;" onclick="runCalculator()">
-        Calculate →
-      </button>
     </div>
 
     <!-- RESULTS -->
-    <div class="results-panel" id="resultsPanel">
+    <div class="results-panel">
       <h2>Ingredients</h2>
-      <p class="results-empty" id="resultsEmpty">Hit calculate to see your shopping list.</p>
+      <p class="results-empty" id="resultsEmpty">Select a salsa to get started.</p>
       <div id="resultsContent"></div>
     </div>
 
@@ -103,74 +158,20 @@
 
   <script src="../js/salsalator.js"></script>
   <script>
+    // Nav toggle
     const hamburger = document.getElementById('hamburger');
     const navLinks  = document.getElementById('navLinks');
     hamburger.addEventListener('click', () => navLinks.classList.toggle('open'));
     navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
 
-    function runCalculator() {
-      const people      = Number(document.getElementById('people').value);
-      const portionSize = Number(document.getElementById('portion').value);
-
-      const selectedSalsas = Array.from(
-        document.querySelectorAll('input[type="checkbox"]:checked')
-      ).map(el => el.value).filter(v => v !== 'coriander');
-
-      const includeCoriander = document.getElementById('coriander').checked;
-      const spiceLevels = { pico: 1, guac: 1, pineapple: 1 };
-
-      const result = calculateIngredients({ people, portionSize, selectedSalsas, includeCoriander, spiceLevels });
-
-      const empty   = document.getElementById('resultsEmpty');
-      const content = document.getElementById('resultsContent');
-
-      if (Object.keys(result).length === 0) {
-        empty.style.display = 'block';
-        empty.textContent = 'Select at least one salsa.';
-        content.innerHTML = '';
-        return;
-      }
-
-      empty.style.display = 'none';
-      content.innerHTML = '';
-
-      const units = {
-        tomatoes:   'g',
-        onion:      'g',
-        lime:       lime => lime === 1 ? 'lime' : 'limes',
-        coriander:  'g',
-        chilli:     'g',
-        avocado:    avocado => avocado === 1 ? 'avocado' : 'avocados',
-        pineapple:  'g',
-      };
-
-      for (const [salsaName, ingredients] of Object.entries(result)) {
-        const block = document.createElement('div');
-        block.className = 'salsa-result';
-
-        const title = document.createElement('div');
-        title.className = 'salsa-result-name';
-        title.textContent = salsaName;
-        block.appendChild(title);
-
-        for (const [item, amount] of Object.entries(ingredients)) {
-          const row = document.createElement('div');
-          row.className = 'ingredient-row';
-
-          const unitDef = units[item];
-          const unit = typeof unitDef === 'function' ? unitDef(amount) : (unitDef || '');
-          const display = Number.isInteger(amount) ? amount : amount.toFixed(1);
-
-          row.innerHTML = `
-            <span class="ingredient-name">${item}</span>
-            <span class="ingredient-amount">${display}${unit ? ' ' + unit : ''}</span>
-          `;
-          block.appendChild(row);
-        }
-
-        content.appendChild(block);
-      }
-    }
+    // Spice slider labels
+    const spiceLabels = { 0.5: "Mild", 1: "Normal", 1.5: "Medium", 2: "Hot", 2.5: "Very Hot", 3: "Fire 🔥" };
+    document.querySelectorAll('.spice-slider').forEach(slider => {
+      slider.addEventListener('input', () => {
+        const label = document.getElementById(`spice-label-${slider.dataset.salsa}`);
+        if (label) label.textContent = spiceLabels[slider.value] || slider.value + "x";
+      });
+    });
   </script>
 
 </body>
