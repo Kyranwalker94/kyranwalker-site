@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Wordle — Kyran Walker</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+
+  <nav>
+    <a href="../index.html" class="nav-logo">Kyran<span>.</span></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="../index.html#services">Services</a></li>
+      <li><a href="../projects.html">Projects</a></li>
+      <li><a href="../index.html#contact" class="nav-cta">Hire Me</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <div class="project-detail-hero">
+    <a href="../projects.html" class="back-link">← Projects</a>
+    <div class="project-detail-tags">
+      <span class="project-tag">Web</span>
+      <span class="project-tag">Game</span>
+    </div>
+    <h1>Wordle 🟩</h1>
+    <p>A fully playable Wordle clone with score tracking and a leaderboard, built from scratch in JavaScript.</p>
+  </div>
+
+  <div class="project-detail-body">
+    <div class="project-detail-content">
+
+      <div class="content-block">
+        <h2>About the project</h2>
+        <p>A custom-built Wordle clone featuring the classic 6-guess word game mechanic. The game tracks your score across rounds and includes a live leaderboard so you can compete with others.</p>
+        <p>Built entirely from scratch using vanilla JavaScript — no libraries or frameworks. A great exercise in DOM manipulation, game state management, and keyboard event handling.</p>
+      </div>
+
+      <div class="content-block">
+        <h2>What I learned</h2>
+        <ul class="content-list">
+          <li>Managing complex game state in vanilla JS</li>
+          <li>Keyboard input handling and on-screen keyboard sync</li>
+          <li>Building a leaderboard with persistent scoring</li>
+          <li>CSS animations for tile reveals and keyboard feedback</li>
+        </ul>
+      </div>
+
+      <a href="https://kyranwalker.com/wordle/" target="_blank" rel="noopener" class="btn-primary" style="display:inline-flex;margin-top:1rem;">
+        Play on old site →
+      </a>
+
+    </div>
+
+    <div class="project-detail-sidebar">
+      <div class="sidebar-card">
+        <h3>Details</h3>
+        <div class="sidebar-row"><span>Type</span><span>Web game</span></div>
+        <div class="sidebar-row"><span>Built with</span><span>HTML, CSS, JS</span></div>
+        <div class="sidebar-row"><span>Players</span><span>Single player</span></div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <span>© 2026 Kyran Walker</span>
+    <span>Built with HTML · CSS · JS</span>
+  </footer>
+
+  <script>
+    const hamburger = document.getElementById('hamburger');
+    const navLinks  = document.getElementById('navLinks');
+    hamburger.addEventListener('click', () => navLinks.classList.toggle('open'));
+    navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
+  </script>
+</body>
+</html>
