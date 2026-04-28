@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Salsalator</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+
+<body>
+
+  <nav>
+    <a href="../index.html">← Back Home</a>
+  </nav>
+
+  <header class="project-hero">
+    <h1>Salsalator 🌶️</h1>
+    <p>Calculate exactly how much salsa you need for any party</p>
+  </header>
+
+  <section class="project-demo">
+    <h2>Try it</h2>
+
+    <div id="app">
+
+      <label>
+        Number of people:
+        <input type="number" id="people" value="5">
+      </label>
+
+      <label>
+        Portion size:
+        <select id="portion">
+          <option value="0.5">Light</option>
+          <option value="1" selected>Normal</option>
+          <option value="1.5">Heavy</option>
+        </select>
+      </label>
+
+      <h3>Salsas</h3>
+
+      <label><input type="checkbox" value="pico" checked> Pico de Gallo</label>
+      <label><input type="checkbox" value="guac"> Guacamole</label>
+      <label><input type="checkbox" value="pineapple"> Pineapple Salsa</label>
+
+      <label>
+        Include coriander?
+        <input type="checkbox" id="coriander" checked>
+      </label>
+
+      <button onclick="runCalculator()">Calculate</button>
+
+      <pre id="output"></pre>
+
+    </div>
+  </section>
+
+  <script src="../js/salsalator.js"></script>
+</body>
+</html>
