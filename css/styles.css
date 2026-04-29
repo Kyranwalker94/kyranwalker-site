@@ -16,6 +16,11 @@
   --muted:     #888;
   --accent:    #c8f04d;
   --accent2:   #4df0c8;
+  --red:       #e63946;
+  --green:     #57cc99;
+  --yellow:    #ffd166;
+  --blue:      #4cc9f0;
+  --shadow:    0 4px 24px rgba(0,0,0,0.35);
   --font-head: 'Syne', sans-serif;
   --font-body: 'DM Sans', sans-serif;
 }
@@ -732,7 +737,7 @@ nav {
 
 /* title styling */
 .cta-band-armijos-title {
-  font-family: var(--font-main);
+  font-family: var(--font-head);
   font-size: clamp(1.3rem, 3vw, 2rem);
   font-weight: 700;
   letter-spacing: -0.02em;
@@ -878,6 +883,68 @@ footer {
 
 @media (min-width: 769px) and (max-width: 1024px) {
   .services-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* ─────────────────────────────
+   PROJECT FILTER TABS
+───────────────────────────── */
+
+.filter-tabs {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 2rem;
+}
+
+.filter-tab {
+  background: none;
+  border: 1px solid var(--border);
+  color: var(--muted);
+  padding: 0.45rem 1.2rem;
+  border-radius: 2rem;
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s, background 0.2s;
+}
+
+.filter-tab:hover {
+  border-color: var(--text);
+  color: var(--text);
+}
+
+.filter-tab.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #0d0d0d;
+  font-weight: 600;
+}
+
+/* ─────────────────────────────
+   PROJECT CARD TAGS / FOOTER
+───────────────────────────── */
+
+.project-card-footer {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  padding-top: 0.25rem;
+}
+
+.project-card-footer .project-card-tag {
+  margin-left: auto;
+}
+
+.project-tag {
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--border);
+  padding: 0.2rem 0.6rem;
+  border-radius: 2rem;
 }
 
 /* ─────────────────────────────
