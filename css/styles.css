@@ -676,16 +676,14 @@ nav {
   font-weight: 600;
   color: var(--text);
 }
-/* =========================================
-   CTA BAND - ARMIJOS MATCHED SYSTEM
-========================================= */
-
 .cta-band-armijos {
   max-width: 1200px;
   margin: 0 auto 6rem;
   padding: 4rem;
 
-  background: var(--surface);
+  /* creamy base like your site background */
+  background: var(--bg);
+
   border: 4px solid var(--border);
   border-radius: 20px;
   box-shadow: var(--shadow);
@@ -700,24 +698,36 @@ nav {
   overflow: hidden;
 }
 
-/* Pixel grid texture (matches body background system) */
+/* polka dot layer */
 .cta-band-armijos::before {
   content: "";
   position: absolute;
   inset: 0;
-  opacity: 0.08;
+  z-index: 0;
   pointer-events: none;
 
-  background-image:
-    radial-gradient(circle at 20px 20px, var(--red) 6px, transparent 7px),
-    radial-gradient(circle at 60px 60px, var(--green) 6px, transparent 7px),
-    radial-gradient(circle at 100px 20px, var(--yellow) 6px, transparent 7px),
-    radial-gradient(circle at 140px 60px, var(--blue) 6px, transparent 7px);
+  /* IMPORTANT: real cream layer so dots sit on top of visible base */
+  background-color: var(--bg);
 
-  background-size: 160px 80px;
+  background-image:
+    radial-gradient(circle, var(--red) 3px, transparent 4px),
+    radial-gradient(circle, var(--green) 3px, transparent 4px),
+    radial-gradient(circle, var(--yellow) 3px, transparent 4px),
+    radial-gradient(circle, var(--blue) 3px, transparent 4px);
+
+  background-size: 40px 40px;
+  background-position: 0 0, 20px 20px, 10px 30px, 30px 10px;
+
+  opacity: 0.18;
 }
 
-/* CTA text */
+/* make sure content sits above pseudo layer */
+.cta-band-armijos > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* title styling */
 .cta-band-armijos-title {
   font-family: var(--font-main);
   font-size: clamp(1.3rem, 3vw, 2rem);
@@ -731,21 +741,13 @@ nav {
   color: var(--red);
 }
 
-/* Optional: CTA button container alignment */
+/* optional actions */
 .cta-band-armijos-actions {
   display: flex;
   gap: 1rem;
   flex-wrap: wrap;
   align-items: center;
 }
-
-/* Optional: ensure buttons inside CTA still match system */
-.cta-band-armijos .btn-primary,
-.cta-band-armijos .btn-secondary {
-  border: 4px solid var(--border);
-  box-shadow: var(--shadow);
-}
-
 /* ─────────────────────────────
    CTA BAND
 ───────────────────────────── */
