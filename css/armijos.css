@@ -1,0 +1,325 @@
+/* =========================================
+   ARMIJOS SUBSITE
+   Pixel food brand / recipes / sauces
+========================================= */
+
+:root {
+  --bg: #fff7df;
+  --surface: #fffef7;
+  --text: #2f1d12;
+  --muted: #6f5643;
+
+  --red: #ff5c5c;
+  --orange: #ff9f43;
+  --yellow: #ffd93d;
+  --green: #4cd964;
+  --mint: #4ecdc4;
+  --blue: #54a0ff;
+
+  --border: #2f1d12;
+  --shadow: 6px 6px 0 #2f1d12;
+
+  --font-main: 'Press Start 2P', monospace;
+  --font-body: 'DM Sans', sans-serif;
+}
+
+/* =========================
+   RESET
+========================= */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--bg);
+  color: var(--text);
+  overflow-x: hidden;
+  min-height: 100vh;
+  position: relative;
+}
+
+/* =========================
+   PIXEL VEG BACKGROUND
+========================= */
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  opacity: 0.12;
+  background-image:
+    radial-gradient(circle at 20px 20px, #ff5c5c 8px, transparent 9px),
+    radial-gradient(circle at 60px 60px, #4cd964 8px, transparent 9px),
+    radial-gradient(circle at 100px 20px, #ffd93d 8px, transparent 9px),
+    radial-gradient(circle at 140px 60px, #54a0ff 8px, transparent 9px);
+  background-size: 160px 80px;
+}
+
+/* =========================
+   NAV
+========================= */
+
+nav {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 1.25rem 2rem;
+  background: rgba(255, 247, 223, 0.95);
+  border-bottom: 4px solid var(--border);
+  backdrop-filter: blur(8px);
+}
+
+.nav-logo {
+  font-family: var(--font-main);
+  font-size: 0.9rem;
+  text-decoration: none;
+  color: var(--text);
+}
+
+.nav-logo span {
+  color: var(--red);
+}
+
+.nav-links {
+  display: flex;
+  list-style: none;
+  gap: 1rem;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: var(--text);
+  font-weight: 700;
+  padding: 0.8rem 1rem;
+  border: 3px solid transparent;
+  border-radius: 12px;
+  transition: 0.2s;
+}
+
+.nav-links a:hover {
+  border-color: var(--border);
+  background: white;
+}
+
+/* homepage return button */
+.home-link {
+  background: var(--blue);
+  color: white !important;
+  border: 3px solid var(--border);
+  box-shadow: var(--shadow);
+}
+
+/* =========================
+   HERO
+========================= */
+
+.hero {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 5rem 2rem 4rem;
+
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 3rem;
+  align-items: center;
+}
+
+.hero-title {
+  font-family: var(--font-main);
+  font-size: clamp(2rem, 5vw, 4rem);
+  line-height: 1.2;
+  margin-bottom: 2rem;
+}
+
+.hero-title .accent {
+  color: var(--red);
+}
+
+.hero-sub {
+  font-size: 1.15rem;
+  line-height: 1.8;
+  max-width: 520px;
+  color: var(--muted);
+  margin-bottom: 2rem;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+/* =========================
+   BUTTONS
+========================= */
+
+.btn-primary,
+.btn-secondary {
+  display: inline-block;
+  text-decoration: none;
+  font-weight: 700;
+  padding: 1rem 1.4rem;
+  border: 4px solid var(--border);
+  border-radius: 14px;
+  box-shadow: var(--shadow);
+  transition: 0.15s ease;
+}
+
+.btn-primary {
+  background: var(--green);
+  color: white;
+}
+
+.btn-secondary {
+  background: var(--yellow);
+  color: var(--text);
+}
+
+.btn-primary:hover,
+.btn-secondary:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 8px 8px 0 var(--border);
+}
+
+/* =========================
+   CARDS
+========================= */
+
+.card,
+.recipe-card,
+.product-card,
+.market-card {
+  background: white;
+  border: 4px solid var(--border);
+  border-radius: 20px;
+  padding: 1.5rem;
+  box-shadow: var(--shadow);
+}
+
+/* =========================
+   PRODUCT GRID
+========================= */
+
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.5rem;
+  padding: 4rem 2rem;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.product-card h3 {
+  font-family: var(--font-main);
+  font-size: 0.85rem;
+  margin-bottom: 1rem;
+}
+
+.product-card:nth-child(1) { background: #fff0f0; }
+.product-card:nth-child(2) { background: #fff8e8; }
+.product-card:nth-child(3) { background: #f2fff0; }
+.product-card:nth-child(4) { background: #eefcff; }
+
+/* =========================
+   SALSALATOR APP
+========================= */
+
+.app-wrapper {
+  max-width: 1100px;
+  margin: auto;
+  padding: 4rem 2rem;
+
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+
+.app-panel,
+.results-panel {
+  background: white;
+  border: 4px solid var(--border);
+  border-radius: 20px;
+  padding: 2rem;
+  box-shadow: var(--shadow);
+}
+
+input,
+select {
+  width: 100%;
+  padding: 1rem;
+  margin-top: 0.4rem;
+  margin-bottom: 1rem;
+
+  border: 3px solid var(--border);
+  border-radius: 12px;
+  font-size: 1rem;
+}
+
+/* =========================
+   MARKET SECTION
+========================= */
+
+.markets-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.5rem;
+  padding: 4rem 2rem;
+  max-width: 1200px;
+  margin: auto;
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+footer {
+  margin-top: 5rem;
+  padding: 3rem 2rem;
+  border-top: 4px solid var(--border);
+  text-align: center;
+  font-weight: 700;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 900px) {
+  .hero {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .hero-sub {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .hero-actions {
+    justify-content: center;
+  }
+
+  .app-wrapper {
+    grid-template-columns: 1fr;
+  }
+
+  .nav-links {
+    display: none;
+  }
+}
