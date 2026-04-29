@@ -1218,3 +1218,392 @@ footer {
 @media (max-width: 480px) {
   .services-teaser { grid-template-columns: 1fr; }
 }
+
+/* ─────────────────────────────
+   PROJECT DETAIL PAGES
+───────────────────────────── */
+
+.project-detail-tags {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.25rem;
+}
+
+.project-detail-body {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 4rem 2.5rem 6rem;
+  display: grid;
+  grid-template-columns: 1fr 280px;
+  gap: 3rem;
+  align-items: start;
+}
+
+.project-detail-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+
+.content-block { display: flex; flex-direction: column; gap: 0.75rem; }
+
+.content-block h2 {
+  font-family: var(--font-head);
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.content-block p {
+  font-size: 0.93rem;
+  color: var(--muted);
+  line-height: 1.75;
+}
+
+.content-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.content-list li {
+  font-size: 0.9rem;
+  color: var(--muted);
+  padding-left: 1.2rem;
+  position: relative;
+  line-height: 1.6;
+}
+
+.content-list li::before {
+  content: '→';
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+  font-size: 0.75rem;
+  top: 0.1em;
+}
+
+.project-detail-sidebar {
+  position: sticky;
+  top: 6rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.sidebar-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.sidebar-card h3 {
+  font-family: var(--font-head);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.sidebar-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.85rem;
+  gap: 1rem;
+}
+
+.sidebar-row span:first-child { color: var(--muted); }
+.sidebar-row span:last-child  { font-weight: 500; text-align: right; }
+
+@media (max-width: 768px) {
+  .project-detail-body {
+    grid-template-columns: 1fr;
+    padding: 3rem 1.5rem 4rem;
+  }
+  .project-detail-sidebar { position: static; }
+}
+
+/* ─────────────────────────────
+   WORDLE GAME
+───────────────────────────── */
+
+.wordle-section {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 3rem 2.5rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.wordle-layout {
+  display: grid;
+  grid-template-columns: 1fr 260px;
+  gap: 2rem;
+  align-items: start;
+}
+
+.wordle-game-wrap {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  padding: 2rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+#score-display {
+  font-family: var(--font-head);
+  font-weight: 700;
+  font-size: 0.9rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+/* Board */
+#board {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.board-row {
+  display: flex;
+  gap: 5px;
+}
+
+.tile {
+  width: 56px;
+  height: 56px;
+  border: 2px solid var(--border);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-head);
+  font-size: 1.5rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: var(--text);
+  user-select: none;
+}
+
+.tile.filled  { border-color: #565758; }
+.tile.correct { background: #538d4e; border-color: #538d4e; color: #fff; }
+.tile.present { background: #b59f3b; border-color: #b59f3b; color: #fff; }
+.tile.absent  { background: #3a3a3c; border-color: #3a3a3c; color: #818384; }
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20%       { transform: translateX(-6px); }
+  40%       { transform: translateX(6px); }
+  60%       { transform: translateX(-4px); }
+  80%       { transform: translateX(4px); }
+}
+
+.board-row.shake { animation: shake 0.4s ease; }
+
+/* Keyboard */
+.wordle-keyboard {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+  max-width: 480px;
+}
+
+.wordle-keyboard .kb-row {
+  display: flex;
+  gap: 5px;
+  justify-content: center;
+}
+
+.key {
+  flex: 1;
+  max-width: 43px;
+  height: 56px;
+  padding: 0;
+  background: #818384;
+  border: none;
+  border-radius: 4px;
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.15s, opacity 0.15s;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.key:hover   { opacity: 0.85; }
+.key.wide    { max-width: 66px; font-size: 0.72rem; }
+.key.correct { background: #538d4e; }
+.key.present { background: #b59f3b; }
+.key.absent  { background: #3a3a3c; }
+
+/* Modal */
+.wordle-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.65);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+}
+
+.wordle-modal.hidden { display: none; }
+
+.wordle-modal-inner {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 1.25rem;
+  padding: 2.5rem;
+  text-align: center;
+  max-width: 360px;
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+#modal-message {
+  font-family: var(--font-head);
+  font-size: 1.05rem;
+  font-weight: 700;
+  line-height: 1.55;
+  white-space: pre-line;
+}
+
+.modal-name-section { display: flex; flex-direction: column; gap: 0.75rem; }
+.modal-name-section.hidden { display: none; }
+
+.modal-name-label {
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+
+.modal-name-input {
+  width: 100%;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 0.7rem 1rem;
+  border-radius: 0.5rem;
+  font-family: var(--font-head);
+  font-size: 1.3rem;
+  font-weight: 800;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  transition: border-color 0.2s;
+}
+
+.modal-name-input:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.modal-name-input::placeholder { color: var(--border); }
+
+#submit-score-btn {
+  background: var(--accent2);
+  color: #0d0d0d;
+  border: none;
+  border-radius: 2rem;
+  padding: 0.75rem 1.5rem;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+#submit-score-btn:hover { opacity: 0.85; }
+
+#continue-btn {
+  background: var(--accent);
+  color: #0d0d0d;
+  border: none;
+  border-radius: 2rem;
+  padding: 0.85rem 2rem;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+#continue-btn:hover { opacity: 0.85; }
+
+/* Leaderboard */
+.wordle-leaderboard {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.wordle-leaderboard h3 {
+  font-family: var(--font-head);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--border);
+}
+
+#leaderboard-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+#leaderboard-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.85rem;
+  padding: 0.35rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+#leaderboard-list li:last-child { border-bottom: none; }
+
+.lb-name { color: var(--text); font-weight: 500; }
+.lb-score { color: var(--accent); font-family: var(--font-head); font-weight: 700; }
+.lb-empty { color: var(--muted); font-size: 0.85rem; font-style: italic; }
+
+@media (max-width: 720px) {
+  .wordle-layout { grid-template-columns: 1fr; }
+  .wordle-section { padding: 2rem 1.5rem; }
+}
+
+@media (max-width: 420px) {
+  .tile { width: 46px; height: 46px; font-size: 1.2rem; }
+  .key  { height: 48px; font-size: 0.72rem; }
+  .key.wide { max-width: 56px; }
+  .wordle-keyboard .kb-row { gap: 4px; }
+  .wordle-keyboard { gap: 4px; }
+}

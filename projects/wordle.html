@@ -11,11 +11,13 @@
 </head>
 <body>
 
+  <!-- NAV -->
   <nav>
     <a href="../index.html" class="nav-logo">Kyran<span>.</span></a>
     <ul class="nav-links" id="navLinks">
-      <li><a href="../index.html#services">Services</a></li>
+      <li><a href="../services.html">Services</a></li>
       <li><a href="../projects.html">Projects</a></li>
+      <li><a href="../profile.html">Profile</a></li>
       <li><a href="../index.html#contact" class="nav-cta">Hire Me</a></li>
     </ul>
     <button class="hamburger" id="hamburger" aria-label="Toggle menu">
@@ -23,6 +25,7 @@
     </button>
   </nav>
 
+  <!-- HERO -->
   <div class="project-detail-hero">
     <a href="../projects.html" class="back-link">← Projects</a>
     <div class="project-detail-tags">
@@ -30,44 +33,129 @@
       <span class="project-tag">Game</span>
     </div>
     <h1>Wordle 🟩</h1>
-    <p>A fully playable Wordle clone with score tracking and a leaderboard, built from scratch in JavaScript.</p>
+    <p>A fully playable Wordle clone with score tracking and a live leaderboard, built from scratch in vanilla JavaScript.</p>
   </div>
 
+  <!-- GAME -->
+  <section class="wordle-section">
+    <div class="wordle-layout">
+
+      <!-- Board + Keyboard -->
+      <div class="wordle-game-wrap">
+        <div id="score-display">Score: 0</div>
+
+        <div id="board"></div>
+
+        <div class="wordle-keyboard">
+          <div class="kb-row">
+            <button class="key" data-key="Q">Q</button>
+            <button class="key" data-key="W">W</button>
+            <button class="key" data-key="E">E</button>
+            <button class="key" data-key="R">R</button>
+            <button class="key" data-key="T">T</button>
+            <button class="key" data-key="Y">Y</button>
+            <button class="key" data-key="U">U</button>
+            <button class="key" data-key="I">I</button>
+            <button class="key" data-key="O">O</button>
+            <button class="key" data-key="P">P</button>
+          </div>
+          <div class="kb-row">
+            <button class="key" data-key="A">A</button>
+            <button class="key" data-key="S">S</button>
+            <button class="key" data-key="D">D</button>
+            <button class="key" data-key="F">F</button>
+            <button class="key" data-key="G">G</button>
+            <button class="key" data-key="H">H</button>
+            <button class="key" data-key="J">J</button>
+            <button class="key" data-key="K">K</button>
+            <button class="key" data-key="L">L</button>
+          </div>
+          <div class="kb-row">
+            <button class="key wide" data-key="ENTER">Enter</button>
+            <button class="key" data-key="Z">Z</button>
+            <button class="key" data-key="X">X</button>
+            <button class="key" data-key="C">C</button>
+            <button class="key" data-key="V">V</button>
+            <button class="key" data-key="B">B</button>
+            <button class="key" data-key="N">N</button>
+            <button class="key" data-key="M">M</button>
+            <button class="key wide" data-key="BACK">⌫</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sidebar: leaderboard + details -->
+      <div style="display:flex;flex-direction:column;gap:1.25rem;">
+
+        <div class="wordle-leaderboard">
+          <h3>Leaderboard</h3>
+          <ol id="leaderboard-list"></ol>
+        </div>
+
+        <div class="sidebar-card">
+          <h3>Details</h3>
+          <div class="sidebar-row"><span>Type</span><span>Web game</span></div>
+          <div class="sidebar-row"><span>Built with</span><span>HTML, CSS, JS</span></div>
+          <div class="sidebar-row"><span>Players</span><span>Single player</span></div>
+          <div class="sidebar-row"><span>Max score</span><span>60 pts / round</span></div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
   <div class="project-detail-body">
     <div class="project-detail-content">
 
       <div class="content-block">
         <h2>About the project</h2>
-        <p>A custom-built Wordle clone featuring the classic 6-guess word game mechanic. The game tracks your score across rounds and includes a live leaderboard so you can compete with others.</p>
-        <p>Built entirely from scratch using vanilla JavaScript — no libraries or frameworks. A great exercise in DOM manipulation, game state management, and keyboard event handling.</p>
+        <p>A custom-built Wordle clone featuring the classic 6-guess word game mechanic. Score accumulates across rounds — 60 points for a first-guess ace, dropping 10 points for each extra attempt. Guess wrong on guess 6 and the run ends, giving you a shot at the leaderboard.</p>
+        <p>Built entirely from scratch using vanilla JavaScript — no libraries or frameworks. The word list is loaded from a local text file and shuffled each session so the order is different every time you play.</p>
       </div>
 
       <div class="content-block">
-        <h2>What I learned</h2>
+        <h2>What I built</h2>
         <ul class="content-list">
-          <li>Managing complex game state in vanilla JS</li>
-          <li>Keyboard input handling and on-screen keyboard sync</li>
-          <li>Building a leaderboard with persistent scoring</li>
-          <li>CSS animations for tile reveals and keyboard feedback</li>
+          <li>Full Wordle game logic — correct / present / absent evaluation with proper duplicate letter handling</li>
+          <li>On-screen keyboard with colour feedback, plus full physical keyboard support</li>
+          <li>Tile flip reveal animation and row shake on invalid word</li>
+          <li>Score system across consecutive rounds with a live leaderboard</li>
+          <li>Leaderboard persisted via Cloudflare KV — scores survive page reloads</li>
         </ul>
       </div>
-
-      <a href="https://kyranwalker.com/wordle/" target="_blank" rel="noopener" class="btn-primary" style="display:inline-flex;margin-top:1rem;">
-        Play on old site →
-      </a>
 
     </div>
 
     <div class="project-detail-sidebar">
-      <div class="sidebar-card">
-        <h3>Details</h3>
-        <div class="sidebar-row"><span>Type</span><span>Web game</span></div>
-        <div class="sidebar-row"><span>Built with</span><span>HTML, CSS, JS</span></div>
-        <div class="sidebar-row"><span>Players</span><span>Single player</span></div>
-      </div>
+      <!-- intentionally empty — sidebar used for game panel above -->
     </div>
   </div>
 
+  <!-- MODAL -->
+  <div id="wordle-modal" class="wordle-modal hidden">
+    <div class="wordle-modal-inner">
+      <p id="modal-message"></p>
+
+      <div id="modal-name-section" class="modal-name-section hidden">
+        <p class="modal-name-label">Enter your 3-letter name for the leaderboard</p>
+        <input
+          id="name-input"
+          class="modal-name-input"
+          type="text"
+          maxlength="3"
+          placeholder="AAA"
+          autocomplete="off"
+          spellcheck="false"
+        >
+        <button id="submit-score-btn">Submit score</button>
+      </div>
+
+      <button id="continue-btn">Next word →</button>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
   <footer>
     <span>© 2026 Kyran Walker</span>
     <span>Built with HTML · CSS · JS</span>
@@ -77,7 +165,11 @@
     const hamburger = document.getElementById('hamburger');
     const navLinks  = document.getElementById('navLinks');
     hamburger.addEventListener('click', () => navLinks.classList.toggle('open'));
-    navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
+    navLinks.querySelectorAll('a').forEach(a =>
+      a.addEventListener('click', () => navLinks.classList.remove('open'))
+    );
   </script>
+  <script src="../js/wordle.js"></script>
+
 </body>
 </html>
