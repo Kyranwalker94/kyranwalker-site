@@ -38,28 +38,87 @@
 
       <div class="content-block">
         <h2>About the project</h2>
-        <p>When lockdown started I wanted to keep the family connected and having fun, so I built this quiz game in Scratch. The format is designed for a quizmaster's assistant who streams the quiz live on Twitch — questions go out via WhatsApp, players answer, and then the results are entered into the game before the next question is released. The game tallies scores automatically and reads out questions.</p>
-        <p>There are 6 categories and players pick a specialist category before the game starts. Correct answers in specialist categories earn a bonus 5 points — but a wrong answer costs 5 points.</p>
+        <p>When lockdown started I wanted to keep the family connected and having fun, so I built this quiz in Scratch. A quizmaster's assistant streams the quiz live on Twitch — questions go out via WhatsApp, players answer, and results are entered before the next question is released. The game tallies scores automatically.</p>
+        <p>There are 6 categories and players pick a specialist category before the game starts. Correct answers in specialist categories earn a bonus 5 points — but a wrong answer costs 5.</p>
       </div>
 
       <div class="content-block">
-        <h2>Quizzes</h2>
-        <div class="quiz-grid">
-          <div class="quiz-card"><span class="quiz-num">Quiz 1</span><span>6 players · 42 questions</span></div>
-          <div class="quiz-card"><span class="quiz-num">Quiz 2</span><span>7 players · 42 questions</span></div>
-          <div class="quiz-card"><span class="quiz-num">Quiz 3</span><span>6 players · 30 questions</span></div>
-          <div class="quiz-card"><span class="quiz-num">Quiz 4</span><span>7 players · 42 questions</span></div>
-          <div class="quiz-card"><span class="quiz-num">Quiz 5</span><span>6 players · 30 questions</span></div>
+        <h2>Play the quizzes</h2>
+        <p style="color:var(--muted);font-size:0.9rem;">Each quiz is a standalone Scratch project. Select one below to load and play it directly.</p>
+
+        <!-- Tab buttons -->
+        <div class="quiz-tabs">
+          <button class="quiz-tab active" data-quiz="1">Quiz 1</button>
+          <button class="quiz-tab" data-quiz="2">Quiz 2</button>
+          <button class="quiz-tab" data-quiz="3">Quiz 3</button>
+          <button class="quiz-tab" data-quiz="4">Quiz 4</button>
+          <button class="quiz-tab" data-quiz="5">Quiz 5</button>
         </div>
+
+        <!-- Quiz 1 -->
+        <div class="quiz-panel active" id="quiz-1">
+          <div class="quiz-meta">
+            <div class="quiz-meta-item"><strong>6</strong> max players</div>
+            <div class="quiz-meta-item"><strong>42</strong> questions</div>
+          </div>
+          <div class="scratch-embed">
+            <iframe src="https://scratch.mit.edu/projects/381092295/embed" allowfullscreen></iframe>
+          </div>
+        </div>
+
+        <!-- Quiz 2 -->
+        <div class="quiz-panel" id="quiz-2">
+          <div class="quiz-meta">
+            <div class="quiz-meta-item"><strong>7</strong> max players</div>
+            <div class="quiz-meta-item"><strong>42</strong> questions</div>
+          </div>
+          <div class="scratch-embed">
+            <iframe src="https://scratch.mit.edu/projects/383831327/embed" allowfullscreen></iframe>
+          </div>
+        </div>
+
+        <!-- Quiz 3 -->
+        <div class="quiz-panel" id="quiz-3">
+          <div class="quiz-meta">
+            <div class="quiz-meta-item"><strong>6</strong> max players</div>
+            <div class="quiz-meta-item"><strong>30</strong> questions</div>
+          </div>
+          <div class="scratch-embed">
+            <iframe src="https://scratch.mit.edu/projects/384056899/embed" allowfullscreen></iframe>
+          </div>
+        </div>
+
+        <!-- Quiz 4 -->
+        <div class="quiz-panel" id="quiz-4">
+          <div class="quiz-meta">
+            <div class="quiz-meta-item"><strong>7</strong> max players</div>
+            <div class="quiz-meta-item"><strong>42</strong> questions</div>
+          </div>
+          <div class="scratch-embed">
+            <iframe src="https://scratch.mit.edu/projects/385587078/embed" allowfullscreen></iframe>
+          </div>
+        </div>
+
+        <!-- Quiz 5 -->
+        <div class="quiz-panel" id="quiz-5">
+          <div class="quiz-meta">
+            <div class="quiz-meta-item"><strong>6</strong> max players</div>
+            <div class="quiz-meta-item"><strong>30</strong> questions</div>
+          </div>
+          <div class="scratch-embed">
+            <iframe src="https://scratch.mit.edu/projects/386565710/embed" allowfullscreen></iframe>
+          </div>
+        </div>
+
       </div>
 
       <div class="content-block">
         <h2>Features</h2>
         <ul class="content-list">
           <li>Supports up to 7 players per quiz</li>
-          <li>6 categories with specialist selection</li>
-          <li>Bonus/penalty scoring in specialist rounds</li>
-          <li>Automatic score tally</li>
+          <li>6 categories with specialist selection before the game</li>
+          <li>Bonus/penalty scoring in specialist rounds (+5 / −5)</li>
+          <li>Automatic score tally throughout</li>
           <li>Twitch streaming compatible format</li>
           <li>WhatsApp question distribution workflow</li>
         </ul>
@@ -74,6 +133,7 @@
         <div class="sidebar-row"><span>Built with</span><span>Scratch</span></div>
         <div class="sidebar-row"><span>Max players</span><span>7</span></div>
         <div class="sidebar-row"><span>Quizzes made</span><span>5</span></div>
+        <div class="sidebar-row"><span>Total questions</span><span>186</span></div>
       </div>
     </div>
   </div>
@@ -88,6 +148,16 @@
     const navLinks  = document.getElementById('navLinks');
     hamburger.addEventListener('click', () => navLinks.classList.toggle('open'));
     navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
+
+    // Quiz tabs
+    document.querySelectorAll('.quiz-tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('.quiz-tab').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.quiz-panel').forEach(p => p.classList.remove('active'));
+        tab.classList.add('active');
+        document.getElementById(`quiz-${tab.dataset.quiz}`).classList.add('active');
+      });
+    });
   </script>
 </body>
 </html>
