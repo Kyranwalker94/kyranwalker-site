@@ -891,3 +891,123 @@ footer {
 }
 
 .quiz-meta-item strong { color: var(--text); }
+
+/* ─────────────────────────────
+   HOMEPAGE PROFILE CARD
+───────────────────────────── */
+
+.profile-card {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 3rem;
+  align-items: center;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 1.5rem;
+  padding: 3rem;
+  text-decoration: none;
+  color: var(--text);
+  position: relative;
+  overflow: hidden;
+  transition: border-color 0.3s, transform 0.3s;
+}
+
+.profile-card::before {
+  content: '';
+  position: absolute;
+  bottom: -60px; left: -60px;
+  width: 220px; height: 220px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(77,240,200,0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.profile-card:hover {
+  border-color: var(--accent2);
+  transform: translateY(-3px);
+}
+
+.profile-card-title {
+  font-family: var(--font-head);
+  font-size: clamp(1.4rem, 2.5vw, 2rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  margin-bottom: 1rem;
+}
+
+.profile-card-desc {
+  font-size: 0.95rem;
+  color: var(--muted);
+  line-height: 1.7;
+  max-width: 520px;
+  margin-bottom: 1.25rem;
+}
+
+.profile-card-desc strong { color: var(--text); }
+
+.profile-card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.profile-pill {
+  font-size: 0.78rem;
+  padding: 0.3rem 0.8rem;
+  border-radius: 2rem;
+  border: 1px solid rgba(77,240,200,0.2);
+  background: rgba(77,240,200,0.06);
+  color: var(--accent2);
+}
+
+.profile-card-cta {
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: var(--accent2);
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  transition: gap 0.2s;
+}
+
+.profile-card:hover .profile-card-cta { gap: 0.7rem; }
+
+.profile-card-right {
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+  flex-shrink: 0;
+  text-align: right;
+}
+
+.profile-card-stat { display: flex; flex-direction: column; gap: 0.2rem; }
+
+.profile-stat-num {
+  font-family: var(--font-head);
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--accent2);
+  line-height: 1;
+}
+
+.profile-stat-label {
+  font-size: 0.75rem;
+  color: var(--muted);
+  line-height: 1.4;
+}
+
+@media (max-width: 768px) {
+  .profile-card {
+    grid-template-columns: 1fr;
+    padding: 2rem;
+  }
+
+  .profile-card-right {
+    flex-direction: row;
+    text-align: left;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+  }
+}
