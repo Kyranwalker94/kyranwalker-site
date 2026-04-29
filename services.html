@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Services — Kyran Walker</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+
+  <style>
+
+    /* ── PAGE HERO ── */
+    .services-page-hero {
+      padding: 10rem 2.5rem 5rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .services-page-hero p {
+      color: var(--muted);
+      font-size: 1.05rem;
+      line-height: 1.7;
+      max-width: 580px;
+      margin-top: 1rem;
+    }
+
+    /* ── RATE BANNER ── */
+    .rate-banner {
+      max-width: 1200px;
+      margin: 3rem auto 0;
+      padding: 0 2.5rem;
+    }
+
+    .rate-banner-inner {
+      background: var(--surface);
+      border: 1px solid rgba(200,240,77,0.2);
+      border-radius: 1rem;
+      padding: 1.5rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1.25rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .rate-banner-inner::before {
+      content: '';
+      position: absolute;
+      right: -40px; top: -40px;
+      width: 160px; height: 160px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(200,240,77,0.1) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .rate-banner-text {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+    }
+
+    .rate-banner-title {
+      font-family: var(--font-head);
+      font-weight: 800;
+      font-size: 1rem;
+      letter-spacing: -0.01em;
+    }
+
+    .rate-banner-sub {
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
+    .rate-badge {
+      font-family: var(--font-head);
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: var(--accent);
+      letter-spacing: -0.02em;
+      white-space: nowrap;
+    }
+
+    .rate-badge span {
+      font-size: 0.9rem;
+      font-weight: 400;
+      color: var(--muted);
+      font-family: var(--font-body);
+    }
+
+    /* ── CATEGORY SECTIONS ── */
+    .services-body {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 4rem 2.5rem 6rem;
+      display: flex;
+      flex-direction: column;
+      gap: 5rem;
+    }
+
+    .service-category { display: flex; flex-direction: column; gap: 2rem; }
+
+    .service-category-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding-bottom: 1.25rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .category-icon-wrap {
+      width: 44px;
+      height: 44px;
+      border-radius: 0.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      flex-shrink: 0;
+    }
+
+    .cat-home    { background: rgba(200,240,77,0.08);  border: 1px solid rgba(200,240,77,0.2); }
+    .cat-tech    { background: rgba(77,240,200,0.08);  border: 1px solid rgba(77,240,200,0.2); }
+    .cat-finance { background: rgba(240,200,77,0.08);  border: 1px solid rgba(240,200,77,0.2); }
+    .cat-digital { background: rgba(200,77,240,0.08);  border: 1px solid rgba(200,77,240,0.2); }
+    .cat-design  { background: rgba(240,120,77,0.08);  border: 1px solid rgba(240,120,77,0.2); }
+
+    .service-category-header h2 {
+      font-family: var(--font-head);
+      font-size: 1.4rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+
+    .service-category-header p {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-top: 0.15rem;
+    }
+
+    /* ── SERVICE CARDS GRID ── */
+    .service-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1rem;
+    }
+
+    .svc-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 1rem;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      transition: border-color 0.25s, transform 0.25s;
+    }
+
+    .svc-card:hover {
+      transform: translateY(-3px);
+    }
+
+    .svc-card.home-card:hover    { border-color: rgba(200,240,77,0.5); }
+    .svc-card.tech-card:hover    { border-color: rgba(77,240,200,0.5); }
+    .svc-card.finance-card:hover { border-color: rgba(240,200,77,0.5); }
+    .svc-card.digital-card:hover { border-color: rgba(200,77,240,0.5); }
+    .svc-card.design-card:hover  { border-color: rgba(240,120,77,0.5); }
+
+    .svc-card-icon { font-size: 1.5rem; }
+
+    .svc-card-title {
+      font-family: var(--font-head);
+      font-weight: 700;
+      font-size: 0.95rem;
+    }
+
+    .svc-card-desc {
+      font-size: 0.85rem;
+      color: var(--muted);
+      line-height: 1.6;
+      flex: 1;
+    }
+
+    .svc-card-tag {
+      display: inline-flex;
+      align-items: center;
+      font-size: 0.72rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 0.25rem;
+    }
+
+    .svc-card-tag.popular {
+      color: var(--accent);
+    }
+
+    .svc-card-tag.new {
+      color: var(--accent2);
+    }
+
+    /* ── BOTTOM CTA ── */
+    .services-cta {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2.5rem 6rem;
+    }
+
+    @media (max-width: 768px) {
+      .rate-banner-inner { flex-direction: column; align-items: flex-start; }
+      .service-cards { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="index.html" class="nav-logo">Kyran<span>.</span></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="services.html">Services</a></li>
+      <li><a href="projects.html">Projects</a></li>
+      <li><a href="profile.html">Profile</a></li>
+      <li><a href="index.html#contact" class="nav-cta">Hire Me</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- HERO -->
+  <div class="services-page-hero">
+    <p class="section-label">What I can do for you</p>
+    <h1 class="section-title" style="margin-bottom:0;">Services</h1>
+    <p>From bookkeeping to broadband cabling, web builds to garden clearances — I'm a local, hands-on professional with a wide range of skills. Based in Hailsham, East Sussex, available for both one-off projects and ongoing work.</p>
+  </div>
+
+  <!-- RATE BANNER -->
+  <div class="rate-banner">
+    <div class="rate-banner-inner">
+      <div class="rate-banner-text">
+        <div class="rate-banner-title">Introductory rate — first year only</div>
+        <div class="rate-banner-sub">Transparent, honest pricing. No call-out fees, no hidden extras. Just good work at a fair rate.</div>
+      </div>
+      <div class="rate-badge">£15 <span>/ hour</span></div>
+    </div>
+  </div>
+
+  <!-- SERVICES BODY -->
+  <div class="services-body">
+
+    <!-- ── HOME & PROPERTY ── -->
+    <div class="service-category" id="home">
+      <div class="service-category-header">
+        <div class="category-icon-wrap cat-home">🏠</div>
+        <div>
+          <h2>Home & Property</h2>
+          <p>Practical, reliable help around the home and garden</p>
+        </div>
+      </div>
+      <div class="service-cards">
+
+        <div class="svc-card home-card">
+          <div class="svc-card-icon">🔨</div>
+          <div class="svc-card-title">General Handyman</div>
+          <p class="svc-card-desc">Flat-pack assembly, shelving, picture hanging, minor repairs, door adjustments, and all the jobs that have been sitting on the to-do list.</p>
+          <span class="svc-card-tag popular">⭐ Popular</span>
+        </div>
+
+        <div class="svc-card home-card">
+          <div class="svc-card-icon">🌿</div>
+          <div class="svc-card-title">Gardening & Maintenance</div>
+          <p class="svc-card-desc">Lawn mowing, hedge trimming, weeding, planting, and general garden tidying. Regular or one-off visits welcome.</p>
+          <span class="svc-card-tag popular">⭐ Popular</span>
+        </div>
+
+        <div class="svc-card home-card">
+          <div class="svc-card-icon">🥕</div>
+          <div class="svc-card-title">Allotment Digging & Prep</div>
+          <p class="svc-card-desc">Digging, clearing, composting, bed preparation, and general allotment maintenance — whether you're starting fresh or keeping on top of things.</p>
+        </div>
+
+        <div class="svc-card home-card">
+          <div class="svc-card-icon">🚛</div>
+          <div class="svc-card-title">House & Garden Clearance</div>
+          <p class="svc-card-desc">Full or partial clearances — ideal for house moves, estate clearances, or a long-overdue declutter. Items taken away and disposed of responsibly.</p>
+        </div>
+
+        <div class="svc-card home-card">
+          <div class="svc-card-icon">🚐</div>
+          <div class="svc-card-title">Man with a Small Van</div>
+          <p class="svc-card-desc">Local collections, deliveries, furniture moves, tip runs, and small removals. Available at short notice across Hailsham and surrounding areas.</p>
+          <span class="svc-card-tag popular">⭐ Popular</span>
+        </div>
+
+        <div class="svc-card home-card">
+          <div class="svc-card-icon">🖼️</div>
+          <div class="svc-card-title">TV Mounting & Aerials</div>
+          <p class="svc-card-desc">Wall-mounting flat screen TVs, cable management, aerial and satellite dish setup, and Freeview box installation.</p>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ── TECH & CONNECTIVITY ── -->
+    <div class="service-category" id="tech">
+      <div class="service-category-header">
+        <div class="category-icon-wrap cat-tech">🔌</div>
+        <div>
+          <h2>Tech & Connectivity</h2>
+          <p>Professional installation and setup — backed by real telecoms experience</p>
+        </div>
+      </div>
+      <div class="service-cards">
+
+        <div class="svc-card tech-card">
+          <div class="svc-card-icon">📹</div>
+          <div class="svc-card-title">CCTV & Security Installation</div>
+          <p class="svc-card-desc">Supply and installation of wired or wireless CCTV systems for homes and small businesses. Camera placement, recording setup, and remote viewing configured.</p>
+          <span class="svc-card-tag popular">⭐ Popular</span>
+        </div>
+
+        <div class="svc-card tech-card">
+          <div class="svc-card-icon">🌐</div>
+          <div class="svc-card-title">Network & Wi-Fi Setup</div>
+          <p class="svc-card-desc">Home and small business network setup, router configuration, Wi-Fi extenders, powerline adapters, and solving dead-spot problems throughout the property.</p>
+        </div>
+
+        <div class="svc-card tech-card">
+          <div class="svc-card-icon">⚡</div>
+          <div class="svc-card-title">Fibre Optic & Network Cabling</div>
+          <p class="svc-card-desc">Structured cabling, ethernet runs, patch panels, and fibre optic installation — backed by professional NVQ-level telecoms experience with Openreach.</p>
+          <span class="svc-card-tag new">✦ Specialist</span>
+        </div>
+
+        <div class="svc-card tech-card">
+          <div class="svc-card-icon">🔒</div>
+          <div class="svc-card-title">Smart Home & Alarm Setup</div>
+          <p class="svc-card-desc">Smart doorbells, smart lighting, smart locks, and alarm systems — installed and configured so they actually work the way you want them to.</p>
+        </div>
+
+        <div class="svc-card tech-card">
+          <div class="svc-card-icon">💻</div>
+          <div class="svc-card-title">Computer & Laptop Repair</div>
+          <p class="svc-card-desc">Slow computers, software issues, virus removal, hardware upgrades, screen replacements, and general troubleshooting — for Windows and Mac.</p>
+          <span class="svc-card-tag popular">⭐ Popular</span>
+        </div>
+
+        <div class="svc-card tech-card">
+          <div class="svc-card-icon">🛟</div>
+          <div class="svc-card-title">Tech Support & IT Help</div>
+          <p class="svc-card-desc">Patient, plain-English help with phones, tablets, laptops, email, printers, apps, and anything tech-related. Home visits available — particularly suited to older residents.</p>
+          <span class="svc-card-tag popular">⭐ Popular</span>
+        </div>
+
+        <div class="svc-card tech-card">
+          <div class="svc-card-icon">💾</div>
+          <div class="svc-card-title">Data Backup & Recovery</div>
+          <p class="svc-card-desc">Setting up backup systems so important files, photos and documents are safe. Recovery of accidentally deleted files where possible.</p>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ── BUSINESS & FINANCE ── -->
+    <div class="service-category" id="finance">
+      <div class="service-category-header">
+        <div class="category-icon-wrap cat-finance">💼</div>
+        <div>
+          <h2>Business & Finance</h2>
+          <p>Qualified, experienced support for small businesses and sole traders</p>
+        </div>
+      </div>
+      <div class="service-cards">
+
+        <div class="svc-card finance-card">
+          <div class="svc-card-icon">📒</div>
+          <div class="svc-card-title">Bookkeeping</div>
+          <p class="svc-card-desc">Regular or catch-up bookkeeping for small businesses and sole traders. Xero specialist. Includes transaction coding, bank reconciliation, and tidy records ready for your accountant.</p>
+          <span class="svc-card-tag popular">⭐ Popular</span>
+        </div>
+
+        <div class="svc-card finance-card">
+          <div class="svc-card-icon">📊</div>
+          <div class="svc-card-title">Management Accounts</div>
+          <p class="svc-card-desc">Monthly or quarterly reports so you know exactly how your business is performing — profit, cash position, and key figures explained clearly.</p>
+        </div>
+
+        <div class="svc-card finance-card">
+          <div class="svc-card-icon">🧾</div>
+          <div class="svc-card-title">VAT Returns</div>
+          <p class="svc-card-desc">Preparation and submission of VAT returns for VAT-registered businesses. Ensuring accuracy and meeting HMRC deadlines.</p>
+        </div>
+
+        <div class="svc-card finance-card">
+          <div class="svc-card-icon">📈</div>
+          <div class="svc-card-title">Excel Spreadsheets & Reporting</div>
+          <p class="svc-card-desc">Custom spreadsheets, financial models, dashboards, and reports built to your exact needs. Advanced Excel user — formulas, pivot tables, and automation.</p>
+        </div>
+
+        <div class="svc-card finance-card">
+          <div class="svc-card-icon">🖨️</div>
+          <div class="svc-card-title">Admin & Office Support</div>
+          <p class="svc-card-desc">Document preparation, scanning, printing, form-filling, email management, and general admin tasks. Particularly useful for small local businesses and self-employed individuals.</p>
+          <span class="svc-card-tag popular">⭐ Popular</span>
+        </div>
+
+        <div class="svc-card finance-card">
+          <div class="svc-card-icon">📣</div>
+          <div class="svc-card-title">Digital Marketing Setup</div>
+          <p class="svc-card-desc">Getting your business online — Google Business profile, Facebook page, Google Ads, and Facebook Ads set up and running. Based on real campaign experience.</p>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ── DIGITAL & WEB ── -->
+    <div class="service-category" id="digital">
+      <div class="service-category-header">
+        <div class="category-icon-wrap cat-digital">💻</div>
+        <div>
+          <h2>Digital & Web</h2>
+          <p>Clean, fast websites and digital tools built from scratch</p>
+        </div>
+      </div>
+      <div class="service-cards">
+
+        <div class="svc-card digital-card">
+          <div class="svc-card-icon">🌐</div>
+          <div class="svc-card-title">Website Design & Build</div>
+          <p class="svc-card-desc">Custom websites built from scratch — no page builders, no bloated templates. Fast, mobile-friendly, and designed to actually convert visitors into customers.</p>
+          <span class="svc-card-tag popular">⭐ Popular</span>
+        </div>
+
+        <div class="svc-card digital-card">
+          <div class="svc-card-icon">🛠️</div>
+          <div class="svc-card-title">Website Fixes & Updates</div>
+          <p class="svc-card-desc">Already have a site that needs updating, fixing, or improving? Happy to work with existing WordPress, HTML, or other sites to get them in better shape.</p>
+        </div>
+
+        <div class="svc-card digital-card">
+          <div class="svc-card-icon">📱</div>
+          <div class="svc-card-title">Web App Development</div>
+          <p class="svc-card-desc">Custom tools, calculators, booking forms, and interactive web applications built to your specification. A practical, affordable alternative to off-the-shelf software.</p>
+        </div>
+
+        <div class="svc-card digital-card">
+          <div class="svc-card-icon">📧</div>
+          <div class="svc-card-title">Email & Domain Setup</div>
+          <p class="svc-card-desc">Professional email addresses on your own domain, DNS configuration, email forwarding, and getting your business looking credible online from day one.</p>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ── DESIGN & 3D ── -->
+    <div class="service-category" id="design">
+      <div class="service-category-header">
+        <div class="category-icon-wrap cat-design">🎨</div>
+        <div>
+          <h2>Design & 3D Modelling</h2>
+          <p>Visualise products and spaces before they're built</p>
+        </div>
+      </div>
+      <div class="service-cards">
+
+        <div class="svc-card design-card">
+          <div class="svc-card-icon">🏗️</div>
+          <div class="svc-card-title">Architectural 3D Modelling</div>
+          <p class="svc-card-desc">3D models of buildings, rooms, extensions, and renovation plans — helping you visualise changes before committing to expensive building work.</p>
+          <span class="svc-card-tag new">✦ Specialist</span>
+        </div>
+
+        <div class="svc-card design-card">
+          <div class="svc-card-icon">📦</div>
+          <div class="svc-card-title">Product 3D Modelling</div>
+          <p class="svc-card-desc">Detailed 3D models of products for websites, marketing materials, or manufacturing reference. Realistic renders that make your product look its best.</p>
+          <span class="svc-card-tag new">✦ Specialist</span>
+        </div>
+
+        <div class="svc-card design-card">
+          <div class="svc-card-icon">🎬</div>
+          <div class="svc-card-title">3D Animation & Walkthroughs</div>
+          <p class="svc-card-desc">Animated walkthroughs of spaces, product animations, and short renders for presentations, planning applications, or client pitches.</p>
+        </div>
+
+        <div class="svc-card design-card">
+          <div class="svc-card-icon">🖼️</div>
+          <div class="svc-card-title">Graphic Design & Print</div>
+          <p class="svc-card-desc">Logos, business cards, flyers, and simple branding for small businesses. Straightforward, professional design without agency prices.</p>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <!-- BOTTOM CTA -->
+  <div class="services-cta">
+    <div class="cta-band" id="contact" style="margin:0;">
+      <h2 class="cta-band-title">Not sure if I can help? <span>Just ask.</span></h2>
+      <a href="mailto:hello@kyranwalker.com" class="btn-primary">Get In Touch →</a>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <span>© 2026 Kyran Walker</span>
+    <span>Built with HTML · CSS · JS</span>
+  </footer>
+
+  <script>
+    const hamburger = document.getElementById('hamburger');
+    const navLinks  = document.getElementById('navLinks');
+    hamburger.addEventListener('click', () => navLinks.classList.toggle('open'));
+    navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
+  </script>
+
+</body>
+</html>

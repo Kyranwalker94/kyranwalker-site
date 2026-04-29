@@ -1011,3 +1011,69 @@ footer {
     gap: 1.5rem;
   }
 }
+
+/* ─────────────────────────────
+   SERVICES TEASER (homepage)
+───────────────────────────── */
+
+.services-teaser {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+.teaser-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  text-decoration: none;
+  color: var(--text);
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  transition: border-color 0.25s, transform 0.25s;
+}
+
+.teaser-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-3px);
+}
+
+.teaser-card-cta {
+  border-color: rgba(200,240,77,0.2);
+  background: rgba(200,240,77,0.04);
+}
+
+.teaser-card-cta:hover {
+  border-color: var(--accent);
+  background: rgba(200,240,77,0.08);
+}
+
+.teaser-icon {
+  font-size: 1.5rem;
+  margin-bottom: 0.25rem;
+}
+
+.teaser-name {
+  font-family: var(--font-head);
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+.teaser-desc {
+  font-size: 0.82rem;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.teaser-card-cta .teaser-name { color: var(--accent); }
+.teaser-card-cta .teaser-desc { color: var(--accent); opacity: 0.7; }
+
+@media (max-width: 768px) {
+  .services-teaser { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 480px) {
+  .services-teaser { grid-template-columns: 1fr; }
+}
