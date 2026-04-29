@@ -676,57 +676,75 @@ nav {
   font-weight: 600;
   color: var(--text);
 }
-
-/* ─────────────────────────────
-   CTA BAND - ARMIJOS
-───────────────────────────── */
+/* =========================================
+   CTA BAND - ARMIJOS MATCHED SYSTEM
+========================================= */
 
 .cta-band-armijos {
   max-width: 1200px;
   margin: 0 auto 6rem;
   padding: 4rem;
+
   background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 1.5rem;
+  border: 4px solid var(--border);
+  border-radius: 20px;
+  box-shadow: var(--shadow);
+
   display: flex;
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
   gap: 2rem;
+
   position: relative;
   overflow: hidden;
 }
 
+/* Pixel grid texture (matches body background system) */
 .cta-band-armijos::before {
-  content: '';
+  content: "";
   position: absolute;
-  top: -60px;
-  right: -60px;
-  width: 200px;
-  height: 200px;
-  border-radius: 50%;
+  inset: 0;
+  opacity: 0.08;
   pointer-events: none;
 
   background-image:
-    radial-gradient(circle, #ff5c5c 2px, transparent 3px),
-    radial-gradient(circle, #4cd964 2px, transparent 3px),
-    radial-gradient(circle, #ffd93d 2px, transparent 3px),
-    radial-gradient(circle, #54a0ff 2px, transparent 3px);
+    radial-gradient(circle at 20px 20px, var(--red) 6px, transparent 7px),
+    radial-gradient(circle at 60px 60px, var(--green) 6px, transparent 7px),
+    radial-gradient(circle at 100px 20px, var(--yellow) 6px, transparent 7px),
+    radial-gradient(circle at 140px 60px, var(--blue) 6px, transparent 7px);
 
-  background-size: 20px 20px;
-  background-repeat: repeat;
+  background-size: 160px 80px;
 }
 
+/* CTA text */
 .cta-band-armijos-title {
-  font-family: var(--font-head);
-  font-size: clamp(1.5rem, 3vw, 2.2rem);
-  font-weight: 800;
+  font-family: var(--font-main);
+  font-size: clamp(1.3rem, 3vw, 2rem);
+  font-weight: 700;
   letter-spacing: -0.02em;
   max-width: 500px;
+  color: var(--text);
 }
 
-.cta-band-armijos-title span { color: var(--accent); }
+.cta-band-armijos-title span {
+  color: var(--red);
+}
 
+/* Optional: CTA button container alignment */
+.cta-band-armijos-actions {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+/* Optional: ensure buttons inside CTA still match system */
+.cta-band-armijos .btn-primary,
+.cta-band-armijos .btn-secondary {
+  border: 4px solid var(--border);
+  box-shadow: var(--shadow);
+}
 
 /* ─────────────────────────────
    CTA BAND
