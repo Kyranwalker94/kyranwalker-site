@@ -1,39 +1,43 @@
 // ─────────────────────────────
 //  RECIPES
-//  All amounts are per person at "normal" (1x) portion size
+//  Ratios define the *proportion* of each ingredient within a salsa.
+//  The total salsa per person is controlled by TOTAL_GRAMS_PER_PERSON.
+//  All weights are relative — they get scaled to fill the allocated share.
 // ─────────────────────────────
+
+const TOTAL_GRAMS_PER_PERSON = 200; // total salsa across ALL selected salsas
 
 const SALSA_RECIPES = {
   pico: {
     name: "Pico de Gallo",
     ingredients: {
-      tomatoes:   { amount: 100, unit: "g" },
-      onion:      { amount: 30,  unit: "g" },
-      lime:       { amount: 0.5, unit: "lime" },
-      coriander:  { amount: 5,   unit: "g" },
-      chilli:     { amount: 2,   unit: "g", spicy: true },
+      tomatoes:  { ratio: 100, unit: "g" },
+      onion:     { ratio: 30,  unit: "g" },
+      lime:      { ratio: 15,  unit: "lime" },
+      coriander: { ratio: 5,   unit: "g" },
+      chilli:    { ratio: 2,   unit: "g", spicy: true },
     }
   },
 
   guac: {
     name: "Guacamole",
     ingredients: {
-      avocado:    { amount: 0.5, unit: "avocado" },
-      lime:       { amount: 0.5, unit: "lime" },
-      onion:      { amount: 20,  unit: "g" },
-      coriander:  { amount: 5,   unit: "g" },
-      chilli:     { amount: 2,   unit: "g", spicy: true },
+      avocado:   { ratio: 120, unit: "avocado" },
+      lime:      { ratio: 15,  unit: "lime" },
+      onion:     { ratio: 20,  unit: "g" },
+      coriander: { ratio: 5,   unit: "g" },
+      chilli:    { ratio: 2,   unit: "g", spicy: true },
     }
   },
 
   pineapple: {
     name: "Pineapple Salsa",
     ingredients: {
-      pineapple:  { amount: 80,  unit: "g" },
-      onion:      { amount: 20,  unit: "g" },
-      lime:       { amount: 0.5, unit: "lime" },
-      coriander:  { amount: 5,   unit: "g" },
-      chilli:     { amount: 2,   unit: "g", spicy: true },
+      pineapple: { ratio: 80,  unit: "g" },
+      onion:     { ratio: 20,  unit: "g" },
+      lime:      { ratio: 15,  unit: "lime" },
+      coriander: { ratio: 5,   unit: "g" },
+      chilli:    { ratio: 2,   unit: "g", spicy: true },
     }
   }
 };
@@ -44,28 +48,37 @@ const SALSA_RECIPES = {
 
 function formatAmount(amount, unit) {
   if (unit === "lime") {
-    const rounded = Math.ceil(amount); // always round up — better to have spare limes
-    return `${rounded} ${rounded === 1 ? "lime" : "limes"}`;
+    const limes = Math.ceil(amount / 30);
+    return `${Math.max(1, limes)} ${limes === 1 ? "lime" : "limes"}`;
   }
 
   if (unit === "avocado") {
-    const rounded = Math.ceil(amount);
-    return `${rounded} ${rounded === 1 ? "avocado" : "avocados"}`;
+    const avocados = Math.ceil(amount / 120);
+    return `${Math.max(1, avocados)} ${avocados === 1 ? "avocado" : "avocados"}`;
   }
 
   if (unit === "g") {
-    return `${Math.round(amount)}g`;
+    // Round to nearest 5g to avoid ugly numbers
+    return `${Math.round(amount / 5) * 5}g`;
   }
 
-  return `${amount}`;
+  return `${Math.round(amount)}`;
 }
 
 // ─────────────────────────────
 //  CORE CALCULATION
+//
+//  Total salsa budget = TOTAL_GRAMS_PER_PERSON × portionSize × people
+//  That budget is split EQUALLY between however many salsas are selected.
+//  So 1 salsa = 200g each, 2 salsas = 100g each, 3 salsas = 67g each.
+//  Each salsa's ingredients are then proportionally scaled to its share.
 // ─────────────────────────────
 
 function calculateIngredients({ people, portionSize, selectedSalsas, includeCoriander, spiceLevels }) {
-  if (!people || people < 1) return {};
+  if (!people || people < 1 || selectedSalsas.length === 0) return {};
+
+  const totalBudget  = TOTAL_GRAMS_PER_PERSON * portionSize * people;
+  const sharePerSalsa = totalBudget / selectedSalsas.length;
 
   const results = {};
 
@@ -73,17 +86,24 @@ function calculateIngredients({ people, portionSize, selectedSalsas, includeCori
     const salsa = SALSA_RECIPES[key];
     if (!salsa) return;
 
-    const scale = people * portionSize;
+    // Sum the ratios of included ingredients to use as the scaling denominator
+    const totalRatio = Object.entries(salsa.ingredients)
+      .filter(([item]) => !(item === "coriander" && !includeCoriander))
+      .reduce((sum, [, def]) => sum + def.ratio, 0);
+
     const spiceMultiplier = spiceLevels[key] ?? 1;
     const ingredients = {};
 
     for (const [item, def] of Object.entries(salsa.ingredients)) {
       if (item === "coriander" && !includeCoriander) continue;
 
-      let finalAmount = def.amount * scale;
-      if (def.spicy) finalAmount *= spiceMultiplier;
+      // Scale proportionally within this salsa's allocated share
+      let amount = (def.ratio / totalRatio) * sharePerSalsa;
 
-      ingredients[item] = { amount: finalAmount, unit: def.unit };
+      // Spice just affects chilli quantity — doesn't change total salsa weight
+      if (def.spicy) amount *= spiceMultiplier;
+
+      ingredients[item] = { amount, unit: def.unit };
     }
 
     results[salsa.name] = ingredients;
@@ -99,7 +119,6 @@ function calculateIngredients({ people, portionSize, selectedSalsas, includeCori
 function renderResults(result) {
   const empty   = document.getElementById("resultsEmpty");
   const content = document.getElementById("resultsContent");
-
   if (!content) return;
 
   if (Object.keys(result).length === 0) {
@@ -149,13 +168,11 @@ function runCalculator() {
 
   const includeCoriander = document.getElementById("coriander").checked;
 
-  // Read per-salsa spice sliders if present
   const spiceLevels = {};
   document.querySelectorAll(".spice-slider").forEach(slider => {
     spiceLevels[slider.dataset.salsa] = Number(slider.value);
   });
 
-  // Default to 1x if no slider exists
   ["pico", "guac", "pineapple"].forEach(key => {
     if (!(key in spiceLevels)) spiceLevels[key] = 1;
   });
@@ -172,15 +189,14 @@ function runCalculator() {
 }
 
 // ─────────────────────────────
-//  AUTO-RECALCULATE ON ANY INPUT CHANGE
+//  AUTO-RECALCULATE ON ANY CHANGE
 // ─────────────────────────────
 
 document.addEventListener("DOMContentLoaded", () => {
   document.querySelectorAll("input, select").forEach(el => {
     el.addEventListener("change", runCalculator);
-    el.addEventListener("input", runCalculator);
+    el.addEventListener("input",  runCalculator);
   });
 
-  // Run once on load so results show immediately
   runCalculator();
 });
