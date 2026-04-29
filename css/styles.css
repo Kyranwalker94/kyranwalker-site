@@ -705,12 +705,16 @@ nav {
   width: 200px;
   height: 200px;
   border-radius: 50%;
-  background:
-    radial-gradient(circle at 20px 20px, #ff5c5c 8px, transparent 9px),
-    radial-gradient(circle at 60px 60px, #4cd964 8px, transparent 9px),
-    radial-gradient(circle at 100px 20px, #ffd93d 8px, transparent 9px),
-    radial-gradient(circle at 140px 60px, #54a0ff 8px, transparent 9px);
-  background-repeat: no-repeat;
+  pointer-events: none;
+
+  background-image:
+    radial-gradient(circle, #ff5c5c 2px, transparent 3px),
+    radial-gradient(circle, #4cd964 2px, transparent 3px),
+    radial-gradient(circle, #ffd93d 2px, transparent 3px),
+    radial-gradient(circle, #54a0ff 2px, transparent 3px);
+
+  background-size: 20px 20px;
+  background-repeat: repeat;
 }
 
 .cta-band-armijos-title {
