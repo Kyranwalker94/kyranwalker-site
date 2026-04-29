@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Salsalator — Kyran Walker</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../css/styles.css">
+
+  <style>
+    .spice-row {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.5rem 0 0.25rem 2rem;
+    }
+
+    .spice-row input[type="range"] {
+      flex: 1;
+      appearance: none;
+      height: 3px;
+      border-radius: 2px;
+      background: var(--border);
+      outline: none;
+      cursor: pointer;
+    }
+
+    .spice-row input[type="range"]::-webkit-slider-thumb {
+      appearance: none;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: var(--accent);
+      cursor: pointer;
+    }
+
+    .spice-label {
+      font-size: 0.78rem;
+      color: var(--muted);
+      min-width: 60px;
+      text-align: right;
+    }
+
+    .spice-emoji { font-size: 0.85rem; min-width: 20px; }
+  </style>
+</head>
+
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="../index.html" class="nav-logo">Kyran<span>.</span></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="../index.html#services">Services</a></li>
+      <li><a href="../projects.html">Projects</a></li>
+      <li><a href="../index.html#contact" class="nav-cta">Hire Me</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- PAGE HEADER -->
+  <div class="project-detail-hero">
+    <a href="../projects.html" class="back-link">← Projects</a>
+    <h1>Salsalator 🌶️</h1>
+    <p>Calculate exactly how much salsa you need for any party — pick your salsas, set your crowd size, adjust the heat.</p>
+  </div>
+
+  <!-- APP -->
+  <div class="app-wrapper">
+
+    <!-- CONTROLS -->
+    <div class="app-panel">
+      <h2>Settings</h2>
+
+      <div>
+        <p class="field-label">Number of people</p>
+        <input type="number" id="people" value="5" min="1" max="500" />
+      </div>
+
+      <div>
+        <p class="field-label">Appetite</p>
+        <select id="portion">
+          <option value="0.5">Light</option>
+          <option value="1" selected>Normal</option>
+          <option value="1.5">Hungry crowd</option>
+        </select>
+      </div>
+
+      <div>
+        <p class="field-label">Salsas &amp; heat</p>
+        <div class="checkbox-group">
+
+          <label class="checkbox-label">
+            <input class="salsa-checkbox" type="checkbox" value="pico" checked>
+            Pico de Gallo
+          </label>
+          <div class="spice-row">
+            <span class="spice-emoji">🌶️</span>
+            <input class="spice-slider" type="range" data-salsa="pico" min="0.5" max="3" step="0.5" value="1" />
+            <span class="spice-label" id="spice-label-pico">Normal</span>
+          </div>
+
+          <label class="checkbox-label">
+            <input class="salsa-checkbox" type="checkbox" value="guac">
+            Guacamole
+          </label>
+          <div class="spice-row">
+            <span class="spice-emoji">🌶️</span>
+            <input class="spice-slider" type="range" data-salsa="guac" min="0.5" max="3" step="0.5" value="1" />
+            <span class="spice-label" id="spice-label-guac">Normal</span>
+          </div>
+
+          <label class="checkbox-label">
+            <input class="salsa-checkbox" type="checkbox" value="pineapple">
+            Pineapple Salsa
+          </label>
+          <div class="spice-row">
+            <span class="spice-emoji">🌶️</span>
+            <input class="spice-slider" type="range" data-salsa="pineapple" min="0.5" max="3" step="0.5" value="1" />
+            <span class="spice-label" id="spice-label-pineapple">Normal</span>
+          </div>
+
+        </div>
+      </div>
+
+      <div>
+        <p class="field-label">Preferences</p>
+        <div class="checkbox-group">
+          <label class="checkbox-label">
+            <input type="checkbox" id="coriander" checked>
+            Include coriander
+          </label>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- RESULTS -->
+    <div class="results-panel">
+      <h2>Ingredients</h2>
+      <p class="results-empty" id="resultsEmpty">Select a salsa to get started.</p>
+      <div id="resultsContent"></div>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <span>© 2026 Kyran Walker</span>
+    <span>Built with HTML · CSS · JS</span>
+  </footer>
+
+  <script src="../js/salsalator.js"></script>
+  <script>
+    // Nav toggle
+    const hamburger = document.getElementById('hamburger');
+    const navLinks  = document.getElementById('navLinks');
+    hamburger.addEventListener('click', () => navLinks.classList.toggle('open'));
+    navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
+
+    // Spice slider labels
+    const spiceLabels = { 0.5: "Mild", 1: "Normal", 1.5: "Medium", 2: "Hot", 2.5: "Very Hot", 3: "Fire 🔥" };
+    document.querySelectorAll('.spice-slider').forEach(slider => {
+      slider.addEventListener('input', () => {
+        const label = document.getElementById(`spice-label-${slider.dataset.salsa}`);
+        if (label) label.textContent = spiceLabels[slider.value] || slider.value + "x";
+      });
+    });
+  </script>
+
+</body>
+</html>
