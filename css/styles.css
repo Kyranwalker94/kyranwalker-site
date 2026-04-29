@@ -678,6 +678,51 @@ nav {
 }
 
 /* ─────────────────────────────
+   CTA BAND - ARMIJOS
+───────────────────────────── */
+
+.cta-band-armijos {
+  max-width: 1200px;
+  margin: 0 auto 6rem;
+  padding: 4rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 2rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.cta-band-armijos::before {
+  content: '';
+  position: absolute;
+  top: -60px; right: -60px;
+  width: 200px; height: 200px;
+  border-radius: 50%;
+  background-image:
+    radial-gradient(circle at 20px 20px, #ff5c5c 8px, transparent 9px),
+    radial-gradient(circle at 60px 60px, #4cd964 8px, transparent 9px),
+    radial-gradient(circle at 100px 20px, #ffd93d 8px, transparent 9px),
+    radial-gradient(circle at 140px 60px, #54a0ff 8px, transparent 9px);
+  pointer-events: none;
+}
+
+.cta-band-armijos-title {
+  font-family: var(--font-head);
+  font-size: clamp(1.5rem, 3vw, 2.2rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  max-width: 500px;
+}
+
+.cta-band-armijos-title span { color: var(--accent); }
+
+
+/* ─────────────────────────────
    CTA BAND
 ───────────────────────────── */
 
