@@ -298,6 +298,57 @@ nav {
 .badge-text { font-size: 0.82rem; color: var(--text); }
 .badge-text strong { display: block; font-weight: 600; font-size: 0.88rem; }
 
+/* Badge as link */
+a.hero-card-badge {
+  text-decoration: none;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+}
+a.hero-card-badge:hover { border-color: var(--accent); }
+
+/* Scroll indicator */
+.scroll-indicator {
+  position: absolute;
+  bottom: 2.25rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  text-decoration: none;
+  color: var(--muted);
+  animation: scroll-bounce 2s ease-in-out infinite;
+  z-index: 2;
+}
+
+.scroll-indicator-label {
+  font-size: 0.62rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.scroll-indicator-chevron {
+  display: block;
+  width: 10px;
+  height: 10px;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: rotate(45deg);
+}
+
+.scroll-indicator-chevron + .scroll-indicator-chevron { opacity: 0.35; }
+
+@keyframes scroll-bounce {
+  0%, 100% { transform: translateX(-50%) translateY(0);   opacity: 0.7; }
+  50%       { transform: translateX(-50%) translateY(7px); opacity: 1;   }
+}
+
+@media (max-width: 768px) {
+  .scroll-indicator { display: none; }
+}
+
 /* ─────────────────────────────
    STATS BAND
 ───────────────────────────── */
