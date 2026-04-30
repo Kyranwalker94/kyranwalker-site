@@ -308,9 +308,11 @@ function showModal(won) {
 
 // ── Leaderboard ────────────────────────────────────────────────────────────
 
+const LEADERBOARD_URL = 'https://wordle-leaderboard.kyranwalker94.workers.dev';
+
 async function fetchLeaderboard() {
   try {
-    const res = await fetch('/api/leaderboard');
+    const res = await fetch(LEADERBOARD_URL);
     leaderboard = await res.json();
     renderLeaderboard();
   } catch (err) {
@@ -321,7 +323,7 @@ async function fetchLeaderboard() {
 
 async function postScore(name, scoreValue) {
   try {
-    const res = await fetch('/api/leaderboard', {
+    const res = await fetch(LEADERBOARD_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ name, score: scoreValue }),
