@@ -297,6 +297,364 @@ footer {
 }
 
 /* =========================
+   NAV EXTRAS
+========================= */
+
+.back-link {
+  background: var(--text) !important;
+  color: white !important;
+  border: 3px solid var(--border) !important;
+  border-radius: 12px;
+  box-shadow: 4px 4px 0 rgba(0,0,0,0.3);
+}
+
+.back-link:hover {
+  background: #4a3020 !important;
+  transform: translate(-1px, -1px);
+  box-shadow: 6px 6px 0 rgba(0,0,0,0.3) !important;
+}
+
+/* =========================
+   COMING SOON
+========================= */
+
+.btn-coming-soon {
+  display: inline-block;
+  text-decoration: none;
+  font-weight: 700;
+  padding: 1rem 1.4rem;
+  border: 4px solid #aaa;
+  border-radius: 14px;
+  box-shadow: 6px 6px 0 #aaa;
+  background: #ccc;
+  color: #888;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.coming-soon-wrap {
+  position: relative;
+}
+
+.coming-soon-content {
+  opacity: 0.3;
+  pointer-events: none;
+  user-select: none;
+}
+
+.coming-soon-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  text-align: center;
+  padding: 2rem;
+}
+
+.coming-soon-badge {
+  font-family: var(--font-main);
+  font-size: 0.85rem;
+  background: var(--text);
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 12px;
+  border: 3px solid var(--border);
+  box-shadow: var(--shadow);
+}
+
+.coming-soon-overlay p {
+  font-size: 1rem;
+  color: var(--muted);
+  max-width: 340px;
+  line-height: 1.7;
+}
+
+/* =========================
+   PAGE HERO (inner pages)
+========================= */
+
+.page-hero {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 4rem 2rem 2rem;
+  text-align: center;
+}
+
+.page-back {
+  display: inline-block;
+  text-decoration: none;
+  font-weight: 700;
+  color: var(--muted);
+  margin-bottom: 1.5rem;
+  padding: 0.5rem 1rem;
+  border: 2px solid var(--muted);
+  border-radius: 8px;
+  font-size: 0.9rem;
+  transition: 0.15s;
+}
+
+.page-back:hover {
+  color: var(--text);
+  border-color: var(--text);
+  background: white;
+}
+
+.page-hero-title {
+  font-family: var(--font-main);
+  font-size: clamp(1.2rem, 3vw, 2rem);
+  margin-bottom: 1rem;
+  line-height: 1.4;
+}
+
+.page-hero-sub {
+  font-size: 1.05rem;
+  line-height: 1.8;
+  color: var(--muted);
+  max-width: 580px;
+  margin: 0 auto;
+}
+
+/* =========================
+   RECIPES GRID
+========================= */
+
+.recipes-section {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 2rem 2rem 6rem;
+}
+
+.recipes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.5rem;
+}
+
+.recipe-card-link {
+  text-decoration: none;
+  display: block;
+  border: 4px solid var(--border);
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  transition: 0.15s ease;
+  background: white;
+}
+
+.recipe-card-link:hover {
+  transform: translate(-3px, -3px);
+  box-shadow: 9px 9px 0 var(--border);
+}
+
+.recipe-card-bg {
+  height: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.recipe-bg-pico {
+  background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+}
+
+.recipe-bg-pineapple {
+  background: linear-gradient(135deg, #ffd93d 0%, #ff9f43 100%);
+}
+
+.recipe-bg-guac {
+  background: linear-gradient(135deg, #6bcb77 0%, #2ecc71 100%);
+}
+
+.recipe-bg-chimichurri {
+  background: linear-gradient(135deg, #26de81 0%, #20bf6b 70%, #1a9c4f 100%);
+}
+
+.recipe-card-emoji {
+  font-size: 3.5rem;
+  line-height: 1;
+  filter: drop-shadow(2px 3px 0 rgba(0,0,0,0.2));
+}
+
+.recipe-card-caption {
+  padding: 1rem 1.25rem;
+  border-top: 3px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.recipe-card-title {
+  font-family: var(--font-main);
+  font-size: 0.72rem;
+  color: var(--text);
+  line-height: 1.5;
+}
+
+.recipe-card-tag {
+  font-size: 0.85rem;
+  color: var(--muted);
+  font-weight: 500;
+}
+
+/* =========================
+   RECIPE DETAIL PAGE
+========================= */
+
+.recipe-detail {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 2rem 2rem 6rem;
+}
+
+.recipe-banner {
+  height: 240px;
+  border: 4px solid var(--border);
+  border-radius: 20px;
+  box-shadow: var(--shadow);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 5rem;
+  margin-bottom: 2rem;
+}
+
+.recipe-meta {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-bottom: 2rem;
+}
+
+.recipe-tag {
+  background: white;
+  border: 3px solid var(--border);
+  border-radius: 10px;
+  padding: 0.4rem 0.9rem;
+  font-weight: 700;
+  font-size: 0.9rem;
+  box-shadow: 3px 3px 0 var(--border);
+}
+
+.recipe-body {
+  background: white;
+  border: 4px solid var(--border);
+  border-radius: 20px;
+  padding: 2rem;
+  box-shadow: var(--shadow);
+  margin-bottom: 1.5rem;
+}
+
+.recipe-body h2 {
+  font-family: var(--font-main);
+  font-size: 0.82rem;
+  margin-bottom: 1.25rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 3px solid var(--border);
+}
+
+.recipe-body ul,
+.recipe-body ol {
+  padding-left: 1.5rem;
+  line-height: 2.1;
+}
+
+.recipe-body li {
+  font-size: 1rem;
+}
+
+.recipe-tip {
+  background: var(--yellow);
+  border: 3px solid var(--border);
+  border-radius: 14px;
+  padding: 1.25rem 1.5rem;
+  box-shadow: 4px 4px 0 var(--border);
+  font-size: 0.95rem;
+  line-height: 1.7;
+}
+
+.recipe-tip strong {
+  font-family: var(--font-main);
+  font-size: 0.7rem;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+/* =========================
+   SALSALATOR FIELD STYLES
+========================= */
+
+.field-label {
+  font-weight: 700;
+  font-size: 0.9rem;
+  margin-bottom: 0.4rem;
+  display: block;
+}
+
+.checkbox-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 0.95rem;
+}
+
+.checkbox-label input[type="checkbox"] {
+  width: auto;
+  margin: 0;
+  accent-color: var(--red);
+}
+
+.spice-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding-left: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.spice-emoji {
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+
+.spice-slider {
+  flex: 1;
+  height: 6px;
+  accent-color: var(--red);
+  margin: 0;
+  padding: 0;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.spice-label {
+  font-size: 0.85rem;
+  font-weight: 700;
+  width: 60px;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.results-empty {
+  color: var(--muted);
+  font-style: italic;
+  font-size: 0.95rem;
+}
+
+/* =========================
    RESPONSIVE
 ========================= */
 

@@ -3,28 +3,21 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-
   <title>Armijos | Fresh Sauces, Recipes & Salsa Tools</title>
-
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Press+Start+2P&display=swap" rel="stylesheet">
-
   <link rel="stylesheet" href="/Armijos/css/armijos.css">
 </head>
-
 <body>
 
   <!-- NAV -->
   <nav>
     <a href="index.html" class="nav-logo">ARMIJOS<span>.</span></a>
-
     <ul class="nav-links">
-      <li><a href="../index.html" class="home-link">Main Site</a></li>
       <li><a href="recipes.html">Recipes</a></li>
-      <li><a href="products.html">Products</a></li>
-      <li><a href="markets.html">Markets</a></li>
-      <li><a href="salsalator.html">Salsalator</a></li>
+      <li><a href="#markets">Markets</a></li>
+      <li><a href="../index.html" class="back-link">← Back to Kyran</a></li>
     </ul>
   </nav>
 
@@ -44,16 +37,14 @@
       </p>
 
       <div class="hero-actions">
-        <a href="products.html" class="btn-primary">Shop Products</a>
+        <a href="#products" class="btn-coming-soon" title="Coming soon">Shop Products</a>
         <a href="recipes.html" class="btn-secondary">Free Recipes</a>
       </div>
     </div>
 
     <div class="card">
       <h2 style="margin-bottom:1rem;">🌶️ Featured This Week</h2>
-      <p style="line-height:1.8;">
-        Handmade in small batches:
-      </p>
+      <p style="line-height:1.8;">Handmade in small batches:</p>
       <ul style="margin-top:1rem; padding-left:1.25rem; line-height:2;">
         <li>Pico de Gallo</li>
         <li>Pineapple Salsa</li>
@@ -63,48 +54,35 @@
     </div>
   </section>
 
-  <!-- PRODUCTS -->
-  <section>
+  <!-- PRODUCTS (coming soon) -->
+  <section id="products">
     <div style="text-align:center; padding: 1rem 2rem;">
-      <h2 style="font-family:'Press Start 2P'; font-size:1.3rem;">
-        OUR PRODUCTS
-      </h2>
+      <h2 style="font-family:'Press Start 2P'; font-size:1.3rem;">OUR PRODUCTS</h2>
     </div>
 
-    <div class="products-grid">
-
-      <div class="product-card">
-        <h3>🍅 Pico de Gallo</h3>
-        <p>
-          Fresh tomatoes, onion, lime, coriander and jalapeño.
-          Bright, classic and super versatile.
-        </p>
+    <div class="coming-soon-wrap">
+      <div class="coming-soon-overlay">
+        <span class="coming-soon-badge">Coming Soon</span>
+        <p>Online shop in development — find us at local markets in the meantime.</p>
       </div>
-
-      <div class="product-card">
-        <h3>🍍 Pineapple Salsa</h3>
-        <p>
-          Sweet pineapple, chilli and herbs for a tropical kick.
-          Great with tacos and grilled meats.
-        </p>
+      <div class="products-grid coming-soon-content">
+        <div class="product-card">
+          <h3>🍅 Pico de Gallo</h3>
+          <p>Fresh tomatoes, onion, lime, coriander and jalapeño. Bright, classic and super versatile.</p>
+        </div>
+        <div class="product-card">
+          <h3>🍍 Pineapple Salsa</h3>
+          <p>Sweet pineapple, chilli and herbs for a tropical kick. Great with tacos and grilled meats.</p>
+        </div>
+        <div class="product-card">
+          <h3>🥑 Guacamole</h3>
+          <p>Creamy avocado, lime, garlic and seasoning. A proper fresh guac, no nonsense.</p>
+        </div>
+        <div class="product-card">
+          <h3>🌿 Chimichurri</h3>
+          <p>Locally sourced herbs blended into a punchy Argentinian-style sauce. Perfect for steak, chicken or veg.</p>
+        </div>
       </div>
-
-      <div class="product-card">
-        <h3>🥑 Guacamole</h3>
-        <p>
-          Creamy avocado, lime, garlic and seasoning.
-          A proper fresh guac, no nonsense.
-        </p>
-      </div>
-
-      <div class="product-card">
-        <h3>🌿 Chimichurri</h3>
-        <p>
-          Locally sourced herbs blended into a punchy Argentinian-style sauce.
-          Perfect for steak, chicken or veg.
-        </p>
-      </div>
-
     </div>
   </section>
 
@@ -112,7 +90,6 @@
   <section style="max-width:1100px; margin:auto; padding:4rem 2rem;">
     <div class="card">
       <h2 style="margin-bottom:1.5rem;">❤️ About Armijos</h2>
-
       <p style="line-height:1.9; font-size:1.05rem;">
         Armijos started as a passion project built around sharing
         fresh recipes, vibrant flavours and small-batch homemade products.
@@ -123,46 +100,37 @@
   </section>
 
   <!-- MARKETS -->
-  <section>
+  <section id="markets">
     <div style="text-align:center; padding: 1rem 2rem;">
-      <h2 style="font-family:'Press Start 2P'; font-size:1.3rem;">
-        FIND US LOCALLY
-      </h2>
+      <h2 style="font-family:'Press Start 2P'; font-size:1.3rem;">FIND US LOCALLY</h2>
     </div>
 
     <div class="markets-grid">
-
       <div class="market-card">
         <h3>Saturday Market</h3>
         <p>Hailsham Farmers Market</p>
         <p>Every Saturday · 9am–2pm</p>
       </div>
-
       <div class="market-card">
         <h3>Sunday Market</h3>
         <p>Eastbourne Food Market</p>
         <p>Every Sunday · 10am–3pm</p>
       </div>
-
       <div class="market-card">
         <h3>Special Events</h3>
-        <p>Pop-up stalls & food fairs</p>
+        <p>Pop-up stalls &amp; food fairs</p>
         <p>Follow socials for updates</p>
       </div>
-
     </div>
   </section>
 
-  <!-- WEB APP CTA -->
+  <!-- SALSALATOR CTA -->
   <section style="max-width:1100px; margin:auto; padding:4rem 2rem;">
     <div class="card" style="text-align:center;">
       <h2 style="margin-bottom:1rem;">🧮 Try the Salsalator</h2>
-
       <p style="line-height:1.8; margin-bottom:2rem;">
-        Scale recipes instantly based on serving size, spice level
-        and ingredient preferences.
+        Scale recipes instantly based on serving size, spice level and ingredient preferences.
       </p>
-
       <a href="salsalator.html" class="btn-primary">Launch Salsalator</a>
     </div>
   </section>

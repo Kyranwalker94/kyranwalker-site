@@ -3,72 +3,29 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Salsalator — Kyran Walker</title>
-
+  <title>Salsalator — Armijos</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
-
-  <link rel="stylesheet" href="../css/styles.css">
-
-  <style>
-    .spice-row {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      padding: 0.5rem 0 0.25rem 2rem;
-    }
-
-    .spice-row input[type="range"] {
-      flex: 1;
-      appearance: none;
-      height: 3px;
-      border-radius: 2px;
-      background: var(--border);
-      outline: none;
-      cursor: pointer;
-    }
-
-    .spice-row input[type="range"]::-webkit-slider-thumb {
-      appearance: none;
-      width: 14px;
-      height: 14px;
-      border-radius: 50%;
-      background: var(--accent);
-      cursor: pointer;
-    }
-
-    .spice-label {
-      font-size: 0.78rem;
-      color: var(--muted);
-      min-width: 60px;
-      text-align: right;
-    }
-
-    .spice-emoji { font-size: 0.85rem; min-width: 20px; }
-  </style>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/Armijos/css/armijos.css">
 </head>
-
 <body>
 
   <!-- NAV -->
   <nav>
-    <a href="../index.html" class="nav-logo">Kyran<span>.</span></a>
-    <ul class="nav-links" id="navLinks">
-      <li><a href="../index.html#services">Services</a></li>
-      <li><a href="../projects.html">Projects</a></li>
-      <li><a href="../index.html#contact" class="nav-cta">Hire Me</a></li>
+    <a href="index.html" class="nav-logo">ARMIJOS<span>.</span></a>
+    <ul class="nav-links">
+      <li><a href="recipes.html">Recipes</a></li>
+      <li><a href="index.html#markets">Markets</a></li>
+      <li><a href="../index.html" class="back-link">← Back to Kyran</a></li>
     </ul>
-    <button class="hamburger" id="hamburger" aria-label="Toggle menu">
-      <span></span><span></span><span></span>
-    </button>
   </nav>
 
-  <!-- PAGE HEADER -->
-  <div class="project-detail-hero">
-    <a href="../projects.html" class="back-link">← Projects</a>
-    <h1>Salsalator 🌶️</h1>
-    <p>Calculate exactly how much salsa you need for any party — pick your salsas, set your crowd size, adjust the heat.</p>
+  <!-- HEADER -->
+  <div class="page-hero">
+    <a href="index.html" class="page-back">← Back to Armijos</a>
+    <h1 class="page-hero-title">🧮 Salsalator</h1>
+    <p class="page-hero-sub">Scale any salsa recipe for your crowd — pick your sauces, set the size, adjust the heat.</p>
   </div>
 
   <!-- APP -->
@@ -76,7 +33,7 @@
 
     <!-- CONTROLS -->
     <div class="app-panel">
-      <h2>Settings</h2>
+      <h2 style="font-family:'Press Start 2P'; font-size:0.85rem; margin-bottom:1.5rem;">Settings</h2>
 
       <div>
         <p class="field-label">Number of people</p>
@@ -143,7 +100,7 @@
 
     <!-- RESULTS -->
     <div class="results-panel">
-      <h2>Ingredients</h2>
+      <h2 style="font-family:'Press Start 2P'; font-size:0.85rem; margin-bottom:1.5rem;">Ingredients</h2>
       <p class="results-empty" id="resultsEmpty">Select a salsa to get started.</p>
       <div id="resultsContent"></div>
     </div>
@@ -152,19 +109,12 @@
 
   <!-- FOOTER -->
   <footer>
-    <span>© 2026 Kyran Walker</span>
-    <span>Built with HTML · CSS · JS</span>
+    <p>© 2026 Armijos</p>
+    <p>Fresh sauces • Recipes • Local markets</p>
   </footer>
 
   <script src="../js/salsalator.js"></script>
   <script>
-    // Nav toggle
-    const hamburger = document.getElementById('hamburger');
-    const navLinks  = document.getElementById('navLinks');
-    hamburger.addEventListener('click', () => navLinks.classList.toggle('open'));
-    navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
-
-    // Spice slider labels
     const spiceLabels = { 0.5: "Mild", 1: "Normal", 1.5: "Medium", 2: "Hot", 2.5: "Very Hot", 3: "Fire 🔥" };
     document.querySelectorAll('.spice-slider').forEach(slider => {
       slider.addEventListener('input', () => {
