@@ -1325,6 +1325,94 @@ footer {
 .sidebar-row span:first-child { color: var(--muted); }
 .sidebar-row span:last-child  { font-weight: 500; text-align: right; }
 
+/* Status badges */
+.status-active {
+  background: rgba(87,204,153,0.12);
+  border: 1px solid rgba(87,204,153,0.3);
+  color: var(--green);
+}
+.status-wip {
+  background: rgba(255,209,102,0.12);
+  border: 1px solid rgba(255,209,102,0.3);
+  color: var(--yellow);
+}
+
+/* Project log items (used in Defender, Our Garden, etc.) */
+.project-log-item {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 1rem;
+}
+.project-log-item:last-child { margin-bottom: 0; }
+
+.project-log-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.75rem;
+}
+.project-log-title {
+  font-family: var(--font-head);
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+/* MOT card */
+.mot-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.mot-result {
+  font-family: var(--font-head);
+  font-size: 1rem;
+  font-weight: 800;
+  letter-spacing: 0.15em;
+  padding: 0.4rem 1rem;
+  border-radius: 0.4rem;
+  display: inline-block;
+  width: fit-content;
+}
+.mot-result.pass {
+  background: rgba(87,204,153,0.15);
+  color: var(--green);
+}
+.mot-result.fail {
+  background: rgba(230,57,70,0.15);
+  color: var(--red);
+}
+
+/* Data table */
+.data-table-wrap { overflow-x: auto; }
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+}
+.data-table th,
+.data-table td {
+  padding: 0.65rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+.data-table th {
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 500;
+}
+.data-table td { color: var(--text); }
+.data-table tr:last-child td { border-bottom: none; }
+
 @media (max-width: 768px) {
   .project-detail-body {
     grid-template-columns: 1fr;

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>3D Printer Customisation — Kyran Walker</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+
+  <nav>
+    <a href="../index.html" class="nav-logo">Kyran<span>.</span></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="../services.html">Services</a></li>
+      <li><a href="../projects.html">Projects</a></li>
+      <li><a href="../profile.html">Profile</a></li>
+      <li><a href="../index.html#contact" class="nav-cta">Hire Me</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <div class="project-detail-hero">
+    <a href="../projects.html" class="back-link">← Projects</a>
+    <div class="project-detail-tags">
+      <span class="project-tag">IRL</span>
+      <span class="project-tag">3D</span>
+    </div>
+    <h1>3D Printer Customisation 🖨️</h1>
+    <p>Upgrading two Creality Ender 3 V2 printers with silent cooling, custom printed parts, and aftermarket add-ons to improve print quality and reliability.</p>
+  </div>
+
+  <div class="project-detail-body">
+    <div class="project-detail-content">
+
+      <div class="content-block">
+        <h2>About the project</h2>
+        <p>In 2021 I was running two Creality Ender 3 V2 printers. Both are capable machines out of the box, but out of the box means noisy fans, a few frustrating quirks, and plenty of headroom for improvement. This project was about making both machines quieter, more reliable, and better suited to longer unattended print runs.</p>
+        <p>The upgrade path combined off-the-shelf parts — better fans, upgraded extruder hardware — with custom 3D printed mounts, cable guides, and tool holders designed and printed on the machines themselves.</p>
+      </div>
+
+      <div class="content-block">
+        <h2>Fan upgrades</h2>
+        <p>The stock fans on the Ender 3 V2 are functional but loud. Swapping them for quality silent alternatives makes a significant difference in noise floor, particularly during overnight prints.</p>
+        <ul class="content-list">
+          <li>Mainboard cooling fan replaced with a Noctua NF-A4x10 5V</li>
+          <li>Hotend cooling fan replaced with a quiet 4010 blower</li>
+          <li>Part cooling fan upgraded for improved airflow and reduced noise</li>
+          <li>All fan connectors checked and re-pinned where needed</li>
+        </ul>
+      </div>
+
+      <div class="content-block">
+        <h2>Custom 3D printed additions</h2>
+        <p>One of the pleasures of owning a 3D printer is printing improvements for the printer itself. Both machines received a set of printed upgrades designed to tidy up the workspace and improve usability.</p>
+        <ul class="content-list">
+          <li>Cable chain and drag chain routing along the X and Y axes</li>
+          <li>Tool and spare parts holder mounted to the frame</li>
+          <li>Screen angle bracket for better viewing angle</li>
+          <li>Filament guide and runout sensor mount</li>
+          <li>Raspberry Pi enclosure for OctoPrint remote control</li>
+        </ul>
+      </div>
+
+      <div class="content-block">
+        <h2>Purchased upgrades</h2>
+        <ul class="content-list">
+          <li>Dual Z-axis leadscrew kit — eliminated Z wobble on both machines</li>
+          <li>Metal extruder arm — replaced the brittle stock plastic arm</li>
+          <li>Capricorn PTFE bowden tube — reduced stringing and improved retraction</li>
+          <li>PEI spring steel print surface — replaced glass bed, massively improved first layer adhesion and part removal</li>
+          <li>BLTouch auto bed levelling sensor — removed the need for manual tramming</li>
+        </ul>
+      </div>
+
+      <div class="content-block">
+        <h2>Results</h2>
+        <p>After upgrades, both printers run noticeably quieter and produce more consistent prints. The dual Z-axis and BLTouch combination eliminated the majority of first-layer issues. OctoPrint added remote monitoring and the ability to cancel failed prints without being in the room.</p>
+        <p style="color:var(--muted);font-size:0.88rem;margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid var(--border);">More detail about this project still to come — including photos of both machines before and after, full parts lists with links, and print quality comparisons.</p>
+      </div>
+
+    </div>
+
+    <div class="project-detail-sidebar">
+      <div class="sidebar-card">
+        <h3>Details</h3>
+        <div class="sidebar-row"><span>Year</span><span>2021</span></div>
+        <div class="sidebar-row"><span>Printers</span><span>2× Creality Ender 3 V2</span></div>
+        <div class="sidebar-row"><span>Category</span><span>Hardware / Maker</span></div>
+        <div class="sidebar-row"><span>Status</span><span>Ongoing</span></div>
+      </div>
+      <div class="sidebar-card">
+        <h3>Key upgrades</h3>
+        <div class="sidebar-row"><span>Cooling</span><span>Noctua fans</span></div>
+        <div class="sidebar-row"><span>Levelling</span><span>BLTouch</span></div>
+        <div class="sidebar-row"><span>Z-axis</span><span>Dual leadscrew</span></div>
+        <div class="sidebar-row"><span>Bed</span><span>PEI spring steel</span></div>
+        <div class="sidebar-row"><span>Control</span><span>OctoPrint</span></div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <span>© 2026 Kyran Walker</span>
+    <span>Built with HTML · CSS · JS</span>
+  </footer>
+
+  <script>
+    const hamburger = document.getElementById('hamburger');
+    const navLinks  = document.getElementById('navLinks');
+    hamburger.addEventListener('click', () => navLinks.classList.toggle('open'));
+    navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
+  </script>
+</body>
+</html>

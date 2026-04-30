@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>First Desktop PC Build — Kyran Walker</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+
+  <nav>
+    <a href="../index.html" class="nav-logo">Kyran<span>.</span></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="../services.html">Services</a></li>
+      <li><a href="../projects.html">Projects</a></li>
+      <li><a href="../profile.html">Profile</a></li>
+      <li><a href="../index.html#contact" class="nav-cta">Hire Me</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <div class="project-detail-hero">
+    <a href="../projects.html" class="back-link">← Projects</a>
+    <div class="project-detail-tags">
+      <span class="project-tag">IRL</span>
+    </div>
+    <h1>First Desktop PC Build 🖥️</h1>
+    <p>My first ever custom desktop build — assembled from scratch in 2012 inside an NZXT Phantom case, centred on an Intel i5 and a then-current Nvidia GPU.</p>
+  </div>
+
+  <div class="project-detail-body">
+    <div class="project-detail-content">
+
+      <div class="content-block">
+        <h2>About the build</h2>
+        <p>Before this build I'd only ever used laptops or family computers. Building a PC from scratch in 2012 was a proper rite of passage — researching every component, watching hours of build guides, and crossing my fingers when it powered on for the first time.</p>
+        <p>The NZXT Phantom was a bold choice — a massive full tower with angular lines and LED lighting. It was partly impractical (the thing was enormous) and entirely the right call for a first build. Plenty of space, great cable management, and unmistakably a gaming PC.</p>
+      </div>
+
+      <div class="content-block">
+        <h2>Full spec</h2>
+        <div class="data-table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr><th>Component</th><th>Part</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Case</td><td>NZXT Phantom — Full Tower, Black</td></tr>
+              <tr><td>Motherboard</td><td>ATX — Intel Socket</td></tr>
+              <tr><td>CPU</td><td>Intel Core i5</td></tr>
+              <tr><td>GPU</td><td>Nvidia GeForce (latest 800 series at time of build)</td></tr>
+              <tr><td>RAM</td><td>16 GB</td></tr>
+              <tr><td>SSD</td><td>90 GB Corsair</td></tr>
+              <tr><td>HDD</td><td>1 TB Seagate</td></tr>
+              <tr><td>OS</td><td>Windows</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="content-block">
+        <h2>Storage strategy</h2>
+        <p>At the time, SSDs were still expensive per gigabyte, so the setup was a classic two-drive split: the 90 GB Corsair SSD for the OS and primary applications, and the 1 TB Seagate spinning disk for games, files, and everything else. Boot times compared to a spinning-disk-only laptop were genuinely shocking.</p>
+      </div>
+
+      <div class="content-block">
+        <h2>Lessons learned</h2>
+        <ul class="content-list">
+          <li>Always route cables before fitting the motherboard</li>
+          <li>Thermal paste — less is more</li>
+          <li>Full tower cases are magnificent and completely unnecessary unless you're watercooling</li>
+          <li>Planning the storage split from the start saves reinstalling the OS later</li>
+          <li>Check RAM compatibility with the motherboard before buying</li>
+        </ul>
+      </div>
+
+      <div class="content-block">
+        <h2>Legacy</h2>
+        <p>This machine served as my primary PC for several years before being upgraded. It's where I spent countless hours gaming, got comfortable with Windows internals, and learned to diagnose my first hardware faults — a solid foundation for everything that came after.</p>
+        <p style="color:var(--muted);font-size:0.88rem;margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid var(--border);">More detail about this project still to come — including the exact motherboard and GPU model, photos of the original build, and a full cost breakdown from the receipts if they can be found.</p>
+      </div>
+
+    </div>
+
+    <div class="project-detail-sidebar">
+      <div class="sidebar-card">
+        <h3>Details</h3>
+        <div class="sidebar-row"><span>Year</span><span>2012</span></div>
+        <div class="sidebar-row"><span>Platform</span><span>Intel</span></div>
+        <div class="sidebar-row"><span>Case</span><span>NZXT Phantom</span></div>
+        <div class="sidebar-row"><span>Status</span><span>Retired</span></div>
+      </div>
+      <div class="sidebar-card">
+        <h3>At a glance</h3>
+        <div class="sidebar-row"><span>CPU</span><span>Intel Core i5</span></div>
+        <div class="sidebar-row"><span>RAM</span><span>16 GB</span></div>
+        <div class="sidebar-row"><span>SSD</span><span>90 GB Corsair</span></div>
+        <div class="sidebar-row"><span>HDD</span><span>1 TB Seagate</span></div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <span>© 2026 Kyran Walker</span>
+    <span>Built with HTML · CSS · JS</span>
+  </footer>
+
+  <script>
+    const hamburger = document.getElementById('hamburger');
+    const navLinks  = document.getElementById('navLinks');
+    hamburger.addEventListener('click', () => navLinks.classList.toggle('open'));
+    navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
+  </script>
+</body>
+</html>

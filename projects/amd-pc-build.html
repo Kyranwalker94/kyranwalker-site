@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AMD Desktop PC Build — Kyran Walker</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+
+  <nav>
+    <a href="../index.html" class="nav-logo">Kyran<span>.</span></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="../services.html">Services</a></li>
+      <li><a href="../projects.html">Projects</a></li>
+      <li><a href="../profile.html">Profile</a></li>
+      <li><a href="../index.html#contact" class="nav-cta">Hire Me</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <div class="project-detail-hero">
+    <a href="../projects.html" class="back-link">← Projects</a>
+    <div class="project-detail-tags">
+      <span class="project-tag">IRL</span>
+      <span class="project-tag status-active">Current</span>
+    </div>
+    <h1>AMD Desktop PC Build 🔴</h1>
+    <p>My current daily driver — an AM4 platform build put together in 2020 and upgraded since, balancing performance, value, and longevity.</p>
+  </div>
+
+  <div class="project-detail-body">
+    <div class="project-detail-content">
+
+      <div class="content-block">
+        <h2>About the build</h2>
+        <p>After years on Intel, I switched to AMD's AM4 platform in 2020. The Ryzen lineup was competitive in ways Intel hadn't faced in years, and AM4's longevity — multiple CPU generations on the same socket — made it an attractive long-term platform to invest in.</p>
+        <p>This is my current main machine, used for everything from gaming and 3D printing workflows to web development and general productivity. It's been upgraded incrementally since the initial build and remains well within its useful life.</p>
+      </div>
+
+      <div class="content-block">
+        <h2>Current spec</h2>
+        <div class="data-table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr><th>Component</th><th>Part</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Platform</td><td>AMD AM4</td></tr>
+              <tr><td>CPU</td><td>AMD Ryzen</td></tr>
+              <tr><td>GPU</td><td>AMD Radeon / Nvidia GeForce</td></tr>
+              <tr><td>Motherboard</td><td>AM4 ATX</td></tr>
+              <tr><td>RAM</td><td>DDR4</td></tr>
+              <tr><td>Storage</td><td>NVMe SSD + HDD</td></tr>
+              <tr><td>OS</td><td>Windows 10 / 11</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="content-block">
+        <h2>Why AM4?</h2>
+        <p>AM4 was compelling in 2020 for a few reasons: AMD's Ryzen 3000 and 5000 series were genuinely beating Intel on both performance and price per core, and the platform had already demonstrated support for multiple CPU generations — meaning a future CPU upgrade wouldn't require a motherboard replacement.</p>
+        <p>That longevity has proven out. The machine has had incremental component upgrades without a full rebuild, which is exactly what you want from a platform choice.</p>
+      </div>
+
+      <div class="content-block">
+        <h2>Use cases</h2>
+        <ul class="content-list">
+          <li>Gaming — primary platform for PC gaming</li>
+          <li>3D print workflow — slicing, file prep, and OctoPrint management for the Ender 3 V2 setup</li>
+          <li>Web development — local development environment, browser testing</li>
+          <li>3D modelling — SketchUp, Blender, and SOLIDWORKS projects</li>
+          <li>General productivity — spreadsheets, documents, and data analysis</li>
+        </ul>
+      </div>
+
+      <div class="content-block">
+        <p style="color:var(--muted);font-size:0.88rem;padding-top:1.5rem;border-top:1px solid var(--border);">More detail about this project still to come — including the full spec sheet, photos of the build, and a breakdown of the upgrade history from 2020 to present.</p>
+      </div>
+
+    </div>
+
+    <div class="project-detail-sidebar">
+      <div class="sidebar-card">
+        <h3>Details</h3>
+        <div class="sidebar-row"><span>Built</span><span>2020</span></div>
+        <div class="sidebar-row"><span>Platform</span><span>AMD AM4</span></div>
+        <div class="sidebar-row"><span>Status</span><span>Active — current machine</span></div>
+      </div>
+      <div class="sidebar-card">
+        <h3>Compared to first build</h3>
+        <div class="sidebar-row"><span>CPU gen</span><span>Ryzen vs Core i5</span></div>
+        <div class="sidebar-row"><span>Storage</span><span>NVMe vs SATA SSD</span></div>
+        <div class="sidebar-row"><span>Platform</span><span>AMD vs Intel</span></div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <span>© 2026 Kyran Walker</span>
+    <span>Built with HTML · CSS · JS</span>
+  </footer>
+
+  <script>
+    const hamburger = document.getElementById('hamburger');
+    const navLinks  = document.getElementById('navLinks');
+    hamburger.addEventListener('click', () => navLinks.classList.toggle('open'));
+    navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
+  </script>
+</body>
+</html>
