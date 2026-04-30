@@ -1,8 +1,8 @@
 // ─────────────────────────────────────────────────────────────────────────────
 //  LIFE TIMELINE DATA
 //  Edit the arrays below to update what shows for each year.
-//  Each entry needs a `start` and `end` year (inclusive).
-//  Achievements use a single `year` instead of a range.
+//  Ranged entries need `start` and `end` (inclusive).
+//  Point-in-time entries (achievements, travel) use a single `year`.
 // ─────────────────────────────────────────────────────────────────────────────
 
 const BIRTH_YEAR = 1994;
@@ -11,39 +11,63 @@ const TIMELINE = {
 
   living: [
     {
-      start: 1994, end: 2006,
-      location: 'East Sussex, UK',
-      detail: 'Born and raised in East Sussex.',
+      start: 1994, end: 1998,
+      location: 'Uckfield, East Sussex',
+      detail: 'Born and raised in Uckfield — a picturesque market town in East Sussex, known for its historic buildings and close-knit community.',
     },
     {
-      start: 2007, end: 2012,
+      start: 1999, end: 2005,
+      location: 'Towyn, Wales',
+      detail: 'Moved to the coastal town of Towyn (Kinmel Bay) in North Wales — a charming seaside community with beautiful coastal views.',
+    },
+    {
+      start: 2006, end: 2011,
       location: 'Abu Dhabi, UAE 🇦🇪',
-      detail: 'Moved abroad with family — attending Raha International School in the UAE.',
+      detail: 'Moved abroad with family to Abu Dhabi — the capital of the United Arab Emirates, known for its modern architecture and vibrant international community.',
     },
     {
-      start: 2012, end: 2015,
-      location: 'Brighton, UK',
-      detail: 'University life on the south coast.',
+      start: 2012, end: 2016,
+      location: 'Eastbourne, East Sussex',
+      detail: 'Based in Eastbourne during university and early career years — a popular seaside town with a beautiful coastline.',
     },
     {
-      start: 2015, end: 2016,
-      location: 'Eastbourne, UK',
-      detail: '',
-    },
-    {
-      start: 2017, end: 2018,
+      start: 2017, end: 2017,
       location: 'Auckland, New Zealand 🇳🇿',
-      detail: 'Working holiday — one of the best decisions I ever made.',
+      detail: 'A working holiday in Auckland — a dynamic city with stunning harbour views, a diverse cultural scene, and a thriving business district. One of the best decisions I ever made.',
     },
     {
-      start: 2018, end: 2019,
-      location: 'Eastbourne, UK',
+      start: 2018, end: 2020,
+      location: 'Eastbourne, East Sussex',
       detail: '',
     },
     {
-      start: 2020, end: 2026,
+      start: 2021, end: 2023,
+      location: 'Milton Keynes, England',
+      detail: 'Relocated to Milton Keynes for the Openreach role — a modern city with a strong emphasis on technology and innovation.',
+    },
+    {
+      start: 2024, end: 2024,
+      location: 'Roxton, Bedfordshire',
+      detail: 'A quaint village with a rich history, providing a peaceful rural setting with a close-knit community feel.',
+    },
+    {
+      start: 2025, end: 2026,
       location: 'Hailsham, East Sussex',
       detail: 'Settled back in East Sussex.',
+    },
+  ],
+
+  // Annual travel — shown inside the Living box
+  travel: [
+    { year: 1994, destination: 'Turkey' },
+    { year: 1995, destination: 'France' },
+    { year: 1996, destination: 'Spain' },
+    { year: 1997, destination: 'France' },
+    { year: 1998, destination: 'Spain' },
+    {
+      year: 2024,
+      destination: 'Devon, UK',
+      detail: 'Short trip to Devon — stayed in an Eco Lodge. Less travel this year to keep the Defender fund topped up.',
     },
   ],
 
@@ -53,67 +77,168 @@ const TIMELINE = {
       company: 'Eastbourne Motoring Centre',
       role: 'Sales & Purchase Ledger Clerk',
       location: 'Eastbourne',
+      detail: 'Processed high-volume invoices, banking, and supplier payments across a multi-dealership group. Prepared accruals, prepayments journals, and ad hoc management reports for the MD.',
     },
     {
-      start: 2017, end: 2018,
+      start: 2017, end: 2017,
       company: 'Wynter Recruitment',
       role: 'Associate Recruitment Partner',
       location: 'Auckland, NZ',
+      detail: 'Helped establish the Accountancy & Finance desk for a 100% NZ-owned recruitment business. Reviewed CVs, interviewed candidates, and built client relationships across the region.',
     },
     {
       start: 2018, end: 2019,
       company: 'Plummer Parsons',
       role: 'Junior Accountant',
       location: 'Eastbourne',
+      detail: 'Compiled statutory accounts for SMEs, conducted company audits (stock-takes, ledger tests, client visits), and managed VAT & Corporation Tax returns for a portfolio of clients across three offices.',
     },
     {
-      start: 2020, end: 2021,
+      start: 2020, end: 2020,
       company: 'Mockford Blinds',
       role: 'Bookkeeper & Business Partner',
       location: 'Eastbourne',
+      detail: 'Took over all operations during COVID — manufacturing and fitting blinds, managing finances in Xero, building the company website, and running Google & Facebook Ads. Generated £70k in sales over nine months.',
     },
     {
-      start: 2021, end: 2024,
+      start: 2021, end: 2021,
       company: 'Openreach',
-      role: 'Apprentice → Advanced FTTP Engineer',
+      role: 'Apprentice FTTP Engineer',
       location: 'Milton Keynes',
+      detail: 'Installed fibre-to-the-premises connections at customer properties, ensuring installations met the highest safety and quality standards. Often covered for the Tails Lead, taking on additional leadership responsibilities.',
+    },
+    {
+      start: 2022, end: 2024,
+      company: 'Openreach',
+      role: 'Advanced FTTP Engineer',
+      location: 'Milton Keynes',
+      detail: 'Progressed to Advanced Engineer and Patch Lead — coordinating regional FTTP deployments, managing team operations, and developing data tools to improve efficiency and resource allocation.',
     },
     {
       start: 2025, end: 2025,
       company: 'Openreach',
       role: 'Data Analysis Project Lead',
       location: 'Milton Keynes',
+      detail: 'Developed internal reporting tools and data processes to optimise FTTP deployment. Managed delayed order administration and coordinated across teams to streamline workflows.',
     },
   ],
 
   learning: [
     {
-      start: 2007, end: 2012,
-      institution: 'Raha International School',
-      qualification: 'International Baccalaureate',
+      start: 1997, end: 1997,
+      institution: 'Manor Nursery',
+      qualification: 'UK Early Years',
+      location: 'Uckfield',
+      detail: '',
+    },
+    {
+      start: 1998, end: 1998,
+      institution: 'Manor Infants',
+      qualification: 'UK Early Years',
+      location: 'Uckfield',
+      detail: '',
+    },
+    {
+      start: 1999, end: 2000,
+      institution: 'Towyn Infants',
+      qualification: 'UK Primary',
+      location: 'Towyn, Wales',
+      detail: '',
+    },
+    {
+      start: 2001, end: 2004,
+      institution: 'Towyn Primary',
+      qualification: 'UK Primary',
+      location: 'Towyn, Wales',
+      detail: '',
+    },
+    {
+      start: 2005, end: 2005,
+      institution: 'Emrys Ap Iwan',
+      qualification: 'UK Secondary',
+      location: 'Abergele, Wales',
+      detail: '',
+    },
+    {
+      start: 2006, end: 2006,
+      institution: 'The Cambridge High School',
+      qualification: 'UK Secondary',
       location: 'Abu Dhabi',
+      detail: '',
+    },
+    {
+      start: 2007, end: 2009,
+      institution: 'Raha International School',
+      qualification: 'IB Middle Years Programme (MYP)',
+      location: 'Abu Dhabi',
+      detail: 'An international school with a focus on global perspectives, academic excellence, and personal development.',
+    },
+    {
+      start: 2010, end: 2012,
+      institution: 'Raha International School',
+      qualification: 'IB Diploma',
+      location: 'Abu Dhabi',
+      detail: '',
     },
     {
       start: 2012, end: 2015,
       institution: 'University of Brighton',
-      qualification: 'BSc (Hons) Accounting & Finance',
+      qualification: 'BSc (Hons) Accounting & Finance — 2:1',
       location: 'Brighton',
+      detail: '',
     },
     {
-      start: 2018, end: 2020,
-      institution: 'ICAEW',
-      qualification: 'ACA Professional Qualification (3 exams passed)',
+      start: 2015, end: 2016,
+      institution: 'ACCA',
+      qualification: 'ACCA Professional Qualification',
       location: 'UK',
+      detail: '',
+    },
+    {
+      start: 2018, end: 2019,
+      institution: 'ICAEW',
+      qualification: 'ACA Professional Qualification (3 exams)',
+      location: 'UK',
+      detail: '',
+    },
+    {
+      start: 2020, end: 2020,
+      institution: 'Harvard / edX',
+      qualification: 'CS50: Introduction to Computer Science',
+      location: 'Online',
+      detail: 'Harvard\'s renowned introduction to computer science — covering algorithms, data structures, web development, and more.',
     },
     {
       start: 2021, end: 2023,
       institution: 'Openreach / BT Group',
       qualification: 'NVQ Level 3 Telecoms Operative',
       location: 'UK',
+      detail: '',
+    },
+    {
+      start: 2022, end: 2022,
+      institution: 'edX',
+      qualification: '3D Design & CAD',
+      location: 'Online',
+      detail: '',
+    },
+    {
+      start: 2023, end: 2023,
+      institution: 'Harvard / edX',
+      qualification: 'CS50 SQL',
+      location: 'Online',
+      detail: '',
+    },
+    {
+      start: 2024, end: 2024,
+      institution: 'edX',
+      qualification: 'SOLIDWORKS CAD Fundamentals',
+      location: 'Online',
+      detail: 'Sketching, extruded features, assemblies, exploded views, and detailed engineering drawings.',
     },
   ],
 
-  // Point-in-time events — use a single `year` field
+  // Point-in-time achievements — use `year`, not a range
   achievements: [
     {
       year: 1994,
@@ -127,8 +252,13 @@ const TIMELINE = {
     },
     {
       year: 2015,
-      title: 'BSc 2:1 Accounting & Finance',
+      title: 'BSc 2:1 — Accounting & Finance',
       detail: 'Graduated from the University of Brighton with a 2:1 Honours degree.',
+    },
+    {
+      year: 2020,
+      title: 'CS50 Completed',
+      detail: 'Finished Harvard\'s CS50 on edX — the course that kicked off serious programming projects.',
     },
     {
       year: 2021,
@@ -138,16 +268,16 @@ const TIMELINE = {
     {
       year: 2024,
       title: 'Advanced FTTP Engineer',
-      detail: 'Progressed through the full Openreach apprenticeship pathway to Advanced Engineer status.',
+      detail: 'Completed the full Openreach apprenticeship pathway and qualified as an Advanced FTTP Engineer.',
     },
     {
       year: 2025,
       title: 'Data & Process Lead',
-      detail: 'Moved into a data analysis and process improvement role at Openreach, building internal tooling and reporting pipelines.',
+      detail: 'Transitioned into a data analysis and process improvement role at Openreach, building internal tooling and reporting pipelines.',
     },
   ],
 
-  // Projects — shown for the year range they were active
+  // Projects — shown across the year range they were active
   projects: [
     {
       start: 2019, end: 2020,
@@ -160,14 +290,14 @@ const TIMELINE = {
       start: 2020, end: 2020,
       title: 'Lockdown Quiz',
       emoji: '🎯',
-      detail: 'A Scratch quiz game with specialist categories, score tracking, and Twitch streaming support.',
+      detail: 'A Scratch quiz game with specialist categories, score tracking, and Twitch streaming support — built during lockdown.',
       link: 'lockdown-quiz.html',
     },
     {
       start: 2020, end: 2021,
       title: 'Mockford Blinds',
       emoji: '🪟',
-      detail: 'Built and launched a full business website with Google and Facebook Ads campaigns.',
+      detail: 'Built and launched a full business website with Google and Facebook Ads campaign management.',
       link: 'mockford-blinds.html',
     },
     {
@@ -238,11 +368,14 @@ function inYear(entries, year) {
 //  RENDERERS
 // ─────────────────────────────────────────────────────────────────────────────
 
-function renderLiving(entries) {
-  if (!entries.length) return null;
-  const e = entries[0];
+function renderLiving(livingEntries, travelEntries) {
+  if (!livingEntries.length) return null;
+  const e = livingEntries[0];
+  const t = travelEntries[0] || null;
   return `
     <div class="tl-row"><span class="tl-row-icon">📍</span><span>${e.location}</span></div>
+    ${t ? `<div class="tl-row"><span class="tl-row-icon">✈️</span><span>${t.destination}</span></div>
+           ${t.detail ? `<p class="tl-detail">${t.detail}</p>` : ''}` : ''}
     ${e.detail ? `<p class="tl-detail">${e.detail}</p>` : ''}
   `;
 }
@@ -254,6 +387,7 @@ function renderWorking(entries) {
       <div class="tl-row"><span class="tl-row-icon">🏢</span><strong>${e.company}</strong></div>
       <div class="tl-row"><span class="tl-row-icon">💼</span><span>${e.role}</span></div>
       <div class="tl-row"><span class="tl-row-icon">📍</span><span>${e.location}</span></div>
+      ${e.detail ? `<p class="tl-detail">${e.detail}</p>` : ''}
     </div>
   `).join('')}</div>`;
 }
@@ -265,6 +399,7 @@ function renderLearning(entries) {
       <div class="tl-row"><span class="tl-row-icon">🎓</span><strong>${e.institution}</strong></div>
       <div class="tl-row"><span class="tl-row-icon">📜</span><span>${e.qualification}</span></div>
       <div class="tl-row"><span class="tl-row-icon">📍</span><span>${e.location}</span></div>
+      ${e.detail ? `<p class="tl-detail">${e.detail}</p>` : ''}
     </div>
   `).join('')}</div>`;
 }
@@ -301,9 +436,8 @@ function setBox(id, html) {
     box.classList.add('hidden');
   } else {
     box.classList.remove('hidden');
-    // Re-trigger entrance animation
     box.style.animation = 'none';
-    box.offsetHeight; // force reflow
+    box.offsetHeight; // force reflow to re-trigger animation
     box.style.animation = '';
     content.innerHTML = html;
   }
@@ -311,12 +445,13 @@ function setBox(id, html) {
 
 function updateGrid(year) {
   const living       = inRange(TIMELINE.living,       year);
+  const travel       = inYear( TIMELINE.travel,       year);
   const working      = inRange(TIMELINE.working,      year);
   const learning     = inRange(TIMELINE.learning,     year);
   const achievements = inYear( TIMELINE.achievements, year);
   const projects     = inRange(TIMELINE.projects,     year);
 
-  setBox('tl-living',       renderLiving(living));
+  setBox('tl-living',       renderLiving(living, travel));
   setBox('tl-working',      renderWorking(working));
   setBox('tl-learning',     renderLearning(learning));
   setBox('tl-achievements', renderAchievements(achievements));
