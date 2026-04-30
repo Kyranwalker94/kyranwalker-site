@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Life Timeline — Kyran Walker</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="../index.html" class="nav-logo">Kyran<span>.</span></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="../services.html">Services</a></li>
+      <li><a href="../projects.html">Projects</a></li>
+      <li><a href="../profile.html">Profile</a></li>
+      <li><a href="../index.html#contact" class="nav-cta">Hire Me</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- HERO -->
+  <div class="project-detail-hero">
+    <a href="../projects.html" class="back-link">← Projects</a>
+    <div class="project-detail-tags">
+      <span class="project-tag">Web</span>
+      <span class="project-tag">Interactive</span>
+    </div>
+    <h1>Life Timeline</h1>
+    <p>Drag the slider to explore any year of my life — where I was living, what I was working on, what I was learning, and what I built.</p>
+  </div>
+
+  <!-- SLIDER -->
+  <section class="tl-slider-section">
+    <div class="tl-year-display">
+      <span class="tl-year" id="tl-year">2024</span>
+      <span class="tl-age"  id="tl-age">Age 30</span>
+    </div>
+    <input
+      type="range"
+      class="tl-slider"
+      id="tl-slider"
+      min="1994"
+      max="2026"
+      value="2024"
+      step="1"
+    >
+    <div class="tl-marks">
+      <span>1994</span>
+      <span>2000</span>
+      <span>2005</span>
+      <span>2010</span>
+      <span>2015</span>
+      <span>2020</span>
+      <span>2026</span>
+    </div>
+  </section>
+
+  <!-- CONTENT GRID -->
+  <section class="tl-grid-section">
+
+    <div class="tl-grid">
+
+      <div class="tl-box" id="tl-living">
+        <div class="tl-box-header">
+          <span class="tl-box-icon">🏠</span>
+          <span class="tl-box-title">Living</span>
+        </div>
+        <div id="tl-living-content"></div>
+      </div>
+
+      <div class="tl-box" id="tl-working">
+        <div class="tl-box-header">
+          <span class="tl-box-icon">💼</span>
+          <span class="tl-box-title">Working</span>
+        </div>
+        <div id="tl-working-content"></div>
+      </div>
+
+      <div class="tl-box" id="tl-learning">
+        <div class="tl-box-header">
+          <span class="tl-box-icon">🎓</span>
+          <span class="tl-box-title">Learning</span>
+        </div>
+        <div id="tl-learning-content"></div>
+      </div>
+
+      <div class="tl-box" id="tl-achievements">
+        <div class="tl-box-header">
+          <span class="tl-box-icon">⭐</span>
+          <span class="tl-box-title">Big Achievements</span>
+        </div>
+        <div id="tl-achievements-content"></div>
+      </div>
+
+      <div class="tl-box" id="tl-projects">
+        <div class="tl-box-header">
+          <span class="tl-box-icon">🛠️</span>
+          <span class="tl-box-title">Projects</span>
+        </div>
+        <div id="tl-projects-content"></div>
+      </div>
+
+    </div>
+
+    <div class="tl-empty" id="tl-empty">
+      Nothing recorded for this year yet.
+    </div>
+
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <span>© 2026 Kyran Walker</span>
+    <span>Built with HTML · CSS · JS</span>
+  </footer>
+
+  <script>
+    const hamburger = document.getElementById('hamburger');
+    const navLinks  = document.getElementById('navLinks');
+    hamburger.addEventListener('click', () => navLinks.classList.toggle('open'));
+    navLinks.querySelectorAll('a').forEach(a =>
+      a.addEventListener('click', () => navLinks.classList.remove('open'))
+    );
+  </script>
+  <script src="../js/life-timeline.js"></script>
+
+</body>
+</html>
