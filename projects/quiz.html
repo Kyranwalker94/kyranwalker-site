@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Quiz — Kyran Walker</title>
+  <title>General Knowledge Quiz — Kyran Walker</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
@@ -29,70 +29,114 @@
     <div class="project-detail-tags">
       <span class="project-tag">Web</span>
       <span class="project-tag">Game</span>
-      <span class="project-tag status-wip">Coming Soon</span>
     </div>
     <h1>General Knowledge Quiz 🧠</h1>
-    <p>An endless multiple-choice quiz — answer as many questions as you can before your streak breaks. Top streaks go on the leaderboard.</p>
+    <p>Answer as many questions as you can before your streak breaks. Pick a category, watch the 30-second clock, and aim for the leaderboard.</p>
   </div>
 
-  <!-- COMING SOON PLACEHOLDER -->
-  <section class="section" style="max-width:700px;margin:0 auto;padding:4rem 2rem 6rem;">
-    <div style="background:var(--surface);border:1px solid var(--border);border-radius:1.25rem;padding:3rem 2.5rem;text-align:center;">
-      <div style="font-size:3.5rem;margin-bottom:1rem;">🧠</div>
-      <h2 style="font-family:var(--font-head);font-size:1.5rem;margin-bottom:0.75rem;">Game in development</h2>
-      <p style="color:var(--muted);line-height:1.7;max-width:420px;margin:0 auto;">
-        The quiz is being built. It'll pull from thousands of questions across categories, track your streak, and let you put your name on the leaderboard.
-      </p>
-    </div>
+  <!-- GAME -->
+  <section class="quiz-section">
+    <div class="quiz-layout">
 
-    <div class="content-block" style="margin-top:3rem;">
-      <h2>How it works</h2>
-      <p>Questions are pulled live from the Open Trivia Database — a community-maintained bank of thousands of general knowledge questions across dozens of categories. No two sessions are the same.</p>
-      <ul class="content-list">
-        <li>Pick a category and difficulty, or play mixed for maximum variety</li>
-        <li>Four answer options per question — one correct</li>
-        <li>Each correct answer extends your streak</li>
-        <li>Wrong answer ends the game — your streak is your score</li>
-        <li>Qualify for the leaderboard with a top-10 streak — enter a 3-letter name</li>
-        <li>Leaderboard is shared and persistent — beat the current top score</li>
-      </ul>
-    </div>
+      <!-- LEFT: game -->
+      <div class="quiz-game-wrap">
 
-    <div class="content-block">
-      <h2>Categories</h2>
-      <div style="display:flex;flex-wrap:wrap;gap:0.5rem;margin-top:0.5rem;">
-        <span class="project-tag">General Knowledge</span>
-        <span class="project-tag">Science &amp; Nature</span>
-        <span class="project-tag">History</span>
-        <span class="project-tag">Geography</span>
-        <span class="project-tag">Sport</span>
-        <span class="project-tag">Music</span>
-        <span class="project-tag">Film &amp; TV</span>
-        <span class="project-tag">Books</span>
-        <span class="project-tag">Technology</span>
-        <span class="project-tag">Vehicles</span>
-        <span class="project-tag">Mixed</span>
+        <div class="quiz-top-bar">
+          <div class="quiz-streak-display">
+            <span class="quiz-streak-num" id="streak-num">0</span>
+            <span class="quiz-streak-label">streak</span>
+          </div>
+          <div class="quiz-timer-wrap">
+            <div class="quiz-timer-bar">
+              <div class="quiz-timer-fill" id="timer-fill"></div>
+            </div>
+            <span class="quiz-timer-num" id="timer-num">30</span>
+          </div>
+        </div>
+
+        <div class="quiz-card">
+          <div class="quiz-category-label" id="quiz-category"></div>
+          <p class="quiz-question-text" id="quiz-question">Loading questions…</p>
+          <div class="quiz-answers" id="quiz-answers"></div>
+        </div>
+
       </div>
-    </div>
 
-    <div class="content-block">
-      <h2>Scoring</h2>
-      <div class="data-table-wrap">
-        <table class="data-table">
-          <thead>
-            <tr><th>Streak</th><th>Rating</th></tr>
-          </thead>
-          <tbody>
-            <tr><td>1 – 4</td><td>Getting started</td></tr>
-            <tr><td>5 – 9</td><td>Solid effort</td></tr>
-            <tr><td>10 – 19</td><td>Impressive</td></tr>
-            <tr><td>20 – 29</td><td>Outstanding</td></tr>
-            <tr><td>30+</td><td>Legendary</td></tr>
-          </tbody>
-        </table>
+      <!-- RIGHT: sidebar -->
+      <div class="quiz-sidebar">
+
+        <div class="sidebar-card">
+          <h3>Settings</h3>
+          <div style="display:flex;flex-direction:column;gap:0.75rem;margin-top:0.25rem;">
+            <div>
+              <p class="field-label" style="margin-bottom:0.35rem;">Category</p>
+              <select id="category-select" style="width:100%;">
+                <option value="0">Any category</option>
+                <option value="9">General Knowledge</option>
+                <option value="17">Science &amp; Nature</option>
+                <option value="18">Technology</option>
+                <option value="23">History</option>
+                <option value="22">Geography</option>
+                <option value="21">Sport</option>
+                <option value="11">Film &amp; TV</option>
+                <option value="12">Music</option>
+                <option value="10">Books</option>
+                <option value="28">Vehicles</option>
+              </select>
+            </div>
+            <div>
+              <p class="field-label" style="margin-bottom:0.35rem;">Difficulty</p>
+              <select id="difficulty-select" style="width:100%;">
+                <option value="any">Any difficulty</option>
+                <option value="easy">Easy</option>
+                <option value="medium">Medium</option>
+                <option value="hard">Hard</option>
+              </select>
+            </div>
+            <button id="new-game-btn" class="quiz-new-game-btn">New Game</button>
+          </div>
+        </div>
+
+        <div class="wordle-leaderboard">
+          <h3>Top Streaks</h3>
+          <ol id="quiz-leaderboard-list"></ol>
+        </div>
+
+        <div class="sidebar-card">
+          <h3>How to play</h3>
+          <div class="sidebar-row"><span>Correct answer</span><span>Streak +1</span></div>
+          <div class="sidebar-row"><span>Wrong answer</span><span>Game over</span></div>
+          <div class="sidebar-row"><span>Time runs out</span><span>Game over</span></div>
+          <div class="sidebar-row"><span>Timer</span><span>30 seconds</span></div>
+          <div class="sidebar-row"><span>Shortcut</span><span>Keys 1–4</span></div>
+        </div>
+
       </div>
     </div>
   </section>
+
+  <!-- MODAL -->
+  <div id="quiz-modal" class="wordle-modal hidden">
+    <div class="wordle-modal-inner">
+      <p id="quiz-modal-message" style="font-family:var(--font-head);font-size:1.1rem;font-weight:700;white-space:pre-line;line-height:1.55;"></p>
+
+      <div id="quiz-name-section" class="modal-name-section hidden">
+        <p class="modal-name-label">Top streak! Enter your 3-letter name for the leaderboard</p>
+        <input
+          id="quiz-name-input"
+          class="modal-name-input"
+          type="text"
+          maxlength="3"
+          placeholder="AAA"
+          autocomplete="off"
+          spellcheck="false"
+        >
+        <button id="quiz-submit-btn" class="quiz-modal-btn quiz-modal-btn--alt">Submit score</button>
+      </div>
+
+      <button id="quiz-play-again-btn" class="quiz-modal-btn">Play Again</button>
+    </div>
+  </div>
 
   <footer>
     <span>© 2026 Kyran Walker</span>
@@ -105,5 +149,7 @@
     hamburger.addEventListener('click', () => navLinks.classList.toggle('open'));
     navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
   </script>
+  <script src="../js/quiz.js"></script>
+
 </body>
 </html>

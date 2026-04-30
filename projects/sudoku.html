@@ -29,53 +29,65 @@
     <div class="project-detail-tags">
       <span class="project-tag">Web</span>
       <span class="project-tag">Game</span>
-      <span class="project-tag status-wip">Coming Soon</span>
     </div>
     <h1>Sudoku 🔢</h1>
-    <p>A fully playable Sudoku with four difficulty levels, pencil notes, conflict highlighting, and a timer — built from scratch in vanilla JS.</p>
+    <p>Four difficulty levels, pencil notes, conflict highlighting, and a timer. Generated fresh every game — no two puzzles are the same.</p>
   </div>
 
-  <!-- COMING SOON PLACEHOLDER -->
-  <section class="section" style="max-width:700px;margin:0 auto;padding:4rem 2rem 6rem;">
-    <div style="background:var(--surface);border:1px solid var(--border);border-radius:1.25rem;padding:3rem 2.5rem;text-align:center;">
-      <div style="font-size:3.5rem;margin-bottom:1rem;">🔢</div>
-      <h2 style="font-family:var(--font-head);font-size:1.5rem;margin-bottom:0.75rem;">Game in development</h2>
-      <p style="color:var(--muted);line-height:1.7;max-width:420px;margin:0 auto;">
-        The Sudoku game is being built. Check back soon — it'll support Easy, Medium, Hard, and Expert puzzles with notes mode and conflict detection.
-      </p>
+  <!-- GAME -->
+  <section class="sudoku-section">
+
+    <!-- Controls row -->
+    <div class="sudoku-top-bar">
+      <select id="difficulty-select">
+        <option value="easy">Easy</option>
+        <option value="medium">Medium</option>
+        <option value="hard">Hard</option>
+        <option value="expert">Expert</option>
+      </select>
+      <button id="new-game-btn" class="sudoku-ctrl-btn">New Game</button>
+      <button id="notes-btn" class="sudoku-action-btn">✏️ Notes: Off</button>
+      <span class="sudoku-timer" id="sudoku-timer">0:00</span>
     </div>
 
-    <div class="content-block" style="margin-top:3rem;">
-      <h2>How it will work</h2>
-      <p>The game uses a pre-generated bank of puzzles for each difficulty level, so there's no puzzle generation delay on load. Every puzzle is guaranteed to have exactly one solution.</p>
-      <ul class="content-list">
-        <li>Select a cell, then press a number key or use the on-screen numpad</li>
-        <li>Pencil mode — toggle notes on/off to track candidates in any cell</li>
-        <li>Conflict highlighting — rule violations are flagged immediately without removing your entry</li>
-        <li>Row, column, and box highlighting when a cell is selected</li>
-        <li>Same-digit highlighting — selecting any filled digit highlights all matching numbers on the board</li>
-        <li>Timer running from first input</li>
-        <li>Check button — marks all current errors</li>
-      </ul>
-    </div>
+    <!-- Board + numpad -->
+    <div class="sudoku-board-wrap">
+      <div class="sudoku-board" id="sudoku-board"></div>
 
-    <div class="content-block">
-      <h2>Difficulty levels</h2>
-      <div class="data-table-wrap">
-        <table class="data-table">
-          <thead>
-            <tr><th>Level</th><th>Cells given</th><th>Typical solve time</th></tr>
-          </thead>
-          <tbody>
-            <tr><td>Easy</td><td>~40</td><td>5–10 min</td></tr>
-            <tr><td>Medium</td><td>~32</td><td>15–25 min</td></tr>
-            <tr><td>Hard</td><td>~26</td><td>30–60 min</td></tr>
-            <tr><td>Expert</td><td>~22</td><td>60+ min</td></tr>
-          </tbody>
-        </table>
+      <div class="sudoku-numpad">
+        <button class="sudoku-num-btn" data-num="1">1</button>
+        <button class="sudoku-num-btn" data-num="2">2</button>
+        <button class="sudoku-num-btn" data-num="3">3</button>
+        <button class="sudoku-num-btn" data-num="4">4</button>
+        <button class="sudoku-num-btn" data-num="5">5</button>
+        <button class="sudoku-num-btn" data-num="6">6</button>
+        <button class="sudoku-num-btn" data-num="7">7</button>
+        <button class="sudoku-num-btn" data-num="8">8</button>
+        <button class="sudoku-num-btn" data-num="9">9</button>
+      </div>
+
+      <div class="sudoku-actions">
+        <button id="sudoku-erase-btn" class="sudoku-action-btn">⌫ Erase</button>
       </div>
     </div>
+
+    <!-- How to play -->
+    <div class="sudoku-help">
+      <span>Click a cell → type a number</span>
+      <span>Arrow keys to navigate</span>
+      <span><kbd>N</kbd> toggles notes mode</span>
+      <span>Wrong entries show in red</span>
+    </div>
+
   </section>
+
+  <!-- WIN MODAL -->
+  <div id="sudoku-modal" class="wordle-modal hidden">
+    <div class="wordle-modal-inner">
+      <p id="sudoku-modal-message" style="font-family:var(--font-head);font-size:1.2rem;font-weight:700;"></p>
+      <button id="sudoku-play-again-btn" class="quiz-modal-btn">New Puzzle</button>
+    </div>
+  </div>
 
   <footer>
     <span>© 2026 Kyran Walker</span>
@@ -88,5 +100,7 @@
     hamburger.addEventListener('click', () => navLinks.classList.toggle('open'));
     navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
   </script>
+  <script src="../js/sudoku.js"></script>
+
 </body>
 </html>
