@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sudoku — Kyran Walker</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+
+  <nav>
+    <a href="../index.html" class="nav-logo">Kyran<span>.</span></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="../services.html">Services</a></li>
+      <li><a href="../projects.html">Projects</a></li>
+      <li><a href="../profile.html">Profile</a></li>
+      <li><a href="../index.html#contact" class="nav-cta">Hire Me</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <div class="project-detail-hero">
+    <a href="../projects.html" class="back-link">← Projects</a>
+    <div class="project-detail-tags">
+      <span class="project-tag">Web</span>
+      <span class="project-tag">Game</span>
+      <span class="project-tag status-wip">Coming Soon</span>
+    </div>
+    <h1>Sudoku 🔢</h1>
+    <p>A fully playable Sudoku with four difficulty levels, pencil notes, conflict highlighting, and a timer — built from scratch in vanilla JS.</p>
+  </div>
+
+  <!-- COMING SOON PLACEHOLDER -->
+  <section class="section" style="max-width:700px;margin:0 auto;padding:4rem 2rem 6rem;">
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:1.25rem;padding:3rem 2.5rem;text-align:center;">
+      <div style="font-size:3.5rem;margin-bottom:1rem;">🔢</div>
+      <h2 style="font-family:var(--font-head);font-size:1.5rem;margin-bottom:0.75rem;">Game in development</h2>
+      <p style="color:var(--muted);line-height:1.7;max-width:420px;margin:0 auto;">
+        The Sudoku game is being built. Check back soon — it'll support Easy, Medium, Hard, and Expert puzzles with notes mode and conflict detection.
+      </p>
+    </div>
+
+    <div class="content-block" style="margin-top:3rem;">
+      <h2>How it will work</h2>
+      <p>The game uses a pre-generated bank of puzzles for each difficulty level, so there's no puzzle generation delay on load. Every puzzle is guaranteed to have exactly one solution.</p>
+      <ul class="content-list">
+        <li>Select a cell, then press a number key or use the on-screen numpad</li>
+        <li>Pencil mode — toggle notes on/off to track candidates in any cell</li>
+        <li>Conflict highlighting — rule violations are flagged immediately without removing your entry</li>
+        <li>Row, column, and box highlighting when a cell is selected</li>
+        <li>Same-digit highlighting — selecting any filled digit highlights all matching numbers on the board</li>
+        <li>Timer running from first input</li>
+        <li>Check button — marks all current errors</li>
+      </ul>
+    </div>
+
+    <div class="content-block">
+      <h2>Difficulty levels</h2>
+      <div class="data-table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr><th>Level</th><th>Cells given</th><th>Typical solve time</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Easy</td><td>~40</td><td>5–10 min</td></tr>
+            <tr><td>Medium</td><td>~32</td><td>15–25 min</td></tr>
+            <tr><td>Hard</td><td>~26</td><td>30–60 min</td></tr>
+            <tr><td>Expert</td><td>~22</td><td>60+ min</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span>© 2026 Kyran Walker</span>
+    <span>Built with HTML · CSS · JS</span>
+  </footer>
+
+  <script>
+    const hamburger = document.getElementById('hamburger');
+    const navLinks  = document.getElementById('navLinks');
+    hamburger.addEventListener('click', () => navLinks.classList.toggle('open'));
+    navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
+  </script>
+</body>
+</html>

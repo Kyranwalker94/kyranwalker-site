@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quiz — Kyran Walker</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+
+  <nav>
+    <a href="../index.html" class="nav-logo">Kyran<span>.</span></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="../services.html">Services</a></li>
+      <li><a href="../projects.html">Projects</a></li>
+      <li><a href="../profile.html">Profile</a></li>
+      <li><a href="../index.html#contact" class="nav-cta">Hire Me</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <div class="project-detail-hero">
+    <a href="../projects.html" class="back-link">← Projects</a>
+    <div class="project-detail-tags">
+      <span class="project-tag">Web</span>
+      <span class="project-tag">Game</span>
+      <span class="project-tag status-wip">Coming Soon</span>
+    </div>
+    <h1>General Knowledge Quiz 🧠</h1>
+    <p>An endless multiple-choice quiz — answer as many questions as you can before your streak breaks. Top streaks go on the leaderboard.</p>
+  </div>
+
+  <!-- COMING SOON PLACEHOLDER -->
+  <section class="section" style="max-width:700px;margin:0 auto;padding:4rem 2rem 6rem;">
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:1.25rem;padding:3rem 2.5rem;text-align:center;">
+      <div style="font-size:3.5rem;margin-bottom:1rem;">🧠</div>
+      <h2 style="font-family:var(--font-head);font-size:1.5rem;margin-bottom:0.75rem;">Game in development</h2>
+      <p style="color:var(--muted);line-height:1.7;max-width:420px;margin:0 auto;">
+        The quiz is being built. It'll pull from thousands of questions across categories, track your streak, and let you put your name on the leaderboard.
+      </p>
+    </div>
+
+    <div class="content-block" style="margin-top:3rem;">
+      <h2>How it works</h2>
+      <p>Questions are pulled live from the Open Trivia Database — a community-maintained bank of thousands of general knowledge questions across dozens of categories. No two sessions are the same.</p>
+      <ul class="content-list">
+        <li>Pick a category and difficulty, or play mixed for maximum variety</li>
+        <li>Four answer options per question — one correct</li>
+        <li>Each correct answer extends your streak</li>
+        <li>Wrong answer ends the game — your streak is your score</li>
+        <li>Qualify for the leaderboard with a top-10 streak — enter a 3-letter name</li>
+        <li>Leaderboard is shared and persistent — beat the current top score</li>
+      </ul>
+    </div>
+
+    <div class="content-block">
+      <h2>Categories</h2>
+      <div style="display:flex;flex-wrap:wrap;gap:0.5rem;margin-top:0.5rem;">
+        <span class="project-tag">General Knowledge</span>
+        <span class="project-tag">Science &amp; Nature</span>
+        <span class="project-tag">History</span>
+        <span class="project-tag">Geography</span>
+        <span class="project-tag">Sport</span>
+        <span class="project-tag">Music</span>
+        <span class="project-tag">Film &amp; TV</span>
+        <span class="project-tag">Books</span>
+        <span class="project-tag">Technology</span>
+        <span class="project-tag">Vehicles</span>
+        <span class="project-tag">Mixed</span>
+      </div>
+    </div>
+
+    <div class="content-block">
+      <h2>Scoring</h2>
+      <div class="data-table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr><th>Streak</th><th>Rating</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>1 – 4</td><td>Getting started</td></tr>
+            <tr><td>5 – 9</td><td>Solid effort</td></tr>
+            <tr><td>10 – 19</td><td>Impressive</td></tr>
+            <tr><td>20 – 29</td><td>Outstanding</td></tr>
+            <tr><td>30+</td><td>Legendary</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span>© 2026 Kyran Walker</span>
+    <span>Built with HTML · CSS · JS</span>
+  </footer>
+
+  <script>
+    const hamburger = document.getElementById('hamburger');
+    const navLinks  = document.getElementById('navLinks');
+    hamburger.addEventListener('click', () => navLinks.classList.toggle('open'));
+    navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
+  </script>
+</body>
+</html>
