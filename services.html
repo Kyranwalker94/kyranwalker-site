@@ -247,6 +247,17 @@
       color: #000;
     }
 
+    /* ── CARD ICON (3D — visible from both sides) ── */
+    .card-3d-icon {
+      position: absolute;
+      top: 1.5rem;
+      left: 1.5rem;
+      font-size: 1.5rem;
+      line-height: 1;
+      pointer-events: none;
+      /* intentionally no backface-visibility: hidden */
+    }
+
     /* ── FLIP FACES ── */
     .flip-front {
       backface-visibility: hidden;
@@ -256,6 +267,7 @@
       gap: 0.6rem;
       flex: 1;
       min-height: 0;
+      padding-top: 2.2rem;
     }
 
     .svc-card.flipped .flip-front {
@@ -712,11 +724,23 @@
       const code   = genCode();
       const subject = encodeURIComponent(title + ' Enquiry [' + code + ']');
 
-      // Wrap existing children in .flip-front (display:contents so layout is unchanged)
+      // Grab icon before wrapping so we can park it directly on the card
+      const iconEl = card.querySelector('.svc-card-icon');
+
+      // Wrap existing children in .flip-front
       const front = document.createElement('div');
       front.className = 'flip-front';
       Array.from(card.childNodes).forEach(n => front.appendChild(n));
       card.appendChild(front);
+
+      // Move icon out of flip-front and re-attach directly to card.
+      // As a direct child of the preserve-3d container with no backface-visibility,
+      // it stays visible from both sides — appearing top-right on the back after the Y flip.
+      if (iconEl) {
+        front.removeChild(iconEl);
+        iconEl.classList.add('card-3d-icon');
+        card.insertBefore(iconEl, front);
+      }
 
       // Enquire button lives inside front face, top-right via absolute positioning
       const enquireBtn = document.createElement('button');
