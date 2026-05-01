@@ -936,6 +936,16 @@ a.hero-card-badge:hover { border-color: var(--accent); }
   color: var(--red);
 }
 
+.cta-band-armijos .btn-primary {
+  background: var(--red);
+  border-color: var(--red);
+}
+
+.cta-band-armijos .btn-primary:hover {
+  background: #c1121f;
+  border-color: #c1121f;
+}
+
 /* optional actions */
 .cta-band-armijos-actions {
   display: flex;
