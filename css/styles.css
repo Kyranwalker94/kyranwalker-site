@@ -949,7 +949,7 @@ a.hero-card-badge:hover { border-color: var(--accent); }
 
 .cta-band {
   max-width: 1200px;
-  margin: 0 auto 6rem;
+  margin: 0 auto 3rem;
   padding: 4rem;
   background: var(--surface);
   border: 1px solid var(--border);
