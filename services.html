@@ -247,17 +247,6 @@
       color: #000;
     }
 
-    /* ── CARD ICON (3D — visible from both sides) ── */
-    .card-3d-icon {
-      position: absolute;
-      top: 1.5rem;
-      left: 1.5rem;
-      font-size: 1.5rem;
-      line-height: 1;
-      pointer-events: none;
-      /* intentionally no backface-visibility: hidden */
-    }
-
     /* ── FLIP FACES ── */
     .flip-front {
       backface-visibility: hidden;
@@ -267,7 +256,15 @@
       gap: 0.6rem;
       flex: 1;
       min-height: 0;
-      padding-top: 2.2rem;
+    }
+
+    .flip-back-icon {
+      position: absolute;
+      top: 1.25rem;
+      right: 1.5rem;
+      font-size: 1.5rem;
+      line-height: 1;
+      pointer-events: none;
     }
 
     .svc-card.flipped .flip-front {
@@ -724,23 +721,14 @@
       const code   = genCode();
       const subject = encodeURIComponent(title + ' Enquiry [' + code + ']');
 
-      // Grab icon before wrapping so we can park it directly on the card
-      const iconEl = card.querySelector('.svc-card-icon');
+      // Grab icon text before wrapping so we can echo it on the back face
+      const iconText = card.querySelector('.svc-card-icon')?.textContent ?? '';
 
       // Wrap existing children in .flip-front
       const front = document.createElement('div');
       front.className = 'flip-front';
       Array.from(card.childNodes).forEach(n => front.appendChild(n));
       card.appendChild(front);
-
-      // Move icon out of flip-front and re-attach directly to card.
-      // As a direct child of the preserve-3d container with no backface-visibility,
-      // it stays visible from both sides — appearing top-right on the back after the Y flip.
-      if (iconEl) {
-        front.removeChild(iconEl);
-        iconEl.classList.add('card-3d-icon');
-        card.insertBefore(iconEl, front);
-      }
 
       // Enquire button lives inside front face, top-right via absolute positioning
       const enquireBtn = document.createElement('button');
@@ -754,6 +742,7 @@
       back.className = 'flip-back';
       back.innerHTML =
         '<button class="flip-back-close" aria-label="Go back">← Back</button>' +
+        (iconText ? '<span class="flip-back-icon">' + iconText + '</span>' : '') +
         '<div class="flip-back-title">' + title + '</div>' +
         '<div class="flip-back-option">' +
           '<div class="flip-back-option-label">📞 Call &nbsp;<small>Mon–Sat · 8am–5pm</small></div>' +
