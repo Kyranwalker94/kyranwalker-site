@@ -158,6 +158,7 @@
       flex-direction: column;
       gap: 0.6rem;
       transition: border-color 0.25s, transform 0.25s;
+      position: relative;
     }
 
     .svc-card:hover {
@@ -208,6 +209,187 @@
       max-width: 1200px;
       margin: 0 auto;
       padding: 0 2.5rem 6rem;
+    }
+
+    /* ── ENQUIRE BUTTON ── */
+    .svc-enquire-btn {
+      position: absolute;
+      top: 0.9rem;
+      right: 0.9rem;
+      padding: 0.28rem 0.65rem;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: 0.4rem;
+      color: var(--muted);
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s, border-color 0.15s;
+      line-height: 1.6;
+    }
+
+    .svc-enquire-btn:hover {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #000;
+    }
+
+    /* ── ENQUIRE MODAL ── */
+    .enquire-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 3000;
+      background: rgba(0, 0, 0, 0.55);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s;
+    }
+
+    .enquire-overlay.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .enquire-modal {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 1.25rem;
+      padding: 2rem;
+      max-width: 460px;
+      width: 100%;
+      position: relative;
+      transform: translateY(16px);
+      transition: transform 0.2s;
+    }
+
+    .enquire-overlay.open .enquire-modal {
+      transform: translateY(0);
+    }
+
+    .enquire-modal-close {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: none;
+      border: 1px solid transparent;
+      border-radius: 0.4rem;
+      color: var(--muted);
+      font-size: 1rem;
+      cursor: pointer;
+      width: 2rem;
+      height: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: 0.15s;
+    }
+
+    .enquire-modal-close:hover {
+      border-color: var(--border);
+      color: var(--text);
+    }
+
+    .enquire-modal-label {
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.3rem;
+    }
+
+    .enquire-modal-title {
+      font-family: var(--font-head);
+      font-weight: 800;
+      font-size: 1.15rem;
+      letter-spacing: -0.02em;
+      margin-bottom: 1.5rem;
+    }
+
+    .enquire-options {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .enquire-option {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 0.85rem;
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .enquire-option-icon { font-size: 1.35rem; }
+
+    .enquire-option-label {
+      font-family: var(--font-head);
+      font-weight: 700;
+      font-size: 0.82rem;
+    }
+
+    .enquire-option-detail {
+      font-size: 0.8rem;
+      color: var(--muted);
+      line-height: 1.55;
+      flex: 1;
+    }
+
+    .enquire-ref-code {
+      display: inline-block;
+      margin-top: 0.35rem;
+      font-family: monospace;
+      font-size: 0.9rem;
+      color: var(--accent);
+      letter-spacing: 0.1em;
+      background: rgba(200, 240, 77, 0.1);
+      padding: 0.1rem 0.45rem;
+      border-radius: 0.3rem;
+    }
+
+    .enquire-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.6rem 0.75rem;
+      border-radius: 0.55rem;
+      font-weight: 600;
+      font-size: 0.8rem;
+      text-decoration: none;
+      cursor: pointer;
+      border: 1px solid var(--border);
+      transition: 0.15s;
+      text-align: center;
+    }
+
+    .enquire-btn-call {
+      background: var(--surface);
+      color: var(--text);
+    }
+
+    .enquire-btn-call:hover {
+      background: var(--text);
+      color: var(--bg);
+    }
+
+    .enquire-btn-email {
+      background: var(--accent);
+      color: #000;
+      border-color: var(--accent);
+    }
+
+    .enquire-btn-email:hover {
+      filter: brightness(1.08);
+    }
+
+    @media (max-width: 500px) {
+      .enquire-options { grid-template-columns: 1fr; }
     }
 
     @media (max-width: 768px) {
@@ -513,11 +695,89 @@
     <span>Built with HTML · CSS · JS</span>
   </footer>
 
+  <!-- ENQUIRE MODAL -->
+  <div class="enquire-overlay" id="enquireOverlay" role="dialog" aria-modal="true" aria-labelledby="enquireTitle">
+    <div class="enquire-modal">
+      <button class="enquire-modal-close" id="enquireClose" aria-label="Close">✕</button>
+      <div class="enquire-modal-label">Enquiry</div>
+      <div class="enquire-modal-title" id="enquireTitle"></div>
+      <div class="enquire-options">
+
+        <div class="enquire-option">
+          <div class="enquire-option-icon">📞</div>
+          <div class="enquire-option-label">Call me</div>
+          <div class="enquire-option-detail">
+            07902 563971<br>Mon–Sat · 8am–5pm
+          </div>
+          <a href="tel:07902563971" class="enquire-btn enquire-btn-call">Call now</a>
+        </div>
+
+        <div class="enquire-option">
+          <div class="enquire-option-icon">✉️</div>
+          <div class="enquire-option-label">Send an email</div>
+          <div class="enquire-option-detail">
+            Your reference:<br>
+            <span class="enquire-ref-code" id="enquireCode"></span>
+          </div>
+          <a href="#" class="enquire-btn enquire-btn-email" id="enquireEmailBtn">Open email draft</a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
   <script>
+    // Nav
     const hamburger = document.getElementById('hamburger');
-    const navLinks  = document.getElementById('navLinks');
+    const navLinks   = document.getElementById('navLinks');
     hamburger.addEventListener('click', () => navLinks.classList.toggle('open'));
     navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
+
+    // Enquire modal
+    const overlay      = document.getElementById('enquireOverlay');
+    const enquireTitle = document.getElementById('enquireTitle');
+    const enquireCode  = document.getElementById('enquireCode');
+    const emailBtn     = document.getElementById('enquireEmailBtn');
+
+    function genCode() {
+      const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+      return Array.from({ length: 6 }, () => chars[Math.floor(Math.random() * chars.length)]).join('');
+    }
+
+    function openEnquire(serviceTitle) {
+      const code = genCode();
+      enquireTitle.textContent = serviceTitle;
+      enquireCode.textContent  = code;
+      emailBtn.href = 'mailto:enquiry@kyranwalker.com?subject=' +
+        encodeURIComponent(serviceTitle + ' Enquiry [' + code + ']');
+      overlay.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeEnquire() {
+      overlay.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    document.getElementById('enquireClose').addEventListener('click', closeEnquire);
+    overlay.addEventListener('click', e => { if (e.target === overlay) closeEnquire(); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeEnquire(); });
+
+    // Inject enquire buttons into every service card
+    document.querySelectorAll('.svc-card').forEach(card => {
+      const titleEl = card.querySelector('.svc-card-title');
+      if (!titleEl) return;
+      const title = titleEl.textContent.trim();
+      const btn = document.createElement('button');
+      btn.className = 'svc-enquire-btn';
+      btn.textContent = 'Enquire';
+      btn.setAttribute('aria-label', 'Enquire about ' + title);
+      btn.addEventListener('click', e => {
+        e.stopPropagation();
+        openEnquire(title);
+      });
+      card.appendChild(btn);
+    });
   </script>
 
 </body>
