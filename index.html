@@ -84,37 +84,37 @@
   </section>
 
   <!-- SERVICES TEASER -->
-  <section class="section" id="services" style="padding-top:2rem;">
-    <p class="section-label">HOW I CAN HELP</p>
-    <h2 class="section-title">Services</h2>
+  <section class="section" id="services" style="padding-top:1rem;">
+    <p class="section-label reveal">HOW I CAN HELP</p>
+    <h2 class="section-title reveal" style="transition-delay:0.08s;">Services</h2>
 
     <div class="services-teaser">
 
-      <a href="services.html#finance" class="teaser-card">
+      <a href="services.html#finance" class="teaser-card reveal" style="transition-delay:0.1s;">
         <span class="teaser-icon">💼</span>
         <span class="teaser-name">Business &amp; Finance</span>
         <span class="teaser-desc">Bookkeeping, self assessment, admin support</span>
       </a>
 
-      <a href="services.html#home" class="teaser-card">
+      <a href="services.html#home" class="teaser-card reveal" style="transition-delay:0.18s;">
         <span class="teaser-icon">🏠</span>
         <span class="teaser-name">Home &amp; Property</span>
         <span class="teaser-desc">Handyman, gardening, clearances, man with van</span>
       </a>
 
-      <a href="services.html#tech" class="teaser-card">
+      <a href="services.html#tech" class="teaser-card reveal" style="transition-delay:0.26s;">
         <span class="teaser-icon">🔌</span>
         <span class="teaser-name">Tech, Connectivity &amp; Web</span>
         <span class="teaser-desc">CCTV, networking, IT support, websites, apps</span>
       </a>
 
-      <a href="services.html#design" class="teaser-card">
+      <a href="services.html#design" class="teaser-card reveal" style="transition-delay:0.34s;">
         <span class="teaser-icon">🎨</span>
         <span class="teaser-name">Design &amp; 3D</span>
         <span class="teaser-desc">3D modelling, renders, animation</span>
       </a>
 
-      <a href="services.html" class="teaser-card teaser-card-cta">
+      <a href="services.html" class="teaser-card teaser-card-cta reveal" style="transition-delay:0.42s;">
         <span class="teaser-icon">→</span>
         <span class="teaser-name">See all services</span>
         <span class="teaser-desc">£20/hr introductory offer</span>
@@ -124,7 +124,7 @@
   </section>
 
   <!-- PROJECTS CTA -->
-  <div class="cta-band" id="projects-cta">
+  <div class="cta-band reveal" id="projects-cta">
     <h2 class="cta-band-title">
       Curious what I get up to? <span>Browse my projects.</span>
     </h2>
@@ -135,7 +135,7 @@
   </div>
 
     <!-- Gaming -->
-  <div class="cta-band-gaming" id="gaming">
+  <div class="cta-band-gaming reveal" id="gaming">
     <h2 class="cta-band-gaming-title">
       Want to Play a Game? <span>Have Fun!</span>
     </h2>
@@ -145,7 +145,7 @@
   </div>
 
     <!-- Armijos -->
-  <div class="cta-band-armijos" id="armijos">
+  <div class="cta-band-armijos reveal" id="armijos">
     <h2 class="cta-band-armijos-title">
       Just Hungry? <span>Check this out!</span>
     </h2>
@@ -172,6 +172,18 @@
     navLinks.querySelectorAll('a').forEach(a => {
       a.addEventListener('click', () => navLinks.classList.remove('open'));
     });
+
+    // Scroll-triggered reveal
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
   </script>
 
 </body>
