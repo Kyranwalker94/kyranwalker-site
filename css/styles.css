@@ -174,7 +174,7 @@ nav {
   grid-template-columns: 1fr 1fr;
   align-items: center;
   gap: 4rem;
-  padding: 7rem 2.5rem 4rem;
+  padding: 2rem 2.5rem 4rem;
   max-width: 1200px;
   margin: 0 auto;
 }
@@ -512,7 +512,7 @@ a.hero-card-badge:hover { border-color: var(--accent); }
 ───────────────────────────── */
 
 .projects-hero {
-  padding: 10rem 2.5rem 4rem;
+  padding: 2.5rem 2.5rem 4rem;
   max-width: 1200px;
   margin: 0 auto;
   border-bottom: 1px solid var(--border);
