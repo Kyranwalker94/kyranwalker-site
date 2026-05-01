@@ -69,6 +69,16 @@ const TIMELINE = {
       destination: 'Devon, UK',
       detail: 'Short trip to Devon — stayed in an Eco Lodge. Less travel this year to keep the Defender fund topped up.',
     },
+    {
+      year: 2025,
+      destination: 'Europe 🇪🇺',
+      detail: 'Month-long road trip through France, Belgium, the Netherlands, Germany, and Luxembourg in the rebuilt Defender — Amiens, Tournai, Brussels, Middelburg, Vlissingen, Colmar, Konstanz, Munich, Bamberg, Venlo, Luxembourg, and Reims.',
+    },
+    {
+      year: 2026,
+      destination: 'New Zealand 🇳🇿',
+      detail: 'Flew to New Zealand in March 2026 to get married — full circle from the working holiday in 2017.',
+    },
   ],
 
   working: [
@@ -120,6 +130,13 @@ const TIMELINE = {
       role: 'Data Analysis Project Lead',
       location: 'Milton Keynes',
       detail: 'Developed internal reporting tools and data processes to optimise FTTP deployment. Managed delayed order administration and coordinated across teams to streamline workflows.',
+    },
+    {
+      start: 2025, end: 2026,
+      company: 'Self-Employed',
+      role: 'Freelance Bookkeeper & Multi-Service Contractor',
+      location: 'Hailsham / Remote',
+      detail: 'Remote bookkeeping and self assessment support for individuals and small businesses, alongside a multi-service sole trader offering covering tech, home services, and web design.',
     },
   ],
 
@@ -275,12 +292,17 @@ const TIMELINE = {
       title: 'Data & Process Lead',
       detail: 'Transitioned into a data analysis and process improvement role at Openreach, building internal tooling and reporting pipelines.',
     },
+    {
+      year: 2026,
+      title: 'Married in New Zealand 💍',
+      detail: 'Got married in New Zealand in March 2026 — the destination that has always meant something special, from the working holiday in 2017 to the European road trip in November 2025 that set the scene.',
+    },
   ],
 
   // Projects — shown across the year range they were active
   projects: [
     {
-      start: 2019, end: 2020,
+      start: 2020, end: 2020,
       title: 'Pokémon Snap',
       emoji: '⚡',
       detail: '2-player Scratch game built for Harvard\'s CS50 — match your Pokémon, first to 10 wins.',
@@ -301,20 +323,6 @@ const TIMELINE = {
       link: 'mockford-blinds.html',
     },
     {
-      start: 2021, end: 2022,
-      title: 'Wordle',
-      emoji: '🟩',
-      detail: 'Fully playable Wordle clone with score tracking and a live leaderboard.',
-      link: 'wordle.html',
-    },
-    {
-      start: 2022, end: 2022,
-      title: 'Salsalator',
-      emoji: '🌶️',
-      detail: 'A salsa recipe calculator that scales ingredient quantities for any crowd size.',
-      link: 'salsalator.html',
-    },
-    {
       start: 2022, end: 2023,
       title: 'Sovereign Harbour',
       emoji: '🏗️',
@@ -329,18 +337,67 @@ const TIMELINE = {
       link: 'shepherds-way.html',
     },
     {
-      start: 2023, end: 2023,
+      start: 2022, end: 2023,
       title: 'Cabinet 3D',
       emoji: '🗄️',
       detail: 'An interactive 3D cabinet viewer running directly in the browser.',
       link: 'cabinet.html',
     },
     {
-      start: 2024, end: 2026,
+      start: 2023, end: 2023,
+      title: 'Spirit Level Template',
+      emoji: '📐',
+      detail: '3D printed drilling template for Openreach — pre-spaced guide holes and an integrated spirit level bubble.',
+      link: 'spirit-level-template.html',
+    },
+    {
+      start: 2024, end: 2024,
+      title: 'Wordle',
+      emoji: '🟩',
+      detail: 'Fully playable Wordle clone with score tracking and a live leaderboard.',
+      link: 'wordle.html',
+    },
+    {
+      start: 2024, end: 2024,
+      title: 'Sudoku',
+      emoji: '🔢',
+      detail: 'Fully playable Sudoku with four difficulty levels, pencil notes, conflict highlighting, and a timer.',
+      link: 'sudoku.html',
+    },
+    {
+      start: 2024, end: 2024,
+      title: 'General Knowledge Quiz',
+      emoji: '🧠',
+      detail: 'Endless multiple-choice quiz with streak tracking and a leaderboard.',
+      link: 'quiz.html',
+    },
+    {
+      start: 2024, end: 2024,
+      title: '3D Printer Customisation',
+      emoji: '🖨️',
+      detail: 'Upgraded two Creality Ender 3 V2 printers with silent fans, BLTouch levelling, and custom printed parts.',
+      link: '3d-printer.html',
+    },
+    {
+      start: 2024, end: 2025,
       title: 'Land Rover Defender',
       emoji: '🚙',
-      detail: 'Restoring a 2008 Defender 110 into a camper and expedition vehicle.',
+      detail: 'Restored a 2008 Defender 110 into a camper and expedition vehicle — completed October 2025.',
       link: 'defender.html',
+    },
+    {
+      start: 2025, end: 2025,
+      title: 'The Trip 2025',
+      emoji: '🗺️',
+      detail: 'Month-long European road trip in the Defender — twelve cities, six countries, Christmas markets, and a proposal.',
+      link: 'the-trip-2025.html',
+    },
+    {
+      start: 2025, end: 2026,
+      title: 'Salsalator',
+      emoji: '🌶️',
+      detail: 'A salsa recipe calculator that scales ingredient quantities for any crowd size.',
+      link: 'salsalator.html',
     },
     {
       start: 2025, end: 2026,
