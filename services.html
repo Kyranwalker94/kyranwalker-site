@@ -157,12 +157,22 @@
       display: flex;
       flex-direction: column;
       gap: 0.6rem;
-      transition: border-color 0.25s, transform 0.25s;
+      transition: border-color 0.25s, transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
       position: relative;
+      transform-style: preserve-3d;
+      min-height: 260px;
     }
 
     .svc-card:hover {
       transform: translateY(-3px);
+    }
+
+    .svc-card.flipped {
+      transform: perspective(900px) rotateY(180deg);
+    }
+
+    .svc-card.flipped:hover {
+      transform: perspective(900px) rotateY(180deg);
     }
 
     .svc-card.home-card:hover    { border-color: rgba(200,240,77,0.5); }
@@ -211,7 +221,7 @@
       padding: 0 2.5rem 6rem;
     }
 
-    /* ── ENQUIRE BUTTON ── */
+    /* ── ENQUIRE BUTTON (front face) ── */
     .svc-enquire-btn {
       position: absolute;
       top: 0.9rem;
@@ -227,6 +237,7 @@
       cursor: pointer;
       transition: background 0.15s, color 0.15s, border-color 0.15s;
       line-height: 1.6;
+      z-index: 1;
     }
 
     .svc-enquire-btn:hover {
@@ -235,161 +246,135 @@
       color: #000;
     }
 
-    /* ── ENQUIRE MODAL ── */
-    .enquire-overlay {
-      position: fixed;
-      inset: 0;
-      z-index: 3000;
-      background: rgba(0, 0, 0, 0.55);
+    /* ── FLIP FACES ── */
+    .flip-front {
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
       display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 1rem;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.2s;
+      flex-direction: column;
+      gap: 0.6rem;
+      flex: 1;
+      min-height: 0;
     }
 
-    .enquire-overlay.open {
-      opacity: 1;
+    .svc-card.flipped .flip-front {
+      pointer-events: none;
+    }
+
+    .flip-back {
+      position: absolute;
+      inset: 0;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      transform: rotateY(180deg);
+      background: var(--surface);
+      border-radius: 1rem;
+      padding: 1.25rem 1.5rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+      border: 1px solid var(--border);
+      pointer-events: none;
+    }
+
+    .svc-card.flipped .flip-back {
       pointer-events: all;
     }
 
-    .enquire-modal {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 1.25rem;
-      padding: 2rem;
-      max-width: 460px;
-      width: 100%;
-      position: relative;
-      transform: translateY(16px);
-      transition: transform 0.2s;
-    }
-
-    .enquire-overlay.open .enquire-modal {
-      transform: translateY(0);
-    }
-
-    .enquire-modal-close {
-      position: absolute;
-      top: 1rem;
-      right: 1rem;
+    .flip-back-close {
+      align-self: flex-start;
       background: none;
-      border: 1px solid transparent;
+      border: 1px solid var(--border);
       border-radius: 0.4rem;
       color: var(--muted);
-      font-size: 1rem;
+      font-size: 0.72rem;
+      font-weight: 600;
+      padding: 0.22rem 0.6rem;
       cursor: pointer;
-      width: 2rem;
-      height: 2rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
       transition: 0.15s;
+      margin-bottom: 0.15rem;
     }
 
-    .enquire-modal-close:hover {
-      border-color: var(--border);
+    .flip-back-close:hover {
+      background: var(--border);
       color: var(--text);
     }
 
-    .enquire-modal-label {
-      font-size: 0.75rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 0.3rem;
-    }
-
-    .enquire-modal-title {
-      font-family: var(--font-head);
-      font-weight: 800;
-      font-size: 1.15rem;
-      letter-spacing: -0.02em;
-      margin-bottom: 1.5rem;
-    }
-
-    .enquire-options {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1rem;
-    }
-
-    .enquire-option {
-      background: var(--bg);
-      border: 1px solid var(--border);
-      border-radius: 0.85rem;
-      padding: 1.25rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-    }
-
-    .enquire-option-icon { font-size: 1.35rem; }
-
-    .enquire-option-label {
+    .flip-back-title {
       font-family: var(--font-head);
       font-weight: 700;
-      font-size: 0.82rem;
+      font-size: 0.88rem;
+      line-height: 1.3;
+      padding-bottom: 0.65rem;
+      border-bottom: 1px solid var(--border);
     }
 
-    .enquire-option-detail {
-      font-size: 0.8rem;
-      color: var(--muted);
-      line-height: 1.55;
+    .flip-back-option {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
       flex: 1;
     }
 
-    .enquire-ref-code {
-      display: inline-block;
-      margin-top: 0.35rem;
-      font-family: monospace;
-      font-size: 0.9rem;
-      color: var(--accent);
-      letter-spacing: 0.1em;
-      background: rgba(200, 240, 77, 0.1);
-      padding: 0.1rem 0.45rem;
-      border-radius: 0.3rem;
+    .flip-back-option-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 600;
     }
 
-    .enquire-btn {
+    .flip-back-option-detail {
+      font-size: 0.83rem;
+      color: var(--text);
+      line-height: 1.5;
+    }
+
+    .flip-back-option-detail small {
+      color: var(--muted);
+      font-size: 0.77rem;
+    }
+
+    .flip-ref-code {
+      font-family: monospace;
+      font-size: 0.88rem;
+      color: var(--accent);
+      letter-spacing: 0.1em;
+    }
+
+    .flip-option-btn {
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 0.6rem 0.75rem;
-      border-radius: 0.55rem;
+      padding: 0.48rem 0.75rem;
+      border-radius: 0.5rem;
       font-weight: 600;
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       text-decoration: none;
-      cursor: pointer;
       border: 1px solid var(--border);
       transition: 0.15s;
-      text-align: center;
+      margin-top: 0.3rem;
+      cursor: pointer;
     }
 
-    .enquire-btn-call {
+    .flip-btn-call {
       background: var(--surface);
       color: var(--text);
     }
 
-    .enquire-btn-call:hover {
+    .flip-btn-call:hover {
       background: var(--text);
       color: var(--bg);
     }
 
-    .enquire-btn-email {
+    .flip-btn-email {
       background: var(--accent);
       color: #000;
       border-color: var(--accent);
     }
 
-    .enquire-btn-email:hover {
+    .flip-btn-email:hover {
       filter: brightness(1.08);
-    }
-
-    @media (max-width: 500px) {
-      .enquire-options { grid-template-columns: 1fr; }
     }
 
     @media (max-width: 768px) {
@@ -695,37 +680,6 @@
     <span>Built with HTML · CSS · JS</span>
   </footer>
 
-  <!-- ENQUIRE MODAL -->
-  <div class="enquire-overlay" id="enquireOverlay" role="dialog" aria-modal="true" aria-labelledby="enquireTitle">
-    <div class="enquire-modal">
-      <button class="enquire-modal-close" id="enquireClose" aria-label="Close">✕</button>
-      <div class="enquire-modal-label">Enquiry</div>
-      <div class="enquire-modal-title" id="enquireTitle"></div>
-      <div class="enquire-options">
-
-        <div class="enquire-option">
-          <div class="enquire-option-icon">📞</div>
-          <div class="enquire-option-label">Call me</div>
-          <div class="enquire-option-detail">
-            07902 563971<br>Mon–Sat · 8am–5pm
-          </div>
-          <a href="tel:07902563971" class="enquire-btn enquire-btn-call">Call now</a>
-        </div>
-
-        <div class="enquire-option">
-          <div class="enquire-option-icon">✉️</div>
-          <div class="enquire-option-label">Send an email</div>
-          <div class="enquire-option-detail">
-            Your reference:<br>
-            <span class="enquire-ref-code" id="enquireCode"></span>
-          </div>
-          <a href="#" class="enquire-btn enquire-btn-email" id="enquireEmailBtn">Open email draft</a>
-        </div>
-
-      </div>
-    </div>
-  </div>
-
   <script>
     // Nav
     const hamburger = document.getElementById('hamburger');
@@ -733,50 +687,59 @@
     hamburger.addEventListener('click', () => navLinks.classList.toggle('open'));
     navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
 
-    // Enquire modal
-    const overlay      = document.getElementById('enquireOverlay');
-    const enquireTitle = document.getElementById('enquireTitle');
-    const enquireCode  = document.getElementById('enquireCode');
-    const emailBtn     = document.getElementById('enquireEmailBtn');
-
+    // Card flip enquiry system
     function genCode() {
       const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
       return Array.from({ length: 6 }, () => chars[Math.floor(Math.random() * chars.length)]).join('');
     }
 
-    function openEnquire(serviceTitle) {
-      const code = genCode();
-      enquireTitle.textContent = serviceTitle;
-      enquireCode.textContent  = code;
-      emailBtn.href = 'mailto:enquiry@kyranwalker.com?subject=' +
-        encodeURIComponent(serviceTitle + ' Enquiry [' + code + ']');
-      overlay.classList.add('open');
-      document.body.style.overflow = 'hidden';
-    }
-
-    function closeEnquire() {
-      overlay.classList.remove('open');
-      document.body.style.overflow = '';
-    }
-
-    document.getElementById('enquireClose').addEventListener('click', closeEnquire);
-    overlay.addEventListener('click', e => { if (e.target === overlay) closeEnquire(); });
-    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeEnquire(); });
-
-    // Inject enquire buttons into every service card
     document.querySelectorAll('.svc-card').forEach(card => {
       const titleEl = card.querySelector('.svc-card-title');
       if (!titleEl) return;
       const title = titleEl.textContent.trim();
-      const btn = document.createElement('button');
-      btn.className = 'svc-enquire-btn';
-      btn.textContent = 'Enquire';
-      btn.setAttribute('aria-label', 'Enquire about ' + title);
-      btn.addEventListener('click', e => {
+      const code   = genCode();
+      const subject = encodeURIComponent(title + ' Enquiry [' + code + ']');
+
+      // Wrap existing children in .flip-front (display:contents so layout is unchanged)
+      const front = document.createElement('div');
+      front.className = 'flip-front';
+      Array.from(card.childNodes).forEach(n => front.appendChild(n));
+      card.appendChild(front);
+
+      // Enquire button lives inside front face, top-right via absolute positioning
+      const enquireBtn = document.createElement('button');
+      enquireBtn.className = 'svc-enquire-btn';
+      enquireBtn.textContent = 'Enquire';
+      enquireBtn.setAttribute('aria-label', 'Enquire about ' + title);
+      front.appendChild(enquireBtn);
+
+      // Build back face
+      const back = document.createElement('div');
+      back.className = 'flip-back';
+      back.innerHTML =
+        '<button class="flip-back-close" aria-label="Go back">← Back</button>' +
+        '<div class="flip-back-title">' + title + '</div>' +
+        '<div class="flip-back-option">' +
+          '<div class="flip-back-option-label">📞 Call</div>' +
+          '<div class="flip-back-option-detail">07902 563971<br><small>Mon–Sat · 8am–5pm</small></div>' +
+          '<a href="tel:07902563971" class="flip-option-btn flip-btn-call">Call now</a>' +
+        '</div>' +
+        '<div class="flip-back-option">' +
+          '<div class="flip-back-option-label">✉️ Email</div>' +
+          '<div class="flip-back-option-detail">Ref: <span class="flip-ref-code">' + code + '</span></div>' +
+          '<a href="mailto:enquiry@kyranwalker.com?subject=' + subject + '" class="flip-option-btn flip-btn-email">Email me</a>' +
+        '</div>';
+      card.appendChild(back);
+
+      // Flip handlers
+      enquireBtn.addEventListener('click', e => {
         e.stopPropagation();
-        openEnquire(title);
+        card.classList.add('flipped');
       });
-      card.appendChild(btn);
+
+      back.querySelector('.flip-back-close').addEventListener('click', () => {
+        card.classList.remove('flipped');
+      });
     });
   </script>
 
