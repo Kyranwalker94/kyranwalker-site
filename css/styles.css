@@ -780,6 +780,95 @@ a.hero-card-badge:hover { border-color: var(--accent); }
   color: var(--text);
 }
 
+/* ─────────────────────────────
+   GAMING CTA BAND
+───────────────────────────── */
+
+.cta-band-gaming {
+  max-width: 1200px;
+  margin: 0 auto 3rem;
+  padding: 4rem;
+
+  background: #0a0a1a;
+  border: 3px solid #00ff88;
+  border-radius: 20px;
+  box-shadow: 0 0 0 1px #00ff8844, 0 0 32px #00ff8822, inset 0 0 60px #00002288;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 2rem;
+
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.cta-band-gaming::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 3px,
+    rgba(0, 0, 0, 0.15) 3px,
+    rgba(0, 0, 0, 0.15) 4px
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+.cta-band-gaming::after {
+  content: "▓ ░ ▒ █ ▓ ░ ▒ █ ▓ ░ ▒ █ ▓ ░ ▒ █ ▓ ░ ▒ █ ▓ ░ ▒ █ ▓ ░ ▒ █";
+  position: absolute;
+  bottom: 1rem;
+  right: 2rem;
+  font-size: 0.9rem;
+  color: rgba(0, 255, 136, 0.12);
+  letter-spacing: 0.4rem;
+  pointer-events: none;
+  z-index: 0;
+  white-space: nowrap;
+}
+
+.cta-band-gaming > * {
+  position: relative;
+  z-index: 1;
+}
+
+.cta-band-gaming-title {
+  font-family: var(--font-head);
+  font-size: clamp(1.3rem, 3vw, 2rem);
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  max-width: 500px;
+  color: #e0ffe0;
+  text-shadow: 0 0 20px rgba(0, 255, 136, 0.4);
+}
+
+.cta-band-gaming-title span {
+  color: #00ff88;
+  text-shadow: 0 0 12px rgba(0, 255, 136, 0.6);
+}
+
+.cta-band-gaming .btn-primary {
+  background: #00ff88;
+  color: #0a0a1a;
+  border-color: #00ff88;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  box-shadow: 0 0 16px rgba(0, 255, 136, 0.4);
+}
+
+.cta-band-gaming .btn-primary:hover {
+  background: #00cc6a;
+  border-color: #00cc6a;
+  box-shadow: 0 0 28px rgba(0, 255, 136, 0.6);
+  transform: translateY(-2px);
+}
+
 .cta-band-armijos {
   max-width: 1200px;
   margin: 0 auto 6rem;
