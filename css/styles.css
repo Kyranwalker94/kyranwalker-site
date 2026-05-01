@@ -172,9 +172,9 @@ nav {
   min-height: 100vh;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  align-items: center;
+  align-items: start;
   gap: 4rem;
-  padding: 2rem 2.5rem 4rem;
+  padding: 3rem 2.5rem 4rem;
   max-width: 1200px;
   margin: 0 auto;
 }
