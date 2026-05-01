@@ -237,7 +237,8 @@
       cursor: pointer;
       transition: background 0.15s, color 0.15s, border-color 0.15s;
       line-height: 1.6;
-      z-index: 1;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
     }
 
     .svc-enquire-btn:hover {
@@ -322,6 +323,17 @@
       text-transform: uppercase;
       color: var(--muted);
       font-weight: 600;
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.25rem;
+    }
+
+    .flip-back-option-label small,
+    .flip-back-option-label .flip-ref-code {
+      text-transform: none;
+      letter-spacing: normal;
+      font-weight: 400;
     }
 
     .flip-back-option-detail {
@@ -720,13 +732,12 @@
         '<button class="flip-back-close" aria-label="Go back">← Back</button>' +
         '<div class="flip-back-title">' + title + '</div>' +
         '<div class="flip-back-option">' +
-          '<div class="flip-back-option-label">📞 Call</div>' +
-          '<div class="flip-back-option-detail">07902 563971<br><small>Mon–Sat · 8am–5pm</small></div>' +
+          '<div class="flip-back-option-label">📞 Call &nbsp;<small>Mon–Sat · 8am–5pm</small></div>' +
+          '<div class="flip-back-option-detail">07902 563971</div>' +
           '<a href="tel:07902563971" class="flip-option-btn flip-btn-call">Call now</a>' +
         '</div>' +
         '<div class="flip-back-option">' +
-          '<div class="flip-back-option-label">✉️ Email</div>' +
-          '<div class="flip-back-option-detail">Ref: <span class="flip-ref-code">' + code + '</span></div>' +
+          '<div class="flip-back-option-label">✉️ Email &nbsp;<span class="flip-ref-code">' + code + '</span></div>' +
           '<a href="mailto:enquiry@kyranwalker.com?subject=' + subject + '" class="flip-option-btn flip-btn-email">Email me</a>' +
         '</div>';
       card.appendChild(back);
