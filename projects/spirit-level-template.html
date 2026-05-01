@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Spirit Level Template — Kyran Walker</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+
+  <nav>
+    <a href="../index.html" class="nav-logo">Kyran<span>.</span></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="../profile.html">Profile</a></li>
+      <li><a href="../services.html">Services</a></li>
+      <li><a href="../projects.html">Projects</a></li>
+      <li><a href="../profile.html" class="nav-cta">Hire Me</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <div class="project-detail-hero">
+    <a href="../projects.html" class="back-link">← Projects</a>
+    <div class="project-detail-tags">
+      <span class="project-tag">IRL</span>
+      <span class="project-tag">3D</span>
+    </div>
+    <h1>Spirit Level Template 📐</h1>
+    <p>A 3D printed drilling template designed for Openreach engineers — pre-spaced guide holes for wall-mounted telecom kit with an integrated spirit level bubble to ensure every install goes on straight.</p>
+  </div>
+
+  <div class="project-detail-body">
+    <div class="project-detail-content">
+
+      <div class="content-block">
+        <h2>The problem</h2>
+        <p>When mounting equipment on walls, getting fixings level and at the correct spacing is fiddly and slow. The usual approach — measure twice, mark, drill — sounds simple but adds up across dozens of installs. A pencil mark can shift, a tape measure can slip, and without a spirit level in hand you're eyeballing it. The result is kit that goes on crooked or with holes in the wrong place.</p>
+        <p>I wanted a way to make the process faster and more consistent for the whole team — something you could hold against the wall, know it was level, and drill straight through.</p>
+      </div>
+
+      <div class="content-block">
+        <h2>The solution</h2>
+        <p>I designed and printed a set of mounting templates in PLA on my Creality Ender 3. Each template is a flat rigid plate with drill-through guide holes at the exact spacing required for specific pieces of Openreach equipment. A circular spirit level bubble is recessed into the top face so you can level the template against the wall before you drill — no separate tool needed.</p>
+        <ul class="content-list">
+          <li>Drill guide holes sized for standard masonry and plasterboard bits</li>
+          <li>Hole spacings matched exactly to equipment fixing points</li>
+          <li>Recessed pocket holds a standard bubble level insert</li>
+          <li>Flat back face sits flush against the wall surface</li>
+          <li>Lightweight and compact enough to fit in a tool bag</li>
+        </ul>
+      </div>
+
+      <div class="content-block">
+        <h2>Design and print</h2>
+        <p>The templates were modelled in CAD and sliced for FDM printing. PLA was chosen for its rigidity — the template needs to hold its shape under light pressure without flexing, so the guide holes stay true. Wall thickness around the drill guides was kept thick enough to prevent cracking when a bit passes through repeatedly.</p>
+        <p>Multiple versions were printed for different equipment types, each sized and labelled so engineers could grab the right template from a kit bag without measuring anything.</p>
+      </div>
+
+      <div class="content-block">
+        <h2>Result</h2>
+        <p>The template removed the measure-and-mark step from wall mounting entirely. Hold it against the wall, check the bubble, drill through — done. The team found it noticeably faster and more consistent than the previous approach, and the spirit level integration meant fewer calls back to fix crooked installs.</p>
+        <p>It's a small tool, but a good example of how 3D printing can solve a practical problem quickly and cheaply when you know what you need.</p>
+      </div>
+
+    </div>
+
+    <div class="project-detail-sidebar">
+      <div class="sidebar-card">
+        <h3>Details</h3>
+        <div class="sidebar-row"><span>Year</span><span>2023</span></div>
+        <div class="sidebar-row"><span>Made for</span><span>Openreach team</span></div>
+        <div class="sidebar-row"><span>Category</span><span>Tooling / 3D Print</span></div>
+        <div class="sidebar-row"><span>Status</span><span>In use</span></div>
+      </div>
+      <div class="sidebar-card">
+        <h3>Features</h3>
+        <div class="sidebar-row"><span>Drill guides</span><span>Pre-spaced holes</span></div>
+        <div class="sidebar-row"><span>Levelling</span><span>Integrated bubble</span></div>
+        <div class="sidebar-row"><span>Material</span><span>PLA</span></div>
+        <div class="sidebar-row"><span>Printer</span><span>Creality Ender 3</span></div>
+        <div class="sidebar-row"><span>Variants</span><span>Multiple kit types</span></div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <span>© 2026 Kyran Walker</span>
+    <span>Built with HTML · CSS · JS</span>
+  </footer>
+
+  <script>
+    const hamburger = document.getElementById('hamburger');
+    const navLinks  = document.getElementById('navLinks');
+    hamburger.addEventListener('click', () => navLinks.classList.toggle('open'));
+    navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
+  </script>
+</body>
+</html>
