@@ -57,13 +57,81 @@ const TIMELINE = {
     },
   ],
 
-  // Annual travel — shown inside the Living box
+  // Annual travel
   travel: [
     { year: 1994, destination: 'Turkey' },
-    { year: 1995, destination: 'France' },
+    {
+      year: 1995,
+      destination: 'France',
+      detail: 'Camping trip to the south of France with family.',
+    },
     { year: 1996, destination: 'Spain' },
-    { year: 1997, destination: 'France' },
+    {
+      year: 1997,
+      destination: 'France',
+      detail: 'Camping trip to the south of France with family.',
+    },
     { year: 1998, destination: 'Spain' },
+    {
+      year: 2005,
+      destination: 'Poland',
+      detail: 'Trip with my grandmother to visit cousins - Warsaw, Lublin, and Pulawy.',
+    },
+    {
+      year: 2007,
+      destination: 'France',
+      detail: 'Trip to Paris with family.',
+    },
+    {
+      year: 2007,
+      destination: 'Poland',
+      detail: 'Trip with my grandmother to visit cousins - Krakow.',
+    },
+    {
+      year: 2007,
+      destination: 'Qatar',
+      detail: 'Football tournament for Raha International School.',
+    },
+    {
+      year: 2008,
+      destination: 'Switzerland',
+      detail: 'Snowboarding school trip to Verbier.',
+    },
+    {
+      year: 2009,
+      destination: 'Canada',
+      detail: 'Trip to Toronto and the Lakes with Cole, best friend from school in Abu Dhabi.',
+    },
+    {
+      year: 2009,
+      destination: 'France',
+      detail: 'School trip to Paris - Cole and Amira were both on the same trip.',
+    },
+    {
+      year: 2009,
+      destination: 'Nepal',
+      detail: 'School trip to Kathmandu, a flight over Everest, and three days hiking in the Himalayas.',
+    },
+    {
+      year: 2009,
+      destination: 'Romania',
+      detail: 'New Year in Romania visiting family - Bucharest and Transylvania in winter. Visited Bran Castle.',
+    },
+    {
+      year: 2011,
+      destination: 'USA',
+      detail: 'Global Young Leaders Conference - New York, Washington, and Philadelphia. Debated in the United Nations HQ building in New York.',
+    },
+    {
+      year: 2011,
+      destination: 'France',
+      detail: 'Trip to Lion-sur-Mer, Normandy - staying in a cottage near the beach.',
+    },
+    {
+      year: 2012,
+      destination: 'Thailand',
+      detail: 'Post-graduation trip with Cole - Koh Samui and the Full Moon Party on Koh Phangan.',
+    },
     {
       year: 2017,
       destination: 'South Africa, South America, USA, New Zealand 🌍',
@@ -72,17 +140,22 @@ const TIMELINE = {
     {
       year: 2024,
       destination: 'Devon, UK',
-      detail: 'Short trip to Devon — stayed in an Eco Lodge. Less travel this year to keep the Defender fund topped up.',
+      detail: 'Short trip to Devon - stayed in an Eco Lodge. Less travel this year to keep the Defender fund topped up.',
+    },
+    {
+      year: 2024,
+      destination: 'Greece',
+      detail: 'Trip to Crete with Cole - five days staying in Chania.',
     },
     {
       year: 2025,
       destination: 'Europe 🇪🇺',
-      detail: 'Month-long road trip through France, Belgium, the Netherlands, Germany, and Luxembourg in the rebuilt Defender — Amiens, Tournai, Brussels, Middelburg, Vlissingen, Colmar, Konstanz, Munich, Bamberg, Venlo, Luxembourg, and Reims.',
+      detail: 'Month-long road trip through France, Belgium, the Netherlands, Germany, and Luxembourg in the rebuilt Defender - Amiens, Tournai, Brussels, Middelburg, Vlissingen, Colmar, Konstanz, Munich, Bamberg, Venlo, Luxembourg, and Reims.',
     },
     {
       year: 2026,
       destination: 'New Zealand 🇳🇿',
-      detail: 'Flew to New Zealand in March 2026 to get married — full circle from the working holiday in 2017.',
+      detail: 'Flew to New Zealand in March 2026 to get married - full circle from the working holiday in 2017.',
     },
   ],
 
