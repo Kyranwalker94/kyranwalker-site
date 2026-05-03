@@ -101,6 +101,7 @@ function showQuestion() {
 
   const box = document.getElementById('quiz-answers');
   box.innerHTML = '';
+  box.style.pointerEvents = '';
   answers.forEach(ans => {
     const btn = document.createElement('button');
     btn.className    = 'quiz-answer-btn';
