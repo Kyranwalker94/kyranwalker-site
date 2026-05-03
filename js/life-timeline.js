@@ -388,6 +388,13 @@ const TIMELINE = {
       location: 'Online',
       detail: 'Sketching, extruded features, assemblies, exploded views, and detailed engineering drawings.',
     },
+    {
+      start: 2025, end: 2028,
+      institution: 'ACCA',
+      qualification: 'ACCA Professional Qualification (Self Study)',
+      location: 'UK',
+      detail: 'Returning to ACCA, self-studying from late 2025 with plans to complete by 2028.',
+    },
   ],
 
   // Point-in-time achievements — use `year`, not a range
