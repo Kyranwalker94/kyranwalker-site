@@ -70,4 +70,5 @@
 
   function openModal()  { overlay.classList.add('open'); }
   function closeModal() { overlay.classList.remove('open'); }
+  window.openContactModal = openModal;
 })();
