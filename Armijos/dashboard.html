@@ -1,0 +1,1175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Armijos | Host Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/Armijos/css/armijos.css">
+  <style>
+    /* ==============================
+       LOGIN SCREEN
+    ============================== */
+    #loginScreen {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+    .login-card {
+      background: white;
+      border: 4px solid var(--border);
+      border-radius: 24px;
+      box-shadow: 8px 8px 0 var(--border);
+      padding: 2.5rem;
+      width: 100%;
+      max-width: 420px;
+    }
+    .login-logo {
+      font-family: var(--font-main);
+      font-size: 1rem;
+      margin-bottom: 0.25rem;
+      color: var(--text);
+    }
+    .login-logo span { color: var(--red); }
+    .login-subtitle {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-bottom: 2rem;
+    }
+    .login-field { margin-bottom: 1.25rem; }
+    .login-field label { display: block; font-weight: 700; font-size: 0.9rem; margin-bottom: 0.4rem; }
+    .login-field input {
+      width: 100%;
+      padding: 0.85rem 1rem;
+      border: 3px solid var(--border);
+      border-radius: 12px;
+      font-size: 1rem;
+      font-family: var(--font-body);
+      background: var(--bg);
+    }
+    .login-field input:focus { outline: none; border-color: var(--red); box-shadow: 0 0 0 2px rgba(255,92,92,0.2); }
+    .login-error {
+      background: #ffe0e0;
+      border: 2px solid var(--red);
+      border-radius: 10px;
+      padding: 0.65rem 0.9rem;
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--red);
+      margin-bottom: 1rem;
+      display: none;
+    }
+    .login-error.show { display: block; }
+    .btn-login {
+      width: 100%;
+      padding: 1rem;
+      background: var(--red);
+      color: white;
+      border: 3px solid var(--border);
+      border-radius: 14px;
+      box-shadow: 4px 4px 0 var(--border);
+      font-family: var(--font-main);
+      font-size: 0.65rem;
+      cursor: pointer;
+      transition: 0.15s;
+    }
+    .btn-login:hover { transform: translate(-2px,-2px); box-shadow: 6px 6px 0 var(--border); }
+    .btn-login:disabled { opacity: 0.5; cursor: not-allowed; transform: none; box-shadow: 4px 4px 0 var(--border); }
+
+    /* ==============================
+       DASHBOARD LAYOUT
+    ============================== */
+    #dashboardScreen { display: none; }
+
+    .dash-header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255,247,223,0.97);
+      border-bottom: 4px solid var(--border);
+      backdrop-filter: blur(8px);
+      padding: 1rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .dash-header-left {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .dash-logo { font-family: var(--font-main); font-size: 0.75rem; }
+    .dash-logo span { color: var(--red); }
+    .dash-logo-sub { font-size: 0.75rem; color: var(--muted); font-weight: 600; }
+    .dash-header-right { display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+    .dash-user { font-size: 0.85rem; color: var(--muted); font-weight: 600; }
+    .btn-logout {
+      background: var(--text);
+      color: white;
+      border: 3px solid var(--border);
+      border-radius: 10px;
+      padding: 0.5rem 1rem;
+      font-size: 0.8rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: 0.15s;
+      text-decoration: none;
+    }
+    .btn-logout:hover { background: #4a3020; }
+
+    /* Tabs */
+    .dash-tabs {
+      display: flex;
+      gap: 0;
+      border-bottom: 4px solid var(--border);
+      background: white;
+      padding: 0 2rem;
+      overflow-x: auto;
+    }
+    .dash-tab {
+      font-family: var(--font-main);
+      font-size: 0.6rem;
+      padding: 1rem 1.5rem;
+      cursor: pointer;
+      border: none;
+      background: none;
+      color: var(--muted);
+      border-bottom: 4px solid transparent;
+      margin-bottom: -4px;
+      white-space: nowrap;
+      transition: 0.15s;
+    }
+    .dash-tab:hover { color: var(--text); }
+    .dash-tab.active { color: var(--text); border-bottom-color: var(--red); }
+    .dash-tab-badge {
+      display: inline-block;
+      background: var(--red);
+      color: white;
+      font-size: 0.55rem;
+      padding: 0.1rem 0.4rem;
+      border-radius: 6px;
+      margin-left: 0.4rem;
+      font-family: var(--font-body);
+      font-weight: 700;
+      vertical-align: middle;
+    }
+
+    .dash-content { padding: 2rem; max-width: 1100px; margin: 0 auto; }
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    /* Section headings */
+    .dash-section-title {
+      font-family: var(--font-main);
+      font-size: 0.7rem;
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 3px solid var(--border);
+    }
+
+    /* ==============================
+       CALENDAR TAB
+    ============================== */
+    .dash-cal-layout {
+      display: grid;
+      grid-template-columns: 1fr 320px;
+      gap: 2rem;
+      align-items: start;
+    }
+    .dash-cal-main {}
+    .dash-cal-nav {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      margin-bottom: 1.25rem;
+    }
+    .dash-cal-btn {
+      background: white;
+      border: 3px solid var(--border);
+      border-radius: 8px;
+      box-shadow: 3px 3px 0 var(--border);
+      padding: 0.5rem 0.9rem;
+      font-family: var(--font-main);
+      font-size: 0.6rem;
+      cursor: pointer;
+      color: var(--text);
+      transition: 0.15s;
+    }
+    .dash-cal-btn:hover { transform: translate(-1px,-1px); box-shadow: 5px 5px 0 var(--border); }
+    .dash-cal-title {
+      font-family: var(--font-main);
+      font-size: 0.8rem;
+      min-width: 150px;
+      text-align: center;
+    }
+    .dash-weekdays {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 3px;
+      margin-bottom: 3px;
+    }
+    .dash-weekday { text-align: center; font-size: 0.7rem; font-weight: 700; color: var(--muted); padding: 0.3rem 0; }
+    .dash-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 3px;
+    }
+    .dash-day {
+      aspect-ratio: 1;
+      border: 2px solid var(--border);
+      border-radius: 8px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      font-weight: 700;
+      cursor: pointer;
+      background: white;
+      transition: 0.12s;
+      min-height: 40px;
+      position: relative;
+      user-select: none;
+    }
+    .dash-day:hover { transform: translate(-1px,-1px); box-shadow: 3px 3px 0 var(--border); }
+    .dash-day.empty { border: none; background: transparent; cursor: default; }
+    .dash-day.empty:hover { transform: none; box-shadow: none; }
+    .dash-day.d-available { background: var(--green); }
+    .dash-day.d-event     { background: var(--orange); }
+    .dash-day.d-taken     { background: #d0d0d0; color: #777; }
+    .dash-day.d-closed    { background: #c0c0c0; color: #666; text-decoration: line-through; }
+    .dash-day.d-today::after {
+      content: '';
+      position: absolute;
+      bottom: 3px;
+      width: 5px; height: 5px;
+      background: var(--red);
+      border-radius: 50%;
+    }
+    .dash-day.d-selected {
+      outline: 3px solid var(--red);
+      outline-offset: 1px;
+    }
+    .dash-day-sub {
+      font-size: 0.35rem;
+      font-family: var(--font-main);
+      text-align: center;
+      line-height: 1.2;
+      margin-top: 1px;
+      max-width: 95%;
+      overflow: hidden;
+    }
+    .dash-cal-loading { grid-column: 1/-1; text-align: center; padding: 2rem; color: var(--muted); }
+
+    /* Edit panel */
+    .dash-edit-panel {
+      background: white;
+      border: 4px solid var(--border);
+      border-radius: 20px;
+      box-shadow: 6px 6px 0 var(--border);
+      padding: 1.5rem;
+      position: sticky;
+      top: 120px;
+    }
+    .dash-edit-panel h3 {
+      font-family: var(--font-main);
+      font-size: 0.65rem;
+      margin-bottom: 0.5rem;
+    }
+    .dash-edit-date {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 1.25rem;
+      color: var(--muted);
+    }
+    .dash-edit-placeholder {
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.9rem;
+      padding: 2rem 1rem;
+      line-height: 1.7;
+    }
+    .status-btn-group { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; margin-bottom: 1.25rem; }
+    .status-btn {
+      padding: 0.6rem 0.5rem;
+      border: 3px solid var(--border);
+      border-radius: 10px;
+      background: white;
+      font-weight: 700;
+      font-size: 0.8rem;
+      cursor: pointer;
+      text-align: center;
+      transition: 0.12s;
+    }
+    .status-btn:hover { background: var(--bg); }
+    .status-btn.active-none     { background: white; border-color: var(--border); }
+    .status-btn.active-available { background: var(--green); color: white; border-color: var(--green); }
+    .status-btn.active-taken    { background: #d0d0d0; border-color: #aaa; }
+    .status-btn.active-closed   { background: #bbb; border-color: #999; }
+
+    .dash-edit-label { font-weight: 700; font-size: 0.85rem; margin: 1rem 0 0.5rem; display: block; }
+    .dash-edit-input {
+      width: 100%;
+      padding: 0.75rem 0.9rem;
+      border: 3px solid var(--border);
+      border-radius: 10px;
+      font-size: 0.95rem;
+      font-family: var(--font-body);
+      margin-bottom: 0.75rem;
+      background: var(--bg);
+    }
+    .dash-edit-input:focus { outline: none; border-color: var(--orange); }
+    .dash-toggle-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 0.75rem;
+    }
+    .dash-toggle-row label { font-weight: 700; font-size: 0.85rem; }
+    .dash-toggle {
+      position: relative;
+      width: 44px;
+      height: 24px;
+      flex-shrink: 0;
+    }
+    .dash-toggle input { opacity: 0; width: 0; height: 0; }
+    .dash-toggle-slider {
+      position: absolute;
+      inset: 0;
+      background: #ccc;
+      border-radius: 24px;
+      cursor: pointer;
+      transition: 0.2s;
+      border: 2px solid var(--border);
+    }
+    .dash-toggle-slider::before {
+      content: '';
+      position: absolute;
+      width: 16px; height: 16px;
+      left: 2px; bottom: 2px;
+      background: white;
+      border-radius: 50%;
+      transition: 0.2s;
+    }
+    .dash-toggle input:checked + .dash-toggle-slider { background: var(--green); }
+    .dash-toggle input:checked + .dash-toggle-slider::before { transform: translateX(20px); }
+
+    .btn-save-date {
+      width: 100%;
+      padding: 0.85rem;
+      background: var(--green);
+      color: white;
+      border: 3px solid var(--border);
+      border-radius: 12px;
+      box-shadow: 3px 3px 0 var(--border);
+      font-family: var(--font-main);
+      font-size: 0.6rem;
+      cursor: pointer;
+      transition: 0.15s;
+      margin-top: 0.5rem;
+    }
+    .btn-save-date:hover { transform: translate(-1px,-1px); box-shadow: 5px 5px 0 var(--border); }
+    .btn-save-date:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+    .event-section { margin-top: 1rem; padding-top: 1rem; border-top: 2px solid var(--border); }
+
+    /* ==============================
+       BOOKINGS TAB
+    ============================== */
+    .bookings-filter-row { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
+    .bookings-filter {
+      padding: 0.5rem 1rem;
+      border: 3px solid var(--border);
+      border-radius: 10px;
+      background: white;
+      font-weight: 700;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: 0.15s;
+    }
+    .bookings-filter.active { background: var(--text); color: white; border-color: var(--text); }
+    .bookings-table-wrap { overflow-x: auto; }
+    .bookings-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    .bookings-table th {
+      background: var(--text);
+      color: white;
+      text-align: left;
+      padding: 0.75rem 1rem;
+      font-family: var(--font-main);
+      font-size: 0.55rem;
+      white-space: nowrap;
+    }
+    .bookings-table td {
+      padding: 0.75rem 1rem;
+      border-bottom: 2px solid var(--border);
+      vertical-align: middle;
+    }
+    .bookings-table tr:nth-child(even) td { background: #fffbf0; }
+    .status-pill {
+      display: inline-block;
+      padding: 0.25rem 0.65rem;
+      border-radius: 20px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      border: 2px solid;
+    }
+    .pill-pending  { background: #fff8d6; color: #8a6d00; border-color: #e0c800; }
+    .pill-confirmed { background: #e6fff0; color: #1a7a3c; border-color: var(--green); }
+    .pill-declined  { background: #ffe8e8; color: var(--red); border-color: var(--red); }
+    .action-btn {
+      padding: 0.35rem 0.75rem;
+      border-radius: 8px;
+      border: 2px solid var(--border);
+      font-size: 0.8rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: 0.12s;
+      background: white;
+      margin-right: 0.35rem;
+    }
+    .action-btn:hover { transform: translate(-1px,-1px); }
+    .action-btn.confirm { background: var(--green); color: white; border-color: var(--green); }
+    .action-btn.decline { background: var(--red); color: white; border-color: var(--red); }
+    .empty-state { text-align: center; padding: 3rem 1rem; color: var(--muted); font-size: 0.95rem; }
+
+    /* ==============================
+       CODES TAB
+    ============================== */
+    .codes-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem; }
+    .btn-generate {
+      background: var(--orange);
+      color: white;
+      border: 3px solid var(--border);
+      border-radius: 12px;
+      box-shadow: 4px 4px 0 var(--border);
+      padding: 0.75rem 1.25rem;
+      font-family: var(--font-main);
+      font-size: 0.6rem;
+      cursor: pointer;
+      transition: 0.15s;
+    }
+    .btn-generate:hover { transform: translate(-2px,-2px); box-shadow: 6px 6px 0 var(--border); }
+    .codes-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+    .codes-table th {
+      background: var(--text); color: white;
+      text-align: left; padding: 0.75rem 1rem;
+      font-family: var(--font-main); font-size: 0.55rem;
+    }
+    .codes-table td { padding: 0.75rem 1rem; border-bottom: 2px solid var(--border); vertical-align: middle; }
+    .codes-table tr:nth-child(even) td { background: #fffbf0; }
+    .code-pill {
+      font-family: var(--font-main);
+      font-size: 0.65rem;
+      background: var(--yellow);
+      border: 2px solid var(--border);
+      border-radius: 8px;
+      padding: 0.3rem 0.6rem;
+      display: inline-block;
+    }
+
+    /* ==============================
+       MODAL (shared)
+    ============================== */
+    .dash-modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 9000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s;
+    }
+    .dash-modal-backdrop.open { opacity: 1; pointer-events: all; }
+    .dash-modal {
+      background: var(--bg);
+      border: 4px solid var(--border);
+      border-radius: 20px;
+      box-shadow: 8px 8px 0 var(--border);
+      padding: 2rem;
+      width: 100%;
+      max-width: 460px;
+      transform: translateY(20px);
+      transition: transform 0.2s;
+    }
+    .dash-modal-backdrop.open .dash-modal { transform: translateY(0); }
+    .dash-modal h3 { font-family: var(--font-main); font-size: 0.7rem; margin-bottom: 1.5rem; }
+    .dash-modal-field { margin-bottom: 1rem; }
+    .dash-modal-field label { display: block; font-weight: 700; font-size: 0.88rem; margin-bottom: 0.35rem; }
+    .dash-modal-field input {
+      width: 100%;
+      padding: 0.8rem 0.9rem;
+      border: 3px solid var(--border);
+      border-radius: 10px;
+      font-size: 1rem;
+      font-family: var(--font-body);
+      background: white;
+    }
+    .dash-modal-field input:focus { outline: none; border-color: var(--orange); }
+    .dash-modal-btns { display: flex; gap: 0.75rem; margin-top: 1.25rem; }
+    .dash-modal-btns .btn-primary { flex: 1; }
+
+    /* Responsive */
+    @media (max-width: 800px) {
+      .dash-cal-layout { grid-template-columns: 1fr; }
+      .dash-edit-panel { position: static; }
+      .dash-content { padding: 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============================================================
+       LOGIN SCREEN
+  ============================================================ -->
+  <div id="loginScreen">
+    <div class="login-card">
+      <div class="login-logo">ARMIJOS<span>.</span></div>
+      <div class="login-subtitle">Host Dashboard</div>
+      <div class="login-error" id="loginError">Incorrect email or password.</div>
+      <div class="login-field">
+        <label for="loginEmail">Email</label>
+        <input type="email" id="loginEmail" placeholder="your@email.com" autocomplete="email" />
+      </div>
+      <div class="login-field">
+        <label for="loginPassword">Password</label>
+        <input type="password" id="loginPassword" placeholder="••••••••" autocomplete="current-password" />
+      </div>
+      <button class="btn-login" id="loginBtn" onclick="doLogin()">Log In</button>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       DASHBOARD
+  ============================================================ -->
+  <div id="dashboardScreen">
+
+    <header class="dash-header">
+      <div class="dash-header-left">
+        <div>
+          <div class="dash-logo">ARMIJOS<span>.</span></div>
+          <div class="dash-logo-sub">Host Dashboard</div>
+        </div>
+      </div>
+      <div class="dash-header-right">
+        <span class="dash-user" id="dashUserEmail"></span>
+        <button class="btn-logout" onclick="doLogout()">Log out</button>
+        <a href="calendar.html" class="btn-logout" style="background:var(--green);">View Calendar →</a>
+      </div>
+    </header>
+
+    <nav class="dash-tabs">
+      <button class="dash-tab active" data-tab="calendar" onclick="switchTab('calendar')">🗓️ Calendar</button>
+      <button class="dash-tab" data-tab="bookings" onclick="switchTab('bookings')">
+        📬 Bookings <span class="dash-tab-badge" id="pendingBadge" style="display:none;">0</span>
+      </button>
+      <button class="dash-tab" data-tab="codes" onclick="switchTab('codes')">🔑 Invite Codes</button>
+    </nav>
+
+    <div class="dash-content">
+
+      <!-- ========================
+           CALENDAR TAB
+      ======================== -->
+      <div class="tab-panel active" id="tab-calendar">
+        <div class="dash-cal-layout">
+
+          <div class="dash-cal-main">
+            <div class="dash-cal-nav">
+              <button class="dash-cal-btn" id="dashPrevBtn">← Prev</button>
+              <h2 class="dash-cal-title" id="dashMonthTitle">Loading...</h2>
+              <button class="dash-cal-btn" id="dashNextBtn">Next →</button>
+            </div>
+            <div class="dash-weekdays">
+              <div class="dash-weekday">Mon</div>
+              <div class="dash-weekday">Tue</div>
+              <div class="dash-weekday">Wed</div>
+              <div class="dash-weekday">Thu</div>
+              <div class="dash-weekday">Fri</div>
+              <div class="dash-weekday">Sat</div>
+              <div class="dash-weekday">Sun</div>
+            </div>
+            <div class="dash-grid" id="dashGrid">
+              <div class="dash-cal-loading">Loading...</div>
+            </div>
+          </div>
+
+          <!-- Edit Panel -->
+          <div class="dash-edit-panel" id="editPanel">
+            <div class="dash-edit-placeholder" id="editPlaceholder">
+              Click any date to edit its status or add an event.
+            </div>
+
+            <div id="editForm" style="display:none;">
+              <h3>EDIT DATE</h3>
+              <div class="dash-edit-date" id="editDateLabel"></div>
+
+              <label class="dash-edit-label">Status</label>
+              <div class="status-btn-group">
+                <button class="status-btn" data-status="none"      onclick="setStatus('none')">None</button>
+                <button class="status-btn" data-status="available" onclick="setStatus('available')">✅ Available</button>
+                <button class="status-btn" data-status="taken"     onclick="setStatus('taken')">🔒 Taken</button>
+                <button class="status-btn" data-status="closed"    onclick="setStatus('closed')">✗ Closed</button>
+              </div>
+
+              <div class="event-section">
+                <div class="dash-toggle-row">
+                  <label>Has Event</label>
+                  <label class="dash-toggle">
+                    <input type="checkbox" id="hasEventToggle" onchange="toggleEventFields()" />
+                    <span class="dash-toggle-slider"></span>
+                  </label>
+                </div>
+
+                <div id="eventFields" style="display:none;">
+                  <label class="dash-edit-label">Event Title</label>
+                  <input class="dash-edit-input" type="text" id="eventTitleInput" placeholder="e.g. Family Dinner 🎉" />
+
+                  <label class="dash-edit-label">Description (optional)</label>
+                  <input class="dash-edit-input" type="text" id="eventDescInput" placeholder="A short note about the event" />
+
+                  <div class="dash-toggle-row" style="margin-top:0.5rem;">
+                    <label>Private (host only)</label>
+                    <label class="dash-toggle">
+                      <input type="checkbox" id="eventPrivateToggle" />
+                      <span class="dash-toggle-slider"></span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+              <button class="btn-save-date" id="saveDateBtn" onclick="saveDate()">Save Changes</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ========================
+           BOOKINGS TAB
+      ======================== -->
+      <div class="tab-panel" id="tab-bookings">
+        <h2 class="dash-section-title">BOOKING REQUESTS</h2>
+        <div class="bookings-filter-row">
+          <button class="bookings-filter active" data-filter="all"       onclick="filterBookings('all')">All</button>
+          <button class="bookings-filter"         data-filter="pending"   onclick="filterBookings('pending')">Pending</button>
+          <button class="bookings-filter"         data-filter="confirmed" onclick="filterBookings('confirmed')">Confirmed</button>
+          <button class="bookings-filter"         data-filter="declined"  onclick="filterBookings('declined')">Declined</button>
+        </div>
+        <div class="bookings-table-wrap">
+          <table class="bookings-table">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Guest</th>
+                <th>Code</th>
+                <th>Requested</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="bookingsTableBody">
+              <tr><td colspan="6" class="empty-state">Loading bookings...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ========================
+           CODES TAB
+      ======================== -->
+      <div class="tab-panel" id="tab-codes">
+        <div class="codes-header">
+          <h2 class="dash-section-title" style="margin:0;border:none;">INVITE CODES</h2>
+          <button class="btn-generate" onclick="openGenerateModal()">+ Generate Code</button>
+        </div>
+        <div class="bookings-table-wrap">
+          <table class="codes-table">
+            <thead>
+              <tr>
+                <th>Code</th>
+                <th>Name</th>
+                <th>Notes</th>
+                <th>Created</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="codesTableBody">
+              <tr><td colspan="5" class="empty-state">Loading codes...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div><!-- /dash-content -->
+  </div><!-- /dashboardScreen -->
+
+  <!-- ============================================================
+       GENERATE CODE MODAL
+  ============================================================ -->
+  <div class="dash-modal-backdrop" id="generateModal">
+    <div class="dash-modal">
+      <h3>GENERATE INVITE CODE</h3>
+      <div class="dash-modal-field">
+        <label>Code <small style="font-weight:400;color:var(--muted);">(auto-generated, editable)</small></label>
+        <input type="text" id="newCodeInput" style="text-transform:uppercase;letter-spacing:0.1em;font-family:var(--font-main);font-size:0.75rem;" />
+      </div>
+      <div class="dash-modal-field">
+        <label>Name <small style="font-weight:400;color:var(--muted);">e.g. Walker Family</small></label>
+        <input type="text" id="newCodeName" placeholder="Who is this for?" />
+      </div>
+      <div class="dash-modal-field">
+        <label>Notes <small style="font-weight:400;color:var(--muted);">(optional)</small></label>
+        <input type="text" id="newCodeNotes" placeholder="Any notes about this invite" />
+      </div>
+      <div class="dash-modal-btns">
+        <button class="btn-primary" onclick="saveCode()">Save Code</button>
+        <button class="btn-secondary" onclick="closeGenerateModal()">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script>
+    const sb = supabase.createClient(
+      'https://duxmjqorfhzftunfhely.supabase.co',
+      'sb_publishable_-5XNg2yIczTFHPc6Lflncw_AacfXzcZ'
+    );
+
+    /* ============================================================
+       AUTH
+    ============================================================ */
+    async function init() {
+      const { data: { session } } = await sb.auth.getSession();
+      if (session) {
+        showDashboard(session.user);
+      }
+    }
+
+    async function doLogin() {
+      const email    = document.getElementById('loginEmail').value.trim();
+      const password = document.getElementById('loginPassword').value;
+      const btn      = document.getElementById('loginBtn');
+      const errEl    = document.getElementById('loginError');
+
+      errEl.classList.remove('show');
+      btn.disabled = true;
+      btn.textContent = 'Logging in...';
+
+      const { data, error } = await sb.auth.signInWithPassword({ email, password });
+
+      if (error) {
+        errEl.classList.add('show');
+        btn.disabled = false;
+        btn.textContent = 'Log In';
+        return;
+      }
+      showDashboard(data.user);
+    }
+
+    async function doLogout() {
+      await sb.auth.signOut();
+      document.getElementById('dashboardScreen').style.display = 'none';
+      document.getElementById('loginScreen').style.display     = 'flex';
+    }
+
+    function showDashboard(user) {
+      document.getElementById('loginScreen').style.display     = 'none';
+      document.getElementById('dashboardScreen').style.display = 'block';
+      document.getElementById('dashUserEmail').textContent     = user.email;
+      loadDashboard();
+    }
+
+    document.getElementById('loginPassword').addEventListener('keydown', e => {
+      if (e.key === 'Enter') doLogin();
+    });
+
+    /* ============================================================
+       TABS
+    ============================================================ */
+    function switchTab(name) {
+      document.querySelectorAll('.dash-tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+      document.querySelector(`.dash-tab[data-tab="${name}"]`).classList.add('active');
+      document.getElementById(`tab-${name}`).classList.add('active');
+    }
+
+    function loadDashboard() {
+      renderDashCalendar();
+      loadBookings();
+      loadCodes();
+    }
+
+    /* ============================================================
+       CALENDAR TAB
+    ============================================================ */
+    let dashDate    = new Date();
+    dashDate.setDate(1);
+    let selectedDay = null;
+    let dayData     = {}; // { day: { status, event } }
+
+    function getDashStartDay(year, month) {
+      return (new Date(year, month - 1, 1).getDay() + 6) % 7;
+    }
+
+    function fmtDate(dateStr) {
+      return new Date(dateStr + 'T00:00:00').toLocaleDateString('en-GB', {
+        weekday: 'long', day: 'numeric', month: 'long', year: 'numeric'
+      });
+    }
+
+    async function renderDashCalendar() {
+      const grid = document.getElementById('dashGrid');
+      grid.innerHTML = '<div class="dash-cal-loading">Loading...</div>';
+
+      const year  = dashDate.getFullYear();
+      const month = dashDate.getMonth() + 1;
+      const days  = new Date(year, month, 0).getDate();
+      const start = getDashStartDay(year, month);
+      const pad   = n => String(n).padStart(2, '0');
+      const first = `${year}-${pad(month)}-01`;
+      const last  = `${year}-${pad(month)}-${pad(days)}`;
+
+      document.getElementById('dashMonthTitle').textContent =
+        dashDate.toLocaleDateString('en-GB', { month: 'long', year: 'numeric' });
+
+      const [{ data: dates }, { data: events }] = await Promise.all([
+        sb.from('calendar_dates').select('date,status').gte('date', first).lte('date', last),
+        sb.from('events').select('date,title,description,is_private').gte('date', first).lte('date', last)
+      ]);
+
+      dayData = {};
+      dates?.forEach(d => {
+        const day = parseInt(d.date.split('-')[2]);
+        dayData[day] = { ...(dayData[day] || {}), status: d.status };
+      });
+      events?.forEach(e => {
+        const day = parseInt(e.date.split('-')[2]);
+        if (!dayData[day]) dayData[day] = {};
+        dayData[day].event = { title: e.title, description: e.description, is_private: e.is_private };
+      });
+
+      grid.innerHTML = '';
+      const today = new Date(); today.setHours(0,0,0,0);
+
+      for (let i = 0; i < start; i++) {
+        const el = document.createElement('div');
+        el.className = 'dash-day empty';
+        grid.appendChild(el);
+      }
+
+      for (let d = 1; d <= days; d++) {
+        const dateKey  = `${year}-${pad(month)}-${pad(d)}`;
+        const thisDate = new Date(year, month - 1, d);
+        const isToday  = thisDate.getTime() === today.getTime();
+        const info     = dayData[d];
+
+        const cell = document.createElement('div');
+        cell.className = 'dash-day';
+        cell.textContent = d;
+        cell.dataset.day = d;
+
+        if (isToday) cell.classList.add('d-today');
+        if (info?.event) {
+          cell.classList.add('d-event');
+          const sub = document.createElement('div');
+          sub.className = 'dash-day-sub';
+          sub.textContent = info.event.title;
+          cell.appendChild(sub);
+        } else if (info?.status === 'available') {
+          cell.classList.add('d-available');
+        } else if (info?.status === 'taken') {
+          cell.classList.add('d-taken');
+        } else if (info?.status === 'closed') {
+          cell.classList.add('d-closed');
+        }
+
+        if (selectedDay === d) cell.classList.add('d-selected');
+
+        cell.addEventListener('click', () => openEditPanel(d, dateKey));
+        grid.appendChild(cell);
+      }
+    }
+
+    document.getElementById('dashPrevBtn').addEventListener('click', () => {
+      dashDate.setMonth(dashDate.getMonth() - 1);
+      selectedDay = null;
+      document.getElementById('editPlaceholder').style.display = 'block';
+      document.getElementById('editForm').style.display = 'none';
+      renderDashCalendar();
+    });
+    document.getElementById('dashNextBtn').addEventListener('click', () => {
+      dashDate.setMonth(dashDate.getMonth() + 1);
+      selectedDay = null;
+      document.getElementById('editPlaceholder').style.display = 'block';
+      document.getElementById('editForm').style.display = 'none';
+      renderDashCalendar();
+    });
+
+    let editingDateKey = null;
+    let editingStatus  = 'none';
+
+    function openEditPanel(day, dateKey) {
+      selectedDay    = day;
+      editingDateKey = dateKey;
+      const info     = dayData[day] || {};
+
+      // Highlight selected cell
+      document.querySelectorAll('.dash-day').forEach(c => c.classList.remove('d-selected'));
+      document.querySelector(`.dash-day[data-day="${day}"]`)?.classList.add('d-selected');
+
+      document.getElementById('editPlaceholder').style.display = 'none';
+      document.getElementById('editForm').style.display        = 'block';
+      document.getElementById('editDateLabel').textContent     = fmtDate(dateKey);
+
+      // Set status
+      editingStatus = info.status || 'none';
+      updateStatusBtns();
+
+      // Set event fields
+      const hasEvent = !!info.event;
+      document.getElementById('hasEventToggle').checked   = hasEvent;
+      document.getElementById('eventTitleInput').value    = info.event?.title || '';
+      document.getElementById('eventDescInput').value     = info.event?.description || '';
+      document.getElementById('eventPrivateToggle').checked = info.event?.is_private || false;
+      document.getElementById('eventFields').style.display = hasEvent ? 'block' : 'none';
+
+      // Reset save button
+      const saveBtn = document.getElementById('saveDateBtn');
+      saveBtn.disabled = false;
+      saveBtn.textContent = 'Save Changes';
+    }
+
+    function setStatus(s) {
+      editingStatus = s;
+      updateStatusBtns();
+    }
+
+    function updateStatusBtns() {
+      document.querySelectorAll('.status-btn').forEach(btn => {
+        btn.className = 'status-btn';
+        if (btn.dataset.status === editingStatus) {
+          btn.classList.add(`active-${editingStatus}`);
+        }
+      });
+    }
+
+    function toggleEventFields() {
+      const show = document.getElementById('hasEventToggle').checked;
+      document.getElementById('eventFields').style.display = show ? 'block' : 'none';
+    }
+
+    async function saveDate() {
+      if (!editingDateKey) return;
+      const saveBtn = document.getElementById('saveDateBtn');
+      saveBtn.disabled = true;
+      saveBtn.textContent = 'Saving...';
+
+      const hasEvent    = document.getElementById('hasEventToggle').checked;
+      const eventTitle  = document.getElementById('eventTitleInput').value.trim();
+      const eventDesc   = document.getElementById('eventDescInput').value.trim();
+      const eventPrivate = document.getElementById('eventPrivateToggle').checked;
+
+      // Handle calendar_dates
+      if (editingStatus === 'none') {
+        await sb.from('calendar_dates').delete().eq('date', editingDateKey);
+      } else {
+        await sb.from('calendar_dates').upsert({ date: editingDateKey, status: editingStatus }, { onConflict: 'date' });
+      }
+
+      // Handle events
+      if (hasEvent && eventTitle) {
+        await sb.from('events').upsert({
+          date:        editingDateKey,
+          title:       eventTitle,
+          description: eventDesc || null,
+          is_private:  eventPrivate
+        }, { onConflict: 'date' });
+      } else {
+        await sb.from('events').delete().eq('date', editingDateKey);
+      }
+
+      saveBtn.textContent = '✅ Saved!';
+      setTimeout(() => {
+        saveBtn.disabled = false;
+        saveBtn.textContent = 'Save Changes';
+      }, 1500);
+
+      renderDashCalendar();
+    }
+
+    /* ============================================================
+       BOOKINGS TAB
+    ============================================================ */
+    let allBookings   = [];
+    let bookingFilter = 'all';
+
+    async function loadBookings() {
+      const { data } = await sb
+        .from('bookings')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+      allBookings = data || [];
+      renderBookings();
+      updatePendingBadge();
+    }
+
+    function updatePendingBadge() {
+      const pending = allBookings.filter(b => b.status === 'pending').length;
+      const badge = document.getElementById('pendingBadge');
+      badge.textContent = pending;
+      badge.style.display = pending > 0 ? 'inline-block' : 'none';
+    }
+
+    function filterBookings(f) {
+      bookingFilter = f;
+      document.querySelectorAll('.bookings-filter').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.filter === f);
+      });
+      renderBookings();
+    }
+
+    function renderBookings() {
+      const tbody = document.getElementById('bookingsTableBody');
+      const list = bookingFilter === 'all'
+        ? allBookings
+        : allBookings.filter(b => b.status === bookingFilter);
+
+      if (list.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="6" class="empty-state">No ${bookingFilter === 'all' ? '' : bookingFilter + ' '}bookings yet.</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = list.map(b => {
+        const dateStr = new Date(b.date + 'T00:00:00').toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' });
+        const timeStr = new Date(b.created_at).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' });
+        const pillClass = b.status === 'pending' ? 'pill-pending' : b.status === 'confirmed' ? 'pill-confirmed' : 'pill-declined';
+
+        const actions = b.status === 'pending'
+          ? `<button class="action-btn confirm" onclick="updateBooking('${b.id}','confirmed')">Confirm</button><button class="action-btn decline" onclick="updateBooking('${b.id}','declined')">Decline</button>`
+          : `<button class="action-btn" onclick="updateBooking('${b.id}','pending')">Reset</button>`;
+
+        return `<tr>
+          <td>${dateStr}</td>
+          <td><strong>${b.guest_name}</strong></td>
+          <td><span class="code-pill">${b.invite_code}</span></td>
+          <td style="font-size:0.8rem;color:var(--muted);">${timeStr}</td>
+          <td><span class="status-pill ${pillClass}">${b.status}</span></td>
+          <td>${actions}</td>
+        </tr>`;
+      }).join('');
+    }
+
+    async function updateBooking(id, status) {
+      await sb.from('bookings').update({ status }).eq('id', id);
+      await loadBookings();
+    }
+
+    /* ============================================================
+       CODES TAB
+    ============================================================ */
+    async function loadCodes() {
+      const { data } = await sb
+        .from('invite_codes')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+      const tbody = document.getElementById('codesTableBody');
+
+      if (!data || data.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="5" class="empty-state">No invite codes yet. Generate your first one above.</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = data.map(c => {
+        const dateStr = new Date(c.created_at).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+        return `<tr>
+          <td><span class="code-pill">${c.code}</span></td>
+          <td><strong>${c.name}</strong></td>
+          <td style="color:var(--muted);font-size:0.88rem;">${c.notes || ''}</td>
+          <td style="font-size:0.8rem;color:var(--muted);">${dateStr}</td>
+          <td>
+            <button class="action-btn" onclick="copyCode('${c.code}')">📋 Copy</button>
+            <button class="action-btn decline" onclick="deleteCode('${c.id}')">Delete</button>
+          </td>
+        </tr>`;
+      }).join('');
+    }
+
+    function openGenerateModal() {
+      document.getElementById('newCodeInput').value = generateCode();
+      document.getElementById('newCodeName').value  = '';
+      document.getElementById('newCodeNotes').value = '';
+      document.getElementById('generateModal').classList.add('open');
+      setTimeout(() => document.getElementById('newCodeName').focus(), 200);
+    }
+
+    function closeGenerateModal() {
+      document.getElementById('generateModal').classList.remove('open');
+    }
+
+    function generateCode() {
+      const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+      let code = '';
+      for (let i = 0; i < 8; i++) {
+        if (i === 4) code += '-';
+        code += chars[Math.floor(Math.random() * chars.length)];
+      }
+      return code;
+    }
+
+    async function saveCode() {
+      const code  = document.getElementById('newCodeInput').value.trim().toUpperCase();
+      const name  = document.getElementById('newCodeName').value.trim();
+      const notes = document.getElementById('newCodeNotes').value.trim();
+
+      if (!code || !name) {
+        alert('Code and name are required.');
+        return;
+      }
+
+      const { error } = await sb.from('invite_codes').insert({ code, name, notes: notes || null });
+      if (error) {
+        if (error.code === '23505') alert('That code already exists. Try a different one.');
+        else alert('Something went wrong. Please try again.');
+        return;
+      }
+
+      closeGenerateModal();
+      loadCodes();
+    }
+
+    function copyCode(code) {
+      const msg = `Here's your invite code for the Armijos dinner calendar: ${code}\n\nVisit https://kyranwalker.com/Armijos/calendar.html to pick a date. 🌶️`;
+      navigator.clipboard.writeText(msg);
+    }
+
+    async function deleteCode(id) {
+      if (!confirm('Delete this invite code? Anyone using it will no longer be able to book.')) return;
+      await sb.from('invite_codes').delete().eq('id', id);
+      loadCodes();
+    }
+
+    /* ============================================================
+       INIT
+    ============================================================ */
+    init();
+  </script>
+
+</body>
+</html>

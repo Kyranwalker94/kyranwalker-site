@@ -9,16 +9,11 @@
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Press+Start+2P&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/Armijos/css/armijos.css">
   <style>
-    /* ===========================
-       CALENDAR PAGE
-    =========================== */
-
     .cal-section {
       max-width: 780px;
       margin: 0 auto;
       padding: 1rem 1.5rem 5rem;
     }
-
     .cal-nav {
       display: flex;
       align-items: center;
@@ -26,7 +21,6 @@
       gap: 1.5rem;
       margin-bottom: 1.5rem;
     }
-
     .cal-nav-btn {
       background: white;
       border: 3px solid var(--border);
@@ -39,27 +33,22 @@
       transition: 0.15s;
       color: var(--text);
     }
-
     .cal-nav-btn:hover:not(:disabled) {
       transform: translate(-2px, -2px);
       box-shadow: 6px 6px 0 var(--border);
     }
-
     .cal-nav-btn:disabled {
       opacity: 0.35;
       cursor: not-allowed;
       transform: none;
       box-shadow: 4px 4px 0 var(--border);
     }
-
     .cal-month-title {
       font-family: var(--font-main);
       font-size: clamp(0.75rem, 2.5vw, 1rem);
       min-width: 160px;
       text-align: center;
     }
-
-    /* Legend */
     .cal-legend {
       display: flex;
       gap: 1rem 1.5rem;
@@ -67,7 +56,6 @@
       justify-content: center;
       margin-bottom: 1.5rem;
     }
-
     .legend-item {
       display: flex;
       align-items: center;
@@ -75,7 +63,6 @@
       font-size: 0.85rem;
       font-weight: 600;
     }
-
     .legend-swatch {
       width: 20px;
       height: 20px;
@@ -83,20 +70,16 @@
       border-radius: 5px;
       flex-shrink: 0;
     }
-
     .swatch-available { background: var(--green); }
     .swatch-event     { background: var(--orange); }
     .swatch-taken     { background: #d0d0d0; }
     .swatch-none      { background: white; }
-
-    /* Weekday headers */
     .cal-weekdays {
       display: grid;
       grid-template-columns: repeat(7, 1fr);
       gap: 4px;
       margin-bottom: 4px;
     }
-
     .cal-weekday {
       text-align: center;
       font-weight: 700;
@@ -104,14 +87,18 @@
       color: var(--muted);
       padding: 0.4rem 0;
     }
-
-    /* Grid */
     .cal-grid {
       display: grid;
       grid-template-columns: repeat(7, 1fr);
       gap: 4px;
     }
-
+    .cal-loading {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 3rem;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
     .cal-day {
       aspect-ratio: 1;
       border: 3px solid var(--border);
@@ -129,73 +116,35 @@
       cursor: default;
       user-select: none;
     }
-
-    .cal-day.empty {
-      border: none;
-      background: transparent;
-      box-shadow: none;
-    }
-
-    .cal-day.available {
-      background: var(--green);
-      cursor: pointer;
-      box-shadow: 3px 3px 0 var(--border);
-    }
-
-    .cal-day.available:hover {
-      transform: translate(-2px, -2px);
-      box-shadow: 5px 5px 0 var(--border);
-    }
-
-    .cal-day.event {
-      background: var(--orange);
-      cursor: pointer;
-      box-shadow: 3px 3px 0 var(--border);
-    }
-
-    .cal-day.event:hover {
-      transform: translate(-2px, -2px);
-      box-shadow: 5px 5px 0 var(--border);
-    }
-
-    .cal-day.taken {
-      background: #d0d0d0;
-      color: #888;
-    }
-
-    .cal-day.past {
-      opacity: 0.38;
-      cursor: not-allowed !important;
-      box-shadow: none !important;
-      transform: none !important;
-    }
-
+    .cal-day.empty { border: none; background: transparent; box-shadow: none; }
+    .cal-day.available { background: var(--green); cursor: pointer; box-shadow: 3px 3px 0 var(--border); }
+    .cal-day.available:hover { transform: translate(-2px, -2px); box-shadow: 5px 5px 0 var(--border); }
+    .cal-day.event { background: var(--orange); cursor: pointer; box-shadow: 3px 3px 0 var(--border); }
+    .cal-day.event:hover { transform: translate(-2px, -2px); box-shadow: 5px 5px 0 var(--border); }
+    .cal-day.taken { background: #d0d0d0; color: #888; }
+    .cal-day.closed { background: #bbb; color: #777; }
+    .cal-day.past { opacity: 0.38; cursor: not-allowed !important; box-shadow: none !important; transform: none !important; }
     .cal-day.today::after {
       content: '';
       position: absolute;
       bottom: 4px;
-      width: 5px;
-      height: 5px;
+      width: 5px; height: 5px;
       background: var(--red);
       border-radius: 50%;
     }
-
     .cal-day-sub {
       font-family: var(--font-main);
-      font-size: 0.42rem;
+      font-size: 0.4rem;
       text-align: center;
       line-height: 1.3;
       margin-top: 2px;
       max-width: 90%;
     }
-
-    /* Invite note */
     .invite-note {
       margin: 2rem auto 0;
       max-width: 780px;
       padding: 0 1.5rem;
     }
-
     .invite-note-inner {
       background: var(--yellow);
       border: 3px solid var(--border);
@@ -208,18 +157,11 @@
       gap: 0.75rem;
       align-items: flex-start;
     }
-
-    .invite-note-inner span:first-child {
-      font-size: 1.2rem;
-      flex-shrink: 0;
-      margin-top: 1px;
-    }
-
-    /* Modal */
+    .invite-note-inner span:first-child { font-size: 1.2rem; flex-shrink: 0; margin-top: 1px; }
     .modal-backdrop {
       position: fixed;
       inset: 0;
-      background: rgba(0, 0, 0, 0.55);
+      background: rgba(0,0,0,0.55);
       z-index: 9000;
       display: flex;
       align-items: center;
@@ -229,12 +171,7 @@
       pointer-events: none;
       transition: opacity 0.2s;
     }
-
-    .modal-backdrop.open {
-      opacity: 1;
-      pointer-events: all;
-    }
-
+    .modal-backdrop.open { opacity: 1; pointer-events: all; }
     .modal {
       background: var(--bg);
       border: 4px solid var(--border);
@@ -246,11 +183,7 @@
       transform: translateY(20px);
       transition: transform 0.2s;
     }
-
-    .modal-backdrop.open .modal {
-      transform: translateY(0);
-    }
-
+    .modal-backdrop.open .modal { transform: translateY(0); }
     .modal-close {
       float: right;
       background: none;
@@ -263,39 +196,11 @@
       color: var(--text);
       transition: 0.15s;
     }
-
-    .modal-close:hover {
-      background: var(--red);
-      color: white;
-      border-color: var(--red);
-    }
-
-    .modal-heading {
-      font-family: var(--font-main);
-      font-size: 0.72rem;
-      margin: 0 0 0.4rem;
-      clear: both;
-      padding-top: 0.25rem;
-    }
-
-    .modal-date-str {
-      font-size: 1.3rem;
-      font-weight: 700;
-      margin-bottom: 1.5rem;
-      color: var(--muted);
-    }
-
-    .modal-field {
-      margin-bottom: 1.25rem;
-    }
-
-    .modal-field label {
-      display: block;
-      font-weight: 700;
-      font-size: 0.9rem;
-      margin-bottom: 0.4rem;
-    }
-
+    .modal-close:hover { background: var(--red); color: white; border-color: var(--red); }
+    .modal-heading { font-family: var(--font-main); font-size: 0.72rem; margin: 0 0 0.4rem; clear: both; padding-top: 0.25rem; }
+    .modal-date-str { font-size: 1.3rem; font-weight: 700; margin-bottom: 1.5rem; color: var(--muted); }
+    .modal-field { margin-bottom: 1.25rem; }
+    .modal-field label { display: block; font-weight: 700; font-size: 0.9rem; margin-bottom: 0.4rem; }
     .modal-field input {
       width: 100%;
       padding: 0.85rem 1rem;
@@ -304,15 +209,8 @@
       font-size: 1rem;
       background: white;
       font-family: var(--font-body);
-      letter-spacing: 0.05em;
     }
-
-    .modal-field input:focus {
-      outline: none;
-      border-color: var(--orange);
-      box-shadow: 0 0 0 2px rgba(255,159,67,0.3);
-    }
-
+    .modal-field input:focus { outline: none; border-color: var(--orange); box-shadow: 0 0 0 2px rgba(255,159,67,0.3); }
     .modal-error {
       background: #ffe0e0;
       border: 2px solid var(--red);
@@ -324,34 +222,12 @@
       margin-bottom: 1rem;
       display: none;
     }
-
-    .modal-error.show {
-      display: block;
-    }
-
-    .modal-btn-row {
-      display: flex;
-      gap: 0.75rem;
-      flex-wrap: wrap;
-    }
-
-    .modal-btn-row .btn-primary {
-      flex: 1;
-    }
-
-    /* Confirmation state */
-    .booking-confirm {
-      display: none;
-    }
-
-    .booking-confirm.show {
-      display: block;
-    }
-
-    .booking-form-body.hide {
-      display: none;
-    }
-
+    .modal-error.show { display: block; }
+    .modal-btn-row { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+    .modal-btn-row .btn-primary { flex: 1; }
+    .booking-confirm { display: none; }
+    .booking-confirm.show { display: block; }
+    .booking-form-body.hide { display: none; }
     .confirm-banner {
       background: #eafff0;
       border: 3px solid var(--green);
@@ -362,17 +238,8 @@
       gap: 0.75rem;
       align-items: flex-start;
     }
-
-    .confirm-banner-icon {
-      font-size: 1.4rem;
-      flex-shrink: 0;
-    }
-
-    .confirm-banner p {
-      font-size: 0.95rem;
-      line-height: 1.6;
-    }
-
+    .confirm-banner-icon { font-size: 1.4rem; flex-shrink: 0; }
+    .confirm-banner p { font-size: 0.95rem; line-height: 1.6; }
     .confirm-msg-box {
       background: white;
       border: 3px solid var(--border);
@@ -381,10 +248,7 @@
       font-size: 0.95rem;
       line-height: 1.6;
       margin-bottom: 1rem;
-      color: var(--text);
     }
-
-    /* Event modal */
     .event-banner {
       background: #fff5e8;
       border: 3px solid var(--orange);
@@ -395,90 +259,17 @@
       gap: 0.75rem;
       align-items: flex-start;
     }
-
-    .event-banner p {
-      font-size: 0.95rem;
-      line-height: 1.6;
-    }
-
-    /* Admin panel */
-    .admin-panel {
-      max-width: 780px;
-      margin: 3rem auto;
-      padding: 0 1.5rem;
-    }
-
-    .admin-panel h2 {
-      font-family: var(--font-main);
-      font-size: 0.75rem;
-      margin-bottom: 1.5rem;
-    }
-
-    .admin-table-wrap {
-      overflow-x: auto;
-    }
-
-    .admin-table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 0.9rem;
-    }
-
-    .admin-table th,
-    .admin-table td {
-      text-align: left;
-      padding: 0.75rem 1rem;
-      border: 2px solid var(--border);
-    }
-
-    .admin-table th {
-      background: var(--text);
-      color: white;
-      font-family: var(--font-main);
-      font-size: 0.6rem;
-    }
-
-    .admin-table tr:nth-child(even) td {
-      background: #fffbf0;
-    }
-
-    .admin-clear-btn {
-      margin-top: 1rem;
-      background: var(--red);
-      color: white;
-      border: 3px solid var(--border);
-      border-radius: 10px;
-      padding: 0.6rem 1.2rem;
-      font-family: var(--font-main);
-      font-size: 0.6rem;
-      cursor: pointer;
-      box-shadow: 3px 3px 0 var(--border);
-    }
-
-    /* Responsive */
+    .event-banner p { font-size: 0.95rem; line-height: 1.6; }
     @media (max-width: 600px) {
-      .cal-day {
-        font-size: 0.75rem;
-        min-height: 38px;
-      }
-
-      .cal-day-sub {
-        display: none;
-      }
-
-      .cal-weekday {
-        font-size: 0.65rem;
-      }
-
-      .modal {
-        padding: 1.5rem;
-      }
+      .cal-day { font-size: 0.75rem; min-height: 38px; }
+      .cal-day-sub { display: none; }
+      .cal-weekday { font-size: 0.65rem; }
+      .modal { padding: 1.5rem; }
     }
   </style>
 </head>
 <body>
 
-  <!-- NAV -->
   <nav>
     <a href="index.html" class="nav-logo">ARMIJOS<span>.</span></a>
     <ul class="nav-links">
@@ -488,29 +279,24 @@
     </ul>
   </nav>
 
-  <!-- HERO -->
   <section class="page-hero">
     <a href="index.html" class="page-back">← Armijos</a>
     <h1 class="page-hero-title">🗓️ Dinner Calendar</h1>
     <p class="page-hero-sub">See when we're available, pick a night that works for you, and use your invite code to request a booking.</p>
   </section>
 
-  <!-- CALENDAR -->
   <section class="cal-section">
-
     <div class="cal-nav">
       <button class="cal-nav-btn" id="prevBtn">← Prev</button>
-      <h2 class="cal-month-title" id="monthTitle">May 2026</h2>
+      <h2 class="cal-month-title" id="monthTitle">Loading...</h2>
       <button class="cal-nav-btn" id="nextBtn">Next →</button>
     </div>
-
     <div class="cal-legend">
       <div class="legend-item"><div class="legend-swatch swatch-available"></div> Available</div>
       <div class="legend-item"><div class="legend-swatch swatch-event"></div> Event</div>
       <div class="legend-item"><div class="legend-swatch swatch-taken"></div> Taken</div>
       <div class="legend-item"><div class="legend-swatch swatch-none"></div> Unavailable</div>
     </div>
-
     <div class="cal-weekdays">
       <div class="cal-weekday">Mon</div>
       <div class="cal-weekday">Tue</div>
@@ -520,37 +306,33 @@
       <div class="cal-weekday">Sat</div>
       <div class="cal-weekday">Sun</div>
     </div>
-
-    <div class="cal-grid" id="calGrid"></div>
-
+    <div class="cal-grid" id="calGrid">
+      <div class="cal-loading">Loading calendar...</div>
+    </div>
   </section>
 
-  <!-- INVITE NOTE -->
   <div class="invite-note">
     <div class="invite-note-inner">
       <span>🔑</span>
-      <p>Bookings are invite-only. If you've been given an invite code, click any available date to request your spot. Bookings are confirmed by the host, keep your code to yourself!</p>
+      <p>Bookings are invite-only. If you've been given an invite code, click any available date to request your spot. Keep your code to yourself!</p>
     </div>
   </div>
 
   <!-- BOOKING MODAL -->
   <div class="modal-backdrop" id="modalBackdrop">
     <div class="modal" id="modal">
-
       <button class="modal-close" id="modalClose">✕</button>
 
-      <!-- Event view -->
       <div id="eventView" style="display:none;">
         <p class="modal-heading" id="eventTitle">EVENT</p>
         <p class="modal-date-str" id="eventDate"></p>
         <div class="event-banner">
           <span>🎉</span>
-          <p id="eventDesc">This is a hosted event, invitations are sent directly. Check with your host if you haven't received yours.</p>
+          <p id="eventDesc">This is a hosted event. Invitations are sent directly. Check with your host if you haven't received yours.</p>
         </div>
         <button class="btn-secondary" style="width:100%;" onclick="closeModal()">Close</button>
       </div>
 
-      <!-- Booking form -->
       <div id="bookingView" style="display:none;">
         <p class="modal-heading">REQUEST A BOOKING</p>
         <p class="modal-date-str" id="bookingDate"></p>
@@ -586,228 +368,147 @@
           </div>
         </div>
       </div>
-
     </div>
   </div>
 
-  <!-- ADMIN PANEL (revealed via ?admin in URL) -->
-  <section class="admin-panel" id="adminPanel" style="display:none;">
-    <h2>🔐 Admin: Booking Requests</h2>
-    <div class="admin-table-wrap">
-      <table class="admin-table" id="adminTable">
-        <thead>
-          <tr>
-            <th>Date</th>
-            <th>Name</th>
-            <th>Code</th>
-            <th>Requested</th>
-          </tr>
-        </thead>
-        <tbody id="adminTableBody"></tbody>
-      </table>
-    </div>
-    <button class="admin-clear-btn" onclick="clearBookings()">Clear All Bookings</button>
-  </section>
-
-  <!-- FOOTER -->
   <footer>
     <p>© 2026 Armijos</p>
     <p>Fresh sauces • Recipes • Local markets</p>
+    <p style="margin-top:0.75rem;font-size:0.75rem;opacity:0.45;"><a href="dashboard.html" style="color:inherit;text-decoration:none;">Host login</a></p>
   </footer>
 
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
   <script>
-    /* =========================================
-       CONFIGURATION
-       Add invite codes here. Share each code
-       privately with the relevant person/family.
-    ========================================= */
-    const CONFIG = {
-      inviteCodes: {
-        'WALKER01': 'Walker Family',
-        'JONES01':  'Jones Family',
-        'SMITH01':  'Smith Family',
-        // Add more invite codes here as needed
-      },
-    };
-
-    /* =========================================
-       CALENDAR DATA
-       status: 'available' | 'event' | 'taken'
-       For events, add a label property.
-    ========================================= */
-    const CALENDAR_DATA = {
-      '2026-05': {
-        name: 'May 2026',
-        year: 2026, month: 5, days: 31,
-        startDay: 4, // 0 = Mon … 6 = Sun (May 1 = Friday)
-        dates: {
-           2: { status: 'available' },
-           7: { status: 'available' },
-           8: { status: 'event', label: 'Family Event 🎉' },
-           9: { status: 'available' },
-          14: { status: 'available' },
-          16: { status: 'available' },
-          21: { status: 'available' },
-          23: { status: 'available' },
-          28: { status: 'available' },
-          30: { status: 'available' },
-        }
-      },
-      '2026-06': {
-        name: 'June 2026',
-        year: 2026, month: 6, days: 30,
-        startDay: 0, // June 1 = Monday
-        dates: {
-           4: { status: 'available' },
-           6: { status: 'available' },
-          11: { status: 'available' },
-          13: { status: 'available' },
-          18: { status: 'available' },
-          20: { status: 'available' },
-          25: { status: 'available' },
-          27: { status: 'available' },
-        }
-      },
-    };
-
-    const MONTH_KEYS = Object.keys(CALENDAR_DATA);
-    const STORAGE_KEY = 'armijos_bookings';
-
-    /* =========================================
-       STATE
-    ========================================= */
-    let currentMonthIndex = 0;
-    let selectedKey = null; // '2026-05-09' etc
+    const sb = supabase.createClient(
+      'https://duxmjqorfhzftunfhely.supabase.co',
+      'sb_publishable_-5XNg2yIczTFHPc6Lflncw_AacfXzcZ'
+    );
 
     const today = new Date();
-    today.setHours(0, 0, 0, 0);
+    today.setHours(0,0,0,0);
 
-    /* =========================================
-       BOOKINGS (localStorage)
-    ========================================= */
-    function getBookings() {
-      try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; }
-      catch { return {}; }
+    let currentDate = new Date(today.getFullYear(), today.getMonth(), 1);
+    let selectedKey  = null;
+
+    function getStartDay(year, month) {
+      return (new Date(year, month - 1, 1).getDay() + 6) % 7;
     }
 
-    function saveBooking(dateKey, name, code) {
-      const bookings = getBookings();
-      bookings[dateKey] = { name, code, ts: Date.now() };
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(bookings));
+    function formatDate(dateStr) {
+      const d = new Date(dateStr + 'T00:00:00');
+      return d.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
     }
 
-    function clearBookings() {
-      if (confirm('Clear all local booking records?')) {
-        localStorage.removeItem(STORAGE_KEY);
-        renderCalendar();
-        renderAdmin();
-      }
-    }
-
-    /* =========================================
-       CALENDAR RENDER
-    ========================================= */
-    function renderCalendar() {
-      const key    = MONTH_KEYS[currentMonthIndex];
-      const data   = CALENDAR_DATA[key];
-      const bookings = getBookings();
-
-      document.getElementById('monthTitle').textContent = data.name;
-      document.getElementById('prevBtn').disabled = (currentMonthIndex === 0);
-      document.getElementById('nextBtn').disabled = (currentMonthIndex === MONTH_KEYS.length - 1);
-
+    async function renderCalendar() {
       const grid = document.getElementById('calGrid');
+      grid.innerHTML = '<div class="cal-loading">Loading...</div>';
+
+      const year  = currentDate.getFullYear();
+      const month = currentDate.getMonth() + 1;
+      const daysInMonth = new Date(year, month, 0).getDate();
+      const startDay    = getStartDay(year, month);
+      const pad  = n => String(n).padStart(2, '0');
+      const firstDay = `${year}-${pad(month)}-01`;
+      const lastDay  = `${year}-${pad(month)}-${pad(daysInMonth)}`;
+
+      document.getElementById('monthTitle').textContent =
+        currentDate.toLocaleDateString('en-GB', { month: 'long', year: 'numeric' });
+
+      const now = new Date();
+      document.getElementById('prevBtn').disabled =
+        year < now.getFullYear() || (year === now.getFullYear() && month <= now.getMonth() + 1);
+
+      const [{ data: dates }, { data: events }] = await Promise.all([
+        sb.from('calendar_dates').select('date,status').gte('date', firstDay).lte('date', lastDay),
+        sb.from('events').select('date,title').gte('date', firstDay).lte('date', lastDay).eq('is_private', false)
+      ]);
+
+      const dayMap = {};
+      dates?.forEach(d => {
+        const day = parseInt(d.date.split('-')[2]);
+        dayMap[day] = { status: d.status };
+      });
+      events?.forEach(e => {
+        const day = parseInt(e.date.split('-')[2]);
+        if (!dayMap[day]) dayMap[day] = {};
+        dayMap[day].eventLabel = e.title;
+        dayMap[day].isEvent = true;
+      });
+
       grid.innerHTML = '';
 
-      // Empty cells before day 1
-      for (let i = 0; i < data.startDay; i++) {
-        const empty = document.createElement('div');
-        empty.className = 'cal-day empty';
-        grid.appendChild(empty);
+      for (let i = 0; i < startDay; i++) {
+        const el = document.createElement('div');
+        el.className = 'cal-day empty';
+        grid.appendChild(el);
       }
 
-      for (let d = 1; d <= data.days; d++) {
-        const cell = document.createElement('div');
-        const dateKey = `${data.year}-${String(data.month).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
-        const thisDate = new Date(data.year, data.month - 1, d);
+      for (let d = 1; d <= daysInMonth; d++) {
+        const dateKey  = `${year}-${pad(month)}-${pad(d)}`;
+        const thisDate = new Date(year, month - 1, d);
         const isPast   = thisDate < today;
         const isToday  = thisDate.getTime() === today.getTime();
-        const dateInfo = data.dates[d];
-        const isBooked = bookings[dateKey];
+        const info     = dayMap[d];
 
+        const cell = document.createElement('div');
         cell.className = 'cal-day';
         cell.textContent = d;
 
         if (isToday) cell.classList.add('today');
 
-        if (isBooked && !isPast) {
-          cell.classList.add('taken');
+        if (info?.isEvent) {
+          cell.classList.add('event');
           const sub = document.createElement('div');
           sub.className = 'cal-day-sub';
-          sub.textContent = 'Yours ✓';
+          sub.textContent = info.eventLabel;
           cell.appendChild(sub);
-        } else if (dateInfo) {
-          if (dateInfo.status === 'available') {
-            cell.classList.add('available');
-            if (isPast) cell.classList.add('past');
-            else cell.addEventListener('click', () => openBookingModal(dateKey, data.year, data.month, d));
-          } else if (dateInfo.status === 'event') {
-            cell.classList.add('event');
-            if (isPast) cell.classList.add('past');
-            else cell.addEventListener('click', () => openEventModal(dateKey, data.year, data.month, d, dateInfo.label));
-          } else if (dateInfo.status === 'taken') {
-            cell.classList.add('taken');
-          }
+          if (!isPast) cell.addEventListener('click', () => openEventModal(dateKey, info.eventLabel));
+        } else if (info?.status === 'available') {
+          cell.classList.add('available');
+          if (!isPast) cell.addEventListener('click', () => openBookingModal(dateKey));
+        } else if (info?.status === 'taken') {
+          cell.classList.add('taken');
+        } else if (info?.status === 'closed') {
+          cell.classList.add('closed');
         }
 
-        if (isPast && !isBooked) cell.classList.add('past');
-
+        if (isPast) cell.classList.add('past');
         grid.appendChild(cell);
       }
     }
 
-    /* =========================================
-       MONTH NAVIGATION
-    ========================================= */
     document.getElementById('prevBtn').addEventListener('click', () => {
-      if (currentMonthIndex > 0) { currentMonthIndex--; renderCalendar(); }
+      currentDate.setMonth(currentDate.getMonth() - 1);
+      renderCalendar();
     });
-
     document.getElementById('nextBtn').addEventListener('click', () => {
-      if (currentMonthIndex < MONTH_KEYS.length - 1) { currentMonthIndex++; renderCalendar(); }
+      currentDate.setMonth(currentDate.getMonth() + 1);
+      renderCalendar();
     });
 
-    /* =========================================
-       DATE FORMATTING
-    ========================================= */
-    function formatDate(year, month, day) {
-      const d = new Date(year, month - 1, day);
-      return d.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
-    }
-
-    /* =========================================
-       MODAL
-    ========================================= */
-    function openBookingModal(dateKey, year, month, day) {
+    function openBookingModal(dateKey) {
       selectedKey = dateKey;
       document.getElementById('eventView').style.display   = 'none';
       document.getElementById('bookingView').style.display = 'block';
-      document.getElementById('bookingDate').textContent   = formatDate(year, month, day);
+      document.getElementById('bookingDate').textContent   = formatDate(dateKey);
       document.getElementById('nameInput').value  = '';
       document.getElementById('codeInput').value  = '';
       document.getElementById('codeError').classList.remove('show');
       document.getElementById('bookingFormBody').classList.remove('hide');
       document.getElementById('bookingConfirm').classList.remove('show');
+      const bookBtn = document.getElementById('bookBtn');
+      bookBtn.disabled = false;
+      bookBtn.textContent = 'Request Booking';
       document.getElementById('modalBackdrop').classList.add('open');
       setTimeout(() => document.getElementById('nameInput').focus(), 200);
     }
 
-    function openEventModal(dateKey, year, month, day, label) {
+    function openEventModal(dateKey, label) {
       selectedKey = dateKey;
       document.getElementById('bookingView').style.display = 'none';
       document.getElementById('eventView').style.display   = 'block';
       document.getElementById('eventTitle').textContent    = label || 'EVENT';
-      document.getElementById('eventDate').textContent     = formatDate(year, month, day);
+      document.getElementById('eventDate').textContent     = formatDate(dateKey);
       document.getElementById('modalBackdrop').classList.add('open');
     }
 
@@ -817,22 +518,20 @@
     }
 
     document.getElementById('modalClose').addEventListener('click', closeModal);
-    document.getElementById('modalBackdrop').addEventListener('click', (e) => {
+    document.getElementById('modalBackdrop').addEventListener('click', e => {
       if (e.target === document.getElementById('modalBackdrop')) closeModal();
     });
-
-    // Enter key submits booking
-    document.getElementById('codeInput').addEventListener('keydown', (e) => {
+    document.getElementById('codeInput').addEventListener('keydown', e => {
       if (e.key === 'Enter') submitBooking();
     });
 
-    /* =========================================
-       BOOKING SUBMISSION
-    ========================================= */
-    function submitBooking() {
-      const rawCode = document.getElementById('codeInput').value.trim().toUpperCase();
-      const name    = document.getElementById('nameInput').value.trim();
-      const errorEl = document.getElementById('codeError');
+    async function submitBooking() {
+      const rawCode  = document.getElementById('codeInput').value.trim().toUpperCase();
+      const name     = document.getElementById('nameInput').value.trim();
+      const errorEl  = document.getElementById('codeError');
+      const bookBtn  = document.getElementById('bookBtn');
+
+      errorEl.classList.remove('show');
 
       if (!name) {
         errorEl.textContent = 'Please enter your name.';
@@ -840,30 +539,49 @@
         document.getElementById('nameInput').focus();
         return;
       }
-
-      if (!CONFIG.inviteCodes[rawCode]) {
-        errorEl.textContent = 'Invalid invite code, please check and try again.';
+      if (!rawCode) {
+        errorEl.textContent = 'Please enter your invite code.';
         errorEl.classList.add('show');
         document.getElementById('codeInput').focus();
         return;
       }
 
-      errorEl.classList.remove('show');
+      bookBtn.disabled = true;
+      bookBtn.textContent = 'Checking...';
 
-      // Save to localStorage
-      saveBooking(selectedKey, name, rawCode);
+      const { data: codeData } = await sb
+        .from('invite_codes')
+        .select('name')
+        .eq('code', rawCode)
+        .maybeSingle();
 
-      // Build confirmation message
-      const dateStr = document.getElementById('bookingDate').textContent;
-      const msg = `Hi! It's ${name}, I'd love to come for dinner on ${dateStr}. My invite code is ${rawCode}. See you then! 🌶️`;
+      if (!codeData) {
+        errorEl.textContent = 'Invalid invite code, please check and try again.';
+        errorEl.classList.add('show');
+        bookBtn.disabled = false;
+        bookBtn.textContent = 'Request Booking';
+        document.getElementById('codeInput').focus();
+        return;
+      }
+
+      const { error } = await sb.from('bookings').insert({
+        date:        selectedKey,
+        guest_name:  name,
+        invite_code: rawCode
+      });
+
+      if (error) {
+        errorEl.textContent = 'Something went wrong. Please try again.';
+        errorEl.classList.add('show');
+        bookBtn.disabled = false;
+        bookBtn.textContent = 'Request Booking';
+        return;
+      }
+
+      const msg = `Hi! It's ${name}, I'd love to come for dinner on ${formatDate(selectedKey)}. My invite code is ${rawCode}. See you then! 🌶️`;
       document.getElementById('confirmMsg').textContent = msg;
-
-      // Show confirmation
       document.getElementById('bookingFormBody').classList.add('hide');
       document.getElementById('bookingConfirm').classList.add('show');
-
-      // Re-render calendar to show booked state
-      renderCalendar();
     }
 
     function copyConfirmMessage() {
@@ -875,43 +593,6 @@
       });
     }
 
-    /* =========================================
-       ADMIN PANEL
-    ========================================= */
-    function renderAdmin() {
-      const bookings = getBookings();
-      const tbody    = document.getElementById('adminTableBody');
-      tbody.innerHTML = '';
-
-      const entries = Object.entries(bookings).sort(([a], [b]) => a.localeCompare(b));
-
-      if (entries.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;color:#888;">No bookings yet.</td></tr>';
-        return;
-      }
-
-      entries.forEach(([dateKey, booking]) => {
-        const tr = document.createElement('tr');
-        const dateDisplay = new Date(dateKey + 'T00:00:00').toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'long', year: 'numeric' });
-        const timeDisplay = new Date(booking.ts).toLocaleString('en-GB');
-        tr.innerHTML = `
-          <td>${dateDisplay}</td>
-          <td>${booking.name}</td>
-          <td>${booking.code}</td>
-          <td style="font-size:0.8rem;color:#666;">${timeDisplay}</td>
-        `;
-        tbody.appendChild(tr);
-      });
-    }
-
-    if (new URLSearchParams(window.location.search).has('admin')) {
-      document.getElementById('adminPanel').style.display = 'block';
-      renderAdmin();
-    }
-
-    /* =========================================
-       INIT
-    ========================================= */
     renderCalendar();
   </script>
 
