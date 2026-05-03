@@ -664,6 +664,13 @@
       ======================== -->
       <div class="tab-panel" id="tab-bookings">
         <h2 class="dash-section-title">BOOKING REQUESTS</h2>
+        <div id="bookingEmailPrompt" style="display:none; background:#e6fff0; border:3px solid var(--green); border-radius:12px; padding:0.9rem 1.25rem; margin-bottom:1.25rem; align-items:center; justify-content:space-between; gap:1rem; flex-wrap:wrap;">
+          <span id="bookingEmailText" style="font-weight:600; font-size:0.9rem;"></span>
+          <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
+            <a id="bookingEmailLink" href="#" class="action-btn confirm" style="text-decoration:none;">✉️ Open Draft</a>
+            <button class="action-btn" onclick="dismissEmailPrompt()">Dismiss</button>
+          </div>
+        </div>
         <div class="bookings-filter-row">
           <button class="bookings-filter active" data-filter="all"       onclick="filterBookings('all')">All</button>
           <button class="bookings-filter"         data-filter="pending"   onclick="filterBookings('pending')">Pending</button>
@@ -703,6 +710,7 @@
               <tr>
                 <th>Code</th>
                 <th>Name</th>
+                <th>Email</th>
                 <th>Notes</th>
                 <th>Created</th>
                 <th>Actions</th>
@@ -731,6 +739,10 @@
       <div class="dash-modal-field">
         <label>Name <small style="font-weight:400;color:var(--muted);">e.g. Walker Family</small></label>
         <input type="text" id="newCodeName" placeholder="Who is this for?" />
+      </div>
+      <div class="dash-modal-field">
+        <label>Email <small style="font-weight:400;color:var(--muted);">(optional, used for email drafts)</small></label>
+        <input type="email" id="newCodeEmail" placeholder="their@email.com" />
       </div>
       <div class="dash-modal-field">
         <label>Notes <small style="font-weight:400;color:var(--muted);">(optional)</small></label>
@@ -806,6 +818,7 @@
       document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
       document.querySelector(`.dash-tab[data-tab="${name}"]`).classList.add('active');
       document.getElementById(`tab-${name}`).classList.add('active');
+      dismissEmailPrompt();
     }
 
     function loadDashboard() {
@@ -1076,34 +1089,77 @@
     }
 
     async function updateBooking(id, status) {
+      const booking = allBookings.find(b => b.id === id);
       await sb.from('bookings').update({ status }).eq('id', id);
+
+      if (booking && (status === 'confirmed' || status === 'declined')) {
+        const email = codesEmailMap[booking.invite_code];
+        if (email) showBookingEmailPrompt(booking, status, email);
+      }
+
       await loadBookings();
+    }
+
+    function showBookingEmailPrompt(booking, status, email) {
+      const dateStr  = new Date(booking.date + 'T00:00:00').toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long' });
+      const word     = status === 'confirmed' ? 'confirmed' : 'declined';
+      const subject  = encodeURIComponent(`Your Armijos dinner booking has been ${word}`);
+      const bodyText = status === 'confirmed'
+        ? `Hi ${booking.guest_name},\n\nGreat news, your dinner booking for ${dateStr} has been confirmed. Looking forward to seeing you!\n\nSee you soon 🌶️`
+        : `Hi ${booking.guest_name},\n\nUnfortunately we can't confirm your dinner booking for ${dateStr}. Sorry for any inconvenience, please check the calendar for other available dates.\n\n🌶️`;
+      const mailto = `mailto:${email}?subject=${subject}&body=${encodeURIComponent(bodyText)}`;
+
+      document.getElementById('bookingEmailText').textContent = `Booking ${word} for ${booking.guest_name}. Want to send them an email?`;
+      document.getElementById('bookingEmailLink').href = mailto;
+      document.getElementById('bookingEmailPrompt').style.display = 'flex';
+    }
+
+    function dismissEmailPrompt() {
+      document.getElementById('bookingEmailPrompt').style.display = 'none';
     }
 
     /* ============================================================
        CODES TAB
     ============================================================ */
+    let allCodes      = [];
+    let codesEmailMap = {};
+
+    function esc(str) {
+      return (str || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    }
+
     async function loadCodes() {
       const { data } = await sb
         .from('invite_codes')
         .select('*')
         .order('created_at', { ascending: false });
 
+      allCodes = data || [];
+      codesEmailMap = {};
+      allCodes.forEach(c => { if (c.email) codesEmailMap[c.code] = c.email; });
+      renderCodes();
+    }
+
+    function renderCodes() {
       const tbody = document.getElementById('codesTableBody');
 
-      if (!data || data.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="5" class="empty-state">No invite codes yet. Generate your first one above.</td></tr>';
+      if (allCodes.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="6" class="empty-state">No invite codes yet. Generate your first one above.</td></tr>';
         return;
       }
 
-      tbody.innerHTML = data.map(c => {
-        const dateStr = new Date(c.created_at).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+      tbody.innerHTML = allCodes.map((c, i) => {
+        const dateStr  = new Date(c.created_at).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+        const emailTd  = `<td style="font-size:0.85rem;">${c.email ? esc(c.email) : '<span style="color:var(--muted);">-</span>'}</td>`;
+        const emailBtn = c.email ? `<button class="action-btn" onclick="emailInviteByIndex(${i})">✉️ Email</button>` : '';
         return `<tr>
           <td><span class="code-pill">${c.code}</span></td>
-          <td><strong>${c.name}</strong></td>
-          <td style="color:var(--muted);font-size:0.88rem;">${c.notes || ''}</td>
+          <td><strong>${esc(c.name)}</strong></td>
+          ${emailTd}
+          <td style="color:var(--muted);font-size:0.88rem;">${esc(c.notes || '')}</td>
           <td style="font-size:0.8rem;color:var(--muted);">${dateStr}</td>
           <td>
+            ${emailBtn}
             <button class="action-btn" onclick="copyCode('${c.code}')">📋 Copy</button>
             <button class="action-btn decline" onclick="deleteCode('${c.id}')">Delete</button>
           </td>
@@ -1114,6 +1170,7 @@
     function openGenerateModal() {
       document.getElementById('newCodeInput').value = generateCode();
       document.getElementById('newCodeName').value  = '';
+      document.getElementById('newCodeEmail').value = '';
       document.getElementById('newCodeNotes').value = '';
       document.getElementById('generateModal').classList.add('open');
       setTimeout(() => document.getElementById('newCodeName').focus(), 200);
@@ -1136,6 +1193,7 @@
     async function saveCode() {
       const code  = document.getElementById('newCodeInput').value.trim().toUpperCase();
       const name  = document.getElementById('newCodeName').value.trim();
+      const email = document.getElementById('newCodeEmail').value.trim().toLowerCase();
       const notes = document.getElementById('newCodeNotes').value.trim();
 
       if (!code || !name) {
@@ -1143,7 +1201,7 @@
         return;
       }
 
-      const { error } = await sb.from('invite_codes').insert({ code, name, notes: notes || null });
+      const { error } = await sb.from('invite_codes').insert({ code, name, email: email || null, notes: notes || null });
       if (error) {
         if (error.code === '23505') alert('That code already exists. Try a different one.');
         else alert('Something went wrong. Please try again.');
@@ -1163,6 +1221,16 @@
       if (!confirm('Delete this invite code? Anyone using it will no longer be able to book.')) return;
       await sb.from('invite_codes').delete().eq('id', id);
       loadCodes();
+    }
+
+    function emailInviteByIndex(idx) {
+      const c = allCodes[idx];
+      if (!c?.email) return;
+      const subject = encodeURIComponent('Your Armijos dinner invite');
+      const body    = encodeURIComponent(
+        `Hi ${c.name},\n\nYou're invited to book a dinner at Armijos! Use the code below on the calendar to pick a date.\n\nYour invite code: ${c.code}\n\nCalendar: https://kyranwalker.com/Armijos/calendar.html\n\nLooking forward to seeing you! 🌶️`
+      );
+      window.location.href = `mailto:${c.email}?subject=${subject}&body=${body}`;
     }
 
     /* ============================================================
