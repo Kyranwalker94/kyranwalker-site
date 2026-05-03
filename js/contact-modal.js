@@ -1,7 +1,7 @@
 (function () {
   var style = document.createElement('style');
   style.textContent = [
-    '.nav-contact-btn{background:var(--accent2,#4df0c8)!important;color:#0d0d0d!important;padding:0.5rem 1.2rem!important;border-radius:2rem;border:none!important;font-size:0.85rem;font-weight:500!important;letter-spacing:0.05em;text-transform:uppercase;cursor:pointer;font-family:var(--font-body,inherit);transition:opacity 0.2s!important;display:inline-flex!important;align-items:center!important;margin:0!important;line-height:1;vertical-align:middle;}',
+    '.nav-contact-btn{background:var(--accent2,#4df0c8)!important;color:#0d0d0d!important;padding:0.5rem 1.2rem!important;border-radius:2rem;font-weight:500!important;transition:opacity 0.2s!important;cursor:pointer;}',
     '.nav-contact-btn:hover{opacity:0.85!important;}',
     '.contact-modal-overlay{position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.65);display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity 0.2s;}',
     '.contact-modal-overlay.open{opacity:1;pointer-events:all;}',
@@ -34,13 +34,14 @@
   var navLinks = document.getElementById('navLinks');
   if (navLinks) {
     var li  = document.createElement('li');
-    var btn = document.createElement('button');
+    li.style.marginLeft = '-0.75rem';
+    var btn = document.createElement('a');
     btn.className = 'nav-contact-btn';
     btn.textContent = 'Contact';
-    btn.setAttribute('aria-label', 'Open contact options');
+    btn.href = '#';
     li.appendChild(btn);
     navLinks.appendChild(li);
-    btn.addEventListener('click', openModal);
+    btn.addEventListener('click', function (e) { e.preventDefault(); openModal(); });
   }
 
   // Build modal
