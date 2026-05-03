@@ -456,16 +456,23 @@ function inYear(entries, year) {
 //  RENDERERS
 // ─────────────────────────────────────────────────────────────────────────────
 
-function renderLiving(livingEntries, travelEntries) {
+function renderLiving(livingEntries) {
   if (!livingEntries.length) return null;
   const e = livingEntries[0];
-  const t = travelEntries[0] || null;
   return `
     <div class="tl-row"><span class="tl-row-icon">📍</span><span>${e.location}</span></div>
-    ${t ? `<div class="tl-row"><span class="tl-row-icon">✈️</span><span>${t.destination}</span></div>
-           ${t.detail ? `<p class="tl-detail">${t.detail}</p>` : ''}` : ''}
     ${e.detail ? `<p class="tl-detail">${e.detail}</p>` : ''}
   `;
+}
+
+function renderTravel(travelEntries) {
+  if (!travelEntries.length) return null;
+  return `<div class="tl-multi">${travelEntries.map(t => `
+    <div class="tl-multi-item">
+      <div class="tl-row"><span class="tl-row-icon">✈️</span><span>${t.destination}</span></div>
+      ${t.detail ? `<p class="tl-detail">${t.detail}</p>` : ''}
+    </div>
+  `).join('')}</div>`;
 }
 
 function renderWorking(entries) {
@@ -539,13 +546,14 @@ function updateGrid(year) {
   const achievements = inYear( TIMELINE.achievements, year);
   const projects     = inRange(TIMELINE.projects,     year);
 
-  setBox('tl-living',       renderLiving(living, travel));
+  setBox('tl-living',       renderLiving(living));
+  setBox('tl-travel',       renderTravel(travel));
   setBox('tl-working',      renderWorking(working));
   setBox('tl-learning',     renderLearning(learning));
   setBox('tl-achievements', renderAchievements(achievements));
   setBox('tl-projects',     renderProjects(projects));
 
-  const anyVisible = living.length || working.length || learning.length
+  const anyVisible = living.length || travel.length || working.length || learning.length
                    || achievements.length || projects.length;
   document.getElementById('tl-empty').classList.toggle('visible', !anyVisible);
 }
