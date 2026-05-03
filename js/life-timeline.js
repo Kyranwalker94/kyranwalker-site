@@ -206,12 +206,12 @@ const TIMELINE = {
     },
     {
       year: 2025,
-      destination: 'Europe 🇪🇺',
+      destination: 'Europe',
       detail: 'Month-long road trip through France, Belgium, the Netherlands, Germany, and Luxembourg in the rebuilt Defender - Amiens, Tournai, Brussels, Middelburg, Vlissingen, Colmar, Konstanz, Munich, Bamberg, Venlo, Luxembourg, and Reims.',
     },
     {
       year: 2026,
-      destination: 'New Zealand 🇳🇿',
+      destination: 'New Zealand',
       detail: 'Flew to New Zealand in March 2026 to get married - full circle from the working holiday in 2017.',
     },
   ],
@@ -616,6 +616,7 @@ function getDestFlag(dest) {
     ['USA',       '🇺🇸'],
     ['Thailand',  '🇹🇭'],
     ['Greece',    '🇬🇷'],
+    ['Europe',    '🇪🇺'],
     ['Devon',     '🇬🇧'], ['UK', '🇬🇧'],
     ['South Africa', '🇿🇦'],
     ['New Zealand',  '🇳🇿'],
@@ -733,6 +734,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const slider = document.getElementById('tl-slider');
   const yearEl = document.getElementById('tl-year');
   const ageEl  = document.getElementById('tl-age');
+
+  slider.value = Math.min(Math.max(new Date().getFullYear(), +slider.min), +slider.max);
 
   function update() {
     const year = parseInt(slider.value, 10);
