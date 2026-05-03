@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Armijos Calendar — Kyran Walker</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+
+  <nav>
+    <a href="../index.html" class="nav-logo">Kyran<span>.</span></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="../profile.html">Profile</a></li>
+      <li><a href="../projects.html">Projects</a></li>
+      <li><a href="../services.html" class="nav-cta">Services</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <div class="project-detail-hero">
+    <a href="../projects.html" class="back-link">← Projects</a>
+    <div class="project-detail-tags">
+      <span class="project-tag">Web</span>
+      <span class="project-tag">In Progress</span>
+    </div>
+    <h1>Armijos Calendar 🗓️</h1>
+    <p>An invite-only dinner booking calendar for Armijos — publicly viewable availability, invite-code gating, and a booking request flow built entirely in vanilla JS with no backend required.</p>
+  </div>
+
+  <div class="project-detail-body">
+    <div class="project-detail-content">
+
+      <div class="content-block">
+        <h2>The idea</h2>
+        <p>Coordinating dinner plans with family and friends across group chats is messy — people asking when we're free, double-booking, forgotten replies. I wanted a simple, single place where availability is always visible and the booking process takes care of itself.</p>
+        <p>The calendar lives on the Armijos site and is designed to feel part of the brand rather than a bolted-on tool. Anyone can view it. Only people with an invite code can request a booking.</p>
+      </div>
+
+      <div class="content-block">
+        <h2>How it works</h2>
+        <p>Available dates are set in the calendar configuration — currently all Thursdays and Saturdays across May and June 2026. Each date is shown as one of four states:</p>
+        <ul class="content-list">
+          <li><strong>Available</strong> — open and bookable with an invite code</li>
+          <li><strong>Event</strong> — a pre-scheduled event (e.g. Family Dinner) where invites are sent directly</li>
+          <li><strong>Taken</strong> — no longer available</li>
+          <li><strong>Unavailable</strong> — not a configured date (default for most days)</li>
+        </ul>
+        <p>Clicking an available date opens a booking modal. The guest enters their name and invite code. Valid codes are pre-configured per person or family group — each one maps to a display name (e.g. "WALKER01" → "Walker Family"). If the code is correct, the booking is saved to localStorage and a pre-formatted confirmation message is generated for the guest to send to the host.</p>
+      </div>
+
+      <div class="content-block">
+        <h2>The tech</h2>
+        <p>Fully static — HTML, CSS, and vanilla JS, no framework, no backend. Availability data is defined in a single JS config object at the top of the page, making it easy to update dates and add invite codes without touching any other code. Bookings are stored in the browser's localStorage, which gives the guest a persistent "Yours ✓" state on their device.</p>
+        <ul class="content-list">
+          <li>Month navigation between configured months</li>
+          <li>Past dates automatically greyed out using JS date comparison</li>
+          <li>Today marker (red dot) on current date</li>
+          <li>Admin panel at <code>?admin</code> URL param — shows all localStorage bookings in a table</li>
+          <li>Enter key support and full keyboard-accessible modal</li>
+          <li>Responsive layout down to small mobile screens</li>
+        </ul>
+      </div>
+
+      <div class="content-block">
+        <h2>What's next</h2>
+        <p>The current version is intentionally lightweight — it coordinates bookings via a copied message rather than automating them, which suits the personal scale of the project. Future additions being considered:</p>
+        <ul class="content-list">
+          <li>Email or WhatsApp notification on booking submission</li>
+          <li>Multi-guest events with RSVP tracking per invite code</li>
+          <li>Host dashboard with approval/decline controls</li>
+          <li>Optional backend to sync bookings across devices in real time</li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="project-detail-sidebar">
+      <div class="sidebar-card">
+        <h3>Details</h3>
+        <div class="sidebar-row"><span>Year</span><span>2026</span></div>
+        <div class="sidebar-row"><span>Site</span><span>Armijos</span></div>
+        <div class="sidebar-row"><span>Stack</span><span>HTML · CSS · JS</span></div>
+        <div class="sidebar-row"><span>Backend</span><span>None (localStorage)</span></div>
+        <div class="sidebar-row"><span>Status</span><span>In Progress</span></div>
+      </div>
+      <div class="sidebar-card">
+        <h3>Features</h3>
+        <div class="sidebar-row"><span>Booking</span><span>Invite code gated</span></div>
+        <div class="sidebar-row"><span>Calendar</span><span>Public view</span></div>
+        <div class="sidebar-row"><span>Events</span><span>Multi-guest support</span></div>
+        <div class="sidebar-row"><span>Admin</span><span>?admin panel</span></div>
+        <div class="sidebar-row"><span>Storage</span><span>localStorage</span></div>
+      </div>
+      <div class="sidebar-card">
+        <a href="/Armijos/calendar.html" class="btn" style="display:block;text-align:center;text-decoration:none;font-weight:700;padding:0.9rem 1.2rem;background:var(--accent);color:white;border-radius:10px;font-size:0.95rem;">View Live Calendar →</a>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <span>© 2026 Kyran Walker</span>
+    <span>Built with HTML · CSS · JS</span>
+  </footer>
+
+  <script>
+    const hamburger = document.getElementById('hamburger');
+    const navLinks  = document.getElementById('navLinks');
+    hamburger.addEventListener('click', () => navLinks.classList.toggle('open'));
+    navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
+  </script>
+</body>
+</html>
