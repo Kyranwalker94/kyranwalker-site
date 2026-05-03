@@ -595,11 +595,42 @@ function renderLiving(livingEntries) {
   `;
 }
 
+function getDestFlag(dest) {
+  // If destination already contains a globe or regional flag emoji, use it
+  for (const emoji of ['🌍', '🌎', '🌏', '🇪🇺', '🇳🇿']) {
+    if (dest.includes(emoji)) return emoji;
+  }
+  // Name-based lookup
+  const map = [
+    ['Abu Dhabi', '🇦🇪'], ['UAE',          '🇦🇪'],
+    ['Turkey',    '🇹🇷'],
+    ['France',    '🇫🇷'],
+    ['Majorca',   '🇪🇸'], ['Minorca',   '🇪🇸'], ['Barcelona', '🇪🇸'], ['Spain', '🇪🇸'],
+    ['Tunisia',   '🇹🇳'],
+    ['Poland',    '🇵🇱'],
+    ['Qatar',     '🇶🇦'],
+    ['Switzerland','🇨🇭'],
+    ['Canada',    '🇨🇦'],
+    ['Nepal',     '🇳🇵'],
+    ['Romania',   '🇷🇴'],
+    ['USA',       '🇺🇸'],
+    ['Thailand',  '🇹🇭'],
+    ['Greece',    '🇬🇷'],
+    ['Devon',     '🇬🇧'], ['UK', '🇬🇧'],
+    ['South Africa', '🇿🇦'],
+    ['New Zealand',  '🇳🇿'],
+  ];
+  for (const [key, flag] of map) {
+    if (dest.includes(key)) return flag;
+  }
+  return '✈️';
+}
+
 function renderTravel(travelEntries) {
   if (!travelEntries.length) return null;
   return `<div class="tl-multi">${travelEntries.map(t => `
     <div class="tl-multi-item">
-      <div class="tl-row"><span class="tl-row-icon">✈️</span><span>${t.destination}</span></div>
+      <div class="tl-row"><span class="tl-row-icon">${getDestFlag(t.destination)}</span><span>${t.destination}</span></div>
       ${t.detail ? `<p class="tl-detail">${t.detail}</p>` : ''}
     </div>
   `).join('')}</div>`;
