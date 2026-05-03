@@ -170,6 +170,21 @@ const TIMELINE = {
       detail: 'Post-graduation trip with Cole - Koh Samui and the Full Moon Party on Koh Phangan.',
     },
     {
+      year: 2014,
+      destination: 'Abu Dhabi, UAE',
+      detail: 'Flew back to visit mum and dad for Christmas.',
+    },
+    {
+      year: 2015,
+      destination: 'Abu Dhabi, UAE',
+      detail: 'Flew back to Abu Dhabi for my 21st birthday with mum and dad.',
+    },
+    {
+      year: 2016,
+      destination: 'Abu Dhabi, UAE',
+      detail: 'Flew back to visit mum and dad for Christmas.',
+    },
+    {
       year: 2017,
       destination: 'South Africa, South America, USA, New Zealand 🌍',
       detail: 'Round the world: three months volunteering at a big cat reserve in South Africa, two weeks in Ecuador and Peru (Salkantay trail, condors, markets, cuy), three months in the USA (Vegas, Wyoming wilderness survival, road trip to Key West, Venice Beach), then nine months living in Auckland, New Zealand.',
@@ -178,6 +193,11 @@ const TIMELINE = {
       year: 2024,
       destination: 'Devon, UK',
       detail: 'Short trip to Devon - stayed in an Eco Lodge. Less travel this year to keep the Defender fund topped up.',
+    },
+    {
+      year: 2018,
+      destination: 'Abu Dhabi, UAE',
+      detail: 'Stopped in Abu Dhabi at the end of the round the world trip, visiting mum and dad before flying back to England.',
     },
     {
       year: 2023,
