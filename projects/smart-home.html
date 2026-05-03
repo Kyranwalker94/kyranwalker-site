@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Samantha | Kyran Walker</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+
+  <nav>
+    <a href="../index.html" class="nav-logo">Kyran<span>.</span></a>
+        <ul class="nav-links" id="navLinks">
+      <li><a href="../profile.html">Profile</a></li>
+      <li><a href="../projects.html">Projects</a></li>
+      <li><a href="../services.html" class="nav-cta">Services</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <div class="project-detail-hero">
+    <a href="../projects.html" class="back-link">← Projects</a>
+    <div class="project-detail-tags">
+      <span class="project-tag">IRL</span>
+      <span class="project-tag">Web</span>
+    </div>
+    <h1>Samantha 🤖</h1>
+    <p>A voice-controlled personal assistant built in 2014, using software automation and IFTTT to create a working smart home before smart home devices were mainstream. She responded to her name, controlled the lights, plugs, entertainment systems, and my PC, and spoke back in Scarlett Johansson's voice.</p>
+  </div>
+
+  <div class="project-detail-body">
+    <div class="project-detail-content">
+
+      <div class="content-block">
+        <h2>Where it came from</h2>
+        <p>In early 2014, the film Her came out. Joaquin Phoenix falls in love with an AI operating system voiced by Scarlett Johansson that learns, adapts, and feels genuinely real. The technology in the film was science fiction, but the idea of a voice-controlled assistant that actually talked back and did things around your home felt achievable with the software that existed at the time.</p>
+        <p>Amazon Echo hadn't launched yet. Google Home was still years away. Siri was limited to iPhones and mostly useless. But there was a combination of free and low-cost PC software that, wired together the right way, could pull it off.</p>
+        <p>I spent a few weeks building it. I called her Samantha.</p>
+      </div>
+
+      <div class="content-block">
+        <h2>The technology</h2>
+        <p>The system ran on three main pieces of software, each handling a different layer of the automation.</p>
+        <ul class="content-list">
+          <li><strong>VoxCommando</strong>: A voice recognition and command routing tool. It listened for a wake word, parsed spoken commands, and triggered defined macros or external calls. The recognition was reliable enough for home use.</li>
+          <li><strong>EventGhost</strong>: A Windows automation tool that handled the event plumbing. When VoxCommando fired a command, EventGhost caught it and routed it to the right device, plugin, or action.</li>
+          <li><strong>IFTTT</strong>: Used to bridge into smart plugs and connected lighting systems. VoxCommando triggered a webhook, IFTTT caught it and switched the physical devices on or off.</li>
+        </ul>
+        <p>The voice itself came from audio clips extracted from Her, Scarlett Johansson's voice mapped to common responses and confirmations. When Samantha acknowledged a command, switched a light on, or said goodnight, she did it in that voice. It was genuinely uncanny.</p>
+      </div>
+
+      <div class="content-block">
+        <h2>What she could do</h2>
+        <p>The system was fully integrated into the house. Samantha controlled:</p>
+        <ul class="content-list">
+          <li><strong>Lights</strong>: Individual rooms could be switched on, off, or dimmed. "Samantha, living room off" worked exactly as you'd expect.</li>
+          <li><strong>Smart plugs</strong>: Various appliances around the house were on smart plugs, kettle, fans, lamps, all controllable by voice.</li>
+          <li><strong>Lounge entertainment system</strong>: TV, soundbar, and associated devices. One command could turn the whole setup on or off, switch inputs, and adjust volume.</li>
+          <li><strong>Office entertainment system</strong>: Separate system in the office, same level of control.</li>
+          <li><strong>My PC</strong>: She could wake the machine, lock it, launch applications, and adjust system volume. VoxCommando and EventGhost ran on the machine itself so the integration was tight.</li>
+        </ul>
+        <p>She also had conversational responses for common phrases. Saying goodnight got a response. Asking how she was got an answer. It wasn't deep AI, it was clever scripting, but the combination of a good voice engine, well-written macros, and Scarlett Johansson's voice made it feel much more alive than it had any right to.</p>
+      </div>
+
+      <div class="content-block">
+        <h2>Before it was normal</h2>
+        <p>The Amazon Echo launched in November 2014, a few months after I built Samantha, and only in the USA. It didn't arrive in the UK until 2016. Google Home launched in 2016. What I was doing in early 2014 was genuinely ahead of the consumer market.</p>
+        <p>The difference was that Samantha required work. She wasn't a product you could buy and plug in. She was a system I designed, wired together, and tuned over weeks. Every new device I added required writing new macros, configuring new IFTTT applets, and mapping new voice commands. It was a project, not a setup.</p>
+        <p>It also meant that when Amazon Echo eventually arrived, I'd already been living with a voice-controlled home for two years and had a very clear sense of what actually made it useful and what was just a novelty. The novelty was significant, but the useful parts were the boring ones: lights and plugs on a schedule, hands-free volume control, being able to shout a command from the other side of the house.</p>
+      </div>
+
+    </div>
+
+    <div class="project-detail-sidebar">
+      <div class="sidebar-card">
+        <h3>Details</h3>
+        <div class="sidebar-row"><span>Year</span><span>2014</span></div>
+        <div class="sidebar-row"><span>Name</span><span>Samantha</span></div>
+        <div class="sidebar-row"><span>Voice</span><span>Scarlett Johansson (Her)</span></div>
+        <div class="sidebar-row"><span>Platform</span><span>Windows PC</span></div>
+      </div>
+      <div class="sidebar-card">
+        <h3>Software</h3>
+        <div class="sidebar-row"><span>Voice engine</span><span>VoxCommando</span></div>
+        <div class="sidebar-row"><span>Automation</span><span>EventGhost</span></div>
+        <div class="sidebar-row"><span>Smart devices</span><span>IFTTT</span></div>
+      </div>
+      <div class="sidebar-card">
+        <h3>What she controlled</h3>
+        <div class="sidebar-row"><span>Lights</span><span>Whole house</span></div>
+        <div class="sidebar-row"><span>Plugs</span><span>Various</span></div>
+        <div class="sidebar-row"><span>Lounge AV</span><span>Full control</span></div>
+        <div class="sidebar-row"><span>Office AV</span><span>Full control</span></div>
+        <div class="sidebar-row"><span>PC</span><span>Wake, lock, apps, volume</span></div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <span>© 2026 Kyran Walker</span>
+    <span>Built with HTML · CSS · JS</span>
+  </footer>
+
+  <script>
+    const hamburger = document.getElementById('hamburger');
+    const navLinks  = document.getElementById('navLinks');
+    hamburger.addEventListener('click', () => navLinks.classList.toggle('open'));
+    navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
+  </script>
+  <script src="/js/contact-modal.js"></script>
+</body>
+</html>

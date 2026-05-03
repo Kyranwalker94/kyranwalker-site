@@ -31,12 +31,12 @@ const TIMELINE = {
       detail: 'Based in Eastbourne during university and early career years — a popular seaside town with a beautiful coastline.',
     },
     {
-      start: 2017, end: 2017,
-      location: 'Auckland, New Zealand 🇳🇿',
-      detail: 'A working holiday in Auckland — a dynamic city with stunning harbour views, a diverse cultural scene, and a thriving business district. One of the best decisions I ever made.',
+      start: 2017, end: 2018,
+      location: 'Round the World + Auckland, New Zealand 🇳🇿',
+      detail: 'An 18-month round the world trip. Started with three months volunteering at a big cat reserve in South Africa, two weeks in Ecuador and Peru including the Salkantay trek, three months in the USA from Vegas to Key West, then nine months living and working in Auckland, New Zealand. One of the best decisions I ever made.',
     },
     {
-      start: 2018, end: 2020,
+      start: 2019, end: 2020,
       location: 'Eastbourne, East Sussex',
       detail: '',
     },
@@ -65,6 +65,11 @@ const TIMELINE = {
     { year: 1997, destination: 'France' },
     { year: 1998, destination: 'Spain' },
     {
+      year: 2017,
+      destination: 'South Africa, South America, USA, New Zealand 🌍',
+      detail: 'Round the world: three months volunteering at a big cat reserve in South Africa, two weeks in Ecuador and Peru (Salkantay trail, condors, markets, cuy), three months in the USA (Vegas, Wyoming wilderness survival, road trip to Key West, Venice Beach), then nine months living in Auckland, New Zealand.',
+    },
+    {
       year: 2024,
       destination: 'Devon, UK',
       detail: 'Short trip to Devon — stayed in an Eco Lodge. Less travel this year to keep the Defender fund topped up.',
@@ -90,7 +95,7 @@ const TIMELINE = {
       detail: 'Processed high-volume invoices, banking, and supplier payments across a multi-dealership group. Prepared accruals, prepayments journals, and ad hoc management reports for the MD.',
     },
     {
-      start: 2017, end: 2017,
+      start: 2017, end: 2018,
       company: 'Wynter Recruitment',
       role: 'Associate Recruitment Partner',
       location: 'Auckland, NZ',
@@ -273,6 +278,11 @@ const TIMELINE = {
       detail: 'Graduated from the University of Brighton with a 2:1 Honours degree.',
     },
     {
+      year: 2018,
+      title: 'Round the World Complete 🌍',
+      detail: '18 months done: big cat volunteering in South Africa, Salkantay trail in Peru, road trip from Wyoming to Key West, and nine months living and working in Auckland, New Zealand.',
+    },
+    {
       year: 2020,
       title: 'CS50 Completed',
       detail: 'Finished Harvard\'s CS50 on edX — the course that kicked off serious programming projects.',
@@ -301,6 +311,20 @@ const TIMELINE = {
 
   // Projects — shown across the year range they were active
   projects: [
+    {
+      start: 2014, end: 2014,
+      title: 'Samantha (Smart Home)',
+      emoji: '🤖',
+      detail: 'Voice-controlled personal assistant using VoxCommando, EventGhost, and IFTTT. Controlled lights, plugs, entertainment systems, and my PC using Scarlett Johansson voice clips from Her.',
+      link: 'smart-home.html',
+    },
+    {
+      start: 2017, end: 2018,
+      title: 'Round the World 2017',
+      emoji: '🌍',
+      detail: '18-month trip: South Africa (big cat volunteering), Salkantay trail in Peru, USA road trip Wyoming to Key West, and nine months living in Auckland, New Zealand.',
+      link: 'round-the-world-2017.html',
+    },
     {
       start: 2020, end: 2020,
       title: 'Pokémon Snap',
