@@ -88,6 +88,11 @@ const TIMELINE = {
       detail: 'All-inclusive trip with family and friends - lots of swimming and kids clubs.',
     },
     {
+      year: 2004,
+      destination: 'Barcelona, Spain',
+      detail: 'Family trip to Barcelona - highlight was the Dali museum.',
+    },
+    {
       year: 2005,
       destination: 'Poland',
       detail: 'Trip with my grandmother to visit cousins - Warsaw, Lublin, and Pulawy.',
