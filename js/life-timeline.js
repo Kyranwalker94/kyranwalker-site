@@ -93,7 +93,7 @@ const TIMELINE = {
       detail: 'Trip with my grandmother to visit cousins - Warsaw, Lublin, and Pulawy.',
     },
     {
-      year: 2007,
+      year: 2006,
       destination: 'France',
       detail: 'Trip to Paris with family.',
     },
@@ -123,7 +123,7 @@ const TIMELINE = {
       detail: 'School trip to Paris - Cole and Amira were both on the same trip.',
     },
     {
-      year: 2009,
+      year: 2010,
       destination: 'Nepal',
       detail: 'School trip to Kathmandu, a flight over Everest, and three days hiking in the Himalayas.',
     },
@@ -143,6 +143,11 @@ const TIMELINE = {
       detail: 'Trip to Lion-sur-Mer, Normandy - staying in a cottage near the beach.',
     },
     {
+      year: 2013,
+      destination: 'France',
+      detail: 'Trip to Montpellier and Magalas in the south of France.',
+    },
+    {
       year: 2012,
       destination: 'Thailand',
       detail: 'Post-graduation trip with Cole - Koh Samui and the Full Moon Party on Koh Phangan.',
@@ -158,7 +163,7 @@ const TIMELINE = {
       detail: 'Short trip to Devon - stayed in an Eco Lodge. Less travel this year to keep the Defender fund topped up.',
     },
     {
-      year: 2024,
+      year: 2023,
       destination: 'Greece',
       detail: 'Trip to Crete with Cole - five days staying in Chania.',
     },
