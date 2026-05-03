@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fence Paint Estimator | Kyran Walker</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+  <style>
+
+    /* =============================================
+       PAGE HERO
+    ============================================= */
+    .tool-hero {
+      padding: 2.5rem 2.5rem 3rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      border-bottom: 1px solid var(--border);
+    }
+    .tool-hero p {
+      color: var(--muted);
+      font-size: 1rem;
+      line-height: 1.7;
+      margin-top: 0.5rem;
+      max-width: 560px;
+    }
+
+    /* =============================================
+       TWO-COLUMN LAYOUT
+    ============================================= */
+    .tool-layout {
+      max-width: 1200px;
+      margin: 2rem auto 6rem;
+      padding: 0 2rem;
+      display: grid;
+      grid-template-columns: 1fr 460px;
+      gap: 2rem;
+      align-items: start;
+    }
+
+    /* =============================================
+       BUILDER COLUMN
+    ============================================= */
+    .builder { display: flex; flex-direction: column; gap: 1.25rem; }
+
+    .tool-card {
+      background: #1a1a1a;
+      border: 1px solid #2d2d2d;
+      border-radius: 1rem;
+      padding: 1.5rem;
+    }
+
+    .tool-card-title {
+      font-family: var(--font-head);
+      font-weight: 700;
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #666;
+      margin-bottom: 1.25rem;
+    }
+    .tool-card-title span { color: #e0e0e0; font-size: 0.92rem; letter-spacing: normal; text-transform: none; font-family: var(--font-body); font-weight: 600; }
+
+    .tool-field { margin-bottom: 0.9rem; }
+    .tool-field:last-child { margin-bottom: 0; }
+
+    .tool-label {
+      display: block;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: #999;
+      margin-bottom: 0.3rem;
+    }
+    .tool-label small { font-weight: 400; color: #555; }
+
+    .tool-input, .tool-select, .tool-textarea {
+      width: 100%;
+      padding: 0.65rem 0.85rem;
+      background: #111;
+      border: 1px solid #2d2d2d;
+      border-radius: 0.55rem;
+      color: #f0f0f0;
+      font-size: 0.92rem;
+      font-family: var(--font-body);
+      transition: border-color 0.15s;
+      box-sizing: border-box;
+    }
+    .tool-input:focus, .tool-select:focus, .tool-textarea:focus {
+      outline: none;
+      border-color: #c8f04d;
+      box-shadow: 0 0 0 2px rgba(200,240,77,0.1);
+    }
+    .tool-select option { background: #1a1a1a; }
+    .tool-textarea { resize: vertical; min-height: 72px; }
+
+    .tool-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+
+    /* Toggle */
+    .tool-toggle-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.4rem 0 0.9rem;
+    }
+    .tool-toggle-row label:first-child { font-size: 0.85rem; color: #ccc; font-weight: 500; }
+
+    .tog { position: relative; width: 40px; height: 22px; flex-shrink: 0; }
+    .tog input { opacity: 0; width: 0; height: 0; }
+    .tog-slider {
+      position: absolute; inset: 0;
+      background: #2d2d2d; border-radius: 22px;
+      cursor: pointer; transition: 0.2s;
+      border: 1px solid #3a3a3a;
+    }
+    .tog-slider::before {
+      content: '';
+      position: absolute;
+      width: 14px; height: 14px;
+      left: 3px; bottom: 3px;
+      background: #666; border-radius: 50%;
+      transition: 0.2s;
+    }
+    .tog input:checked + .tog-slider { background: #c8f04d; border-color: #c8f04d; }
+    .tog input:checked + .tog-slider::before { transform: translateX(18px); background: #111; }
+
+    /* Coats selector */
+    .coats-row { display: flex; gap: 0.5rem; }
+    .coats-row input[type="radio"] { display: none; }
+    .coats-row label {
+      flex: 1; text-align: center;
+      padding: 0.5rem 0.5rem;
+      border: 1px solid #2d2d2d;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #777;
+      transition: 0.15s;
+    }
+    .coats-row input:checked + label { background: #c8f04d; border-color: #c8f04d; color: #111; }
+
+    /* Labor cost preview */
+    .labor-preview {
+      background: #111;
+      border: 1px solid #2d2d2d;
+      border-radius: 0.55rem;
+      padding: 0.6rem 0.85rem;
+      font-size: 0.85rem;
+      color: #666;
+      margin: 0.75rem 0;
+    }
+    .labor-preview strong { color: #c8f04d; }
+
+    /* Add buttons */
+    .btn-add-item {
+      width: 100%;
+      padding: 0.75rem;
+      background: #c8f04d;
+      color: #111;
+      border: none;
+      border-radius: 0.6rem;
+      font-family: var(--font-head);
+      font-weight: 700;
+      font-size: 0.78rem;
+      cursor: pointer;
+      transition: 0.15s;
+      letter-spacing: 0.02em;
+    }
+    .btn-add-item:hover { filter: brightness(1.1); transform: translateY(-1px); }
+
+    /* Item rows in builder */
+    .item-row {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 0.7rem 0;
+      border-bottom: 1px solid #222;
+    }
+    .item-row:last-of-type { border-bottom: none; }
+    .item-row-info { flex: 1; min-width: 0; }
+    .item-row-info strong { font-size: 0.88rem; color: #e0e0e0; display: block; }
+    .item-row-detail { font-size: 0.76rem; color: #666; margin-top: 0.15rem; line-height: 1.4; }
+    .item-row-right { display: flex; align-items: center; gap: 0.6rem; flex-shrink: 0; }
+    .item-cost { font-family: var(--font-head); font-weight: 700; font-size: 0.9rem; color: #c8f04d; }
+    .item-remove {
+      background: none; border: 1px solid #333; border-radius: 0.35rem;
+      color: #555; font-size: 0.72rem; padding: 0.18rem 0.45rem;
+      cursor: pointer; transition: 0.12s; line-height: 1.4;
+    }
+    .item-remove:hover { background: #c0392b; border-color: #c0392b; color: white; }
+
+    .items-subtotal {
+      text-align: right;
+      font-size: 0.82rem;
+      color: #777;
+      padding-top: 0.65rem;
+      margin-top: 0.2rem;
+    }
+    .empty-dark { color: #444; font-size: 0.85rem; text-align: center; padding: 0.75rem 0; }
+
+    /* Materials add row */
+    .mat-add-row { display: grid; grid-template-columns: 1fr 110px 52px; gap: 0.5rem; align-items: end; margin-bottom: 0.25rem; }
+    .btn-add-mat {
+      padding: 0.65rem 0;
+      background: #2a2a2a; color: #c8f04d;
+      border: 1px solid #3a3a3a; border-radius: 0.55rem;
+      font-weight: 700; font-size: 0.9rem;
+      cursor: pointer; transition: 0.15s; text-align: center;
+    }
+    .btn-add-mat:hover { background: #333; }
+
+    /* Rates */
+    .rates-details summary {
+      font-size: 0.72rem; font-weight: 600; color: #555;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      cursor: pointer; user-select: none; list-style: none;
+    }
+    .rates-details summary::-webkit-details-marker { display: none; }
+    .rates-details summary::before { content: '▶  '; font-size: 0.6rem; }
+    .rates-details[open] summary::before { content: '▼  '; }
+
+    .rates-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.75rem; margin-top: 1rem; }
+    .rate-field label { display: block; font-size: 0.75rem; color: #777; margin-bottom: 0.3rem; }
+    .rate-note { font-size: 0.75rem; color: #555; margin: 0.6rem 0 0.5rem; }
+
+    .btn-save-rates {
+      padding: 0.45rem 1rem;
+      background: #1e1e1e; color: #c8f04d;
+      border: 1px solid #333; border-radius: 0.45rem;
+      font-size: 0.78rem; font-weight: 700;
+      cursor: pointer; transition: 0.15s;
+    }
+    .btn-save-rates:hover { background: #2a2a2a; }
+
+    /* =============================================
+       PREVIEW COLUMN
+    ============================================= */
+    .preview { position: sticky; top: 1.5rem; display: flex; flex-direction: column; gap: 0.85rem; }
+
+    .preview-actions { display: flex; gap: 0.6rem; }
+
+    .btn-print {
+      flex: 1; padding: 0.75rem 1rem;
+      background: #c8f04d; color: #111;
+      border: none; border-radius: 0.6rem;
+      font-family: var(--font-head); font-weight: 700; font-size: 0.75rem;
+      cursor: pointer; transition: 0.15s; letter-spacing: 0.02em;
+    }
+    .btn-print:hover { filter: brightness(1.1); }
+
+    .btn-clear {
+      padding: 0.75rem 0.9rem;
+      background: transparent; color: #666;
+      border: 1px solid #2d2d2d; border-radius: 0.6rem;
+      font-size: 0.8rem; font-weight: 600;
+      cursor: pointer; transition: 0.15s;
+    }
+    .btn-clear:hover { border-color: #c0392b; color: #c0392b; }
+
+    /* =============================================
+       ESTIMATE DOCUMENT
+    ============================================= */
+    .estimate-doc {
+      background: #ffffff;
+      color: #111;
+      border-radius: 0.75rem;
+      padding: 2.25rem;
+      font-family: var(--font-body);
+      line-height: 1.55;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.4);
+      font-size: 0.88rem;
+    }
+
+    .est-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      padding-bottom: 1.5rem;
+      border-bottom: 2px solid #111;
+      margin-bottom: 1.5rem;
+    }
+    .est-co-name {
+      font-family: var(--font-head);
+      font-weight: 800;
+      font-size: 1.05rem;
+      color: #111;
+      letter-spacing: -0.01em;
+    }
+    .est-co-detail { font-size: 0.75rem; color: #777; margin-top: 0.18rem; }
+
+    .est-title {
+      font-family: var(--font-head);
+      font-weight: 800;
+      font-size: 1.7rem;
+      color: #111;
+      letter-spacing: -0.03em;
+      line-height: 1;
+      text-align: right;
+    }
+    .est-ref {
+      font-size: 0.72rem; color: #aaa; text-align: right;
+      margin-top: 0.2rem; font-family: monospace; letter-spacing: 0.06em;
+    }
+
+    .est-meta {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 1.75rem;
+    }
+    .est-meta-lbl {
+      font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase;
+      color: #aaa; font-weight: 700; display: block; margin-bottom: 0.2rem;
+    }
+    .est-meta-val { font-weight: 700; font-size: 0.97rem; color: #111; }
+    .est-meta-addr { color: #666; font-size: 0.82rem; margin-top: 0.2rem; line-height: 1.5; }
+    .est-meta-right { text-align: right; }
+    .est-meta-right .est-meta-lbl { display: inline; margin-right: 0.3rem; }
+    .est-meta-right div { color: #555; margin-bottom: 0.15rem; font-size: 0.82rem; }
+
+    .est-section {
+      font-family: var(--font-head);
+      font-weight: 700;
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #aaa;
+      margin: 1.5rem 0 0.5rem;
+      padding-bottom: 0.35rem;
+      border-bottom: 1px solid #e8e8e8;
+    }
+
+    .est-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .est-table th {
+      background: #111; color: #fff;
+      padding: 0.45rem 0.7rem;
+      text-align: left;
+      font-size: 0.62rem; letter-spacing: 0.08em; text-transform: uppercase;
+      font-family: var(--font-head);
+    }
+    .est-table th:last-child { text-align: right; }
+    .est-table td {
+      padding: 0.55rem 0.7rem;
+      border-bottom: 1px solid #f0f0f0;
+      vertical-align: top;
+      color: #222;
+    }
+    .est-table td:last-child { text-align: right; white-space: nowrap; font-weight: 600; color: #111; }
+    .est-table tr:last-child td { border-bottom: none; }
+    .est-item-note { font-size: 0.74rem; color: #999; margin-top: 0.15rem; font-style: italic; }
+
+    .est-totals {
+      margin-top: 1.5rem;
+      border-top: 2px solid #111;
+      padding-top: 0.6rem;
+    }
+    .est-total-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.85rem;
+      padding: 0.22rem 0.7rem;
+      color: #666;
+    }
+    .est-grand-total {
+      font-family: var(--font-head);
+      font-weight: 800;
+      font-size: 1rem;
+      color: #111;
+      border-top: 1px solid #ddd;
+      margin-top: 0.35rem;
+      padding-top: 0.55rem;
+    }
+
+    .est-notes-box {
+      margin-top: 1.5rem;
+      padding: 0.9rem 1rem;
+      background: #f7f7f7;
+      border-radius: 0.45rem;
+      font-size: 0.8rem;
+      color: #555;
+      line-height: 1.6;
+    }
+    .est-notes-box strong { color: #333; display: block; margin-bottom: 0.25rem; font-size: 0.72rem; letter-spacing: 0.06em; text-transform: uppercase; }
+
+    .est-footer {
+      margin-top: 1.5rem;
+      padding-top: 1rem;
+      border-top: 1px solid #e8e8e8;
+      font-size: 0.72rem;
+      color: #bbb;
+      line-height: 1.7;
+    }
+    .est-footer p { margin: 0; }
+
+    /* =============================================
+       RESPONSIVE
+    ============================================= */
+    @media (max-width: 900px) {
+      .tool-layout { grid-template-columns: 1fr; }
+      .preview { position: static; order: -1; }
+    }
+    @media (max-width: 580px) {
+      .tool-layout { padding: 0 1rem; }
+      .mat-add-row { grid-template-columns: 1fr 90px 44px; }
+      .tool-row { grid-template-columns: 1fr; }
+      .estimate-doc { padding: 1.5rem 1.25rem; }
+      .rates-grid { grid-template-columns: 1fr; }
+    }
+
+    /* =============================================
+       PRINT
+    ============================================= */
+    @media print {
+      nav, footer, .tool-hero, .builder, .preview-actions { display: none !important; }
+      .tool-layout { display: block; padding: 0; margin: 0; max-width: none; }
+      .preview { position: static; }
+      .estimate-doc {
+        box-shadow: none;
+        border-radius: 0;
+        padding: 1.5cm 2cm;
+        font-size: 10pt;
+      }
+      .est-title { font-size: 22pt; }
+      .est-table th { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="../index.html" class="nav-logo">Kyran<span>.</span></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="../profile.html">Profile</a></li>
+      <li><a href="../projects.html">Projects</a></li>
+      <li><a href="../services.html" class="nav-cta">Services</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <div class="tool-hero">
+    <p class="section-label">Tools</p>
+    <h1 class="section-title" style="margin-bottom:0;">Fence Paint Estimator</h1>
+    <p>Build a fence painting quote, add panel items on the left, list your materials at the bottom, and the estimate on the right updates in real time. Print or save as PDF when ready.</p>
+  </div>
+
+  <div class="tool-layout">
+
+    <!-- ==========================================
+         BUILDER COLUMN
+    =========================================== -->
+    <div class="builder">
+
+      <!-- Job Details -->
+      <div class="tool-card">
+        <div class="tool-card-title">📋 &nbsp;<span>Job Details</span></div>
+        <div class="tool-field">
+          <label class="tool-label">Customer name</label>
+          <input class="tool-input" type="text" id="jobCustomer" placeholder="e.g. Mr and Mrs Smith" oninput="updateDetails()" />
+        </div>
+        <div class="tool-field">
+          <label class="tool-label">Address</label>
+          <textarea class="tool-textarea" id="jobAddress" rows="3" placeholder="12 Example Road&#10;Hailsham&#10;BN27 1AB" oninput="updateDetails()" style="min-height:68px;"></textarea>
+        </div>
+        <div class="tool-row">
+          <div class="tool-field" style="margin:0;">
+            <label class="tool-label">Date</label>
+            <input class="tool-input" type="text" id="jobDate" oninput="updateDetails()" />
+          </div>
+          <div class="tool-field" style="margin:0;">
+            <label class="tool-label">Reference</label>
+            <input class="tool-input" type="text" id="jobRef" oninput="updateRef()" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Add Fence Panels -->
+      <div class="tool-card">
+        <div class="tool-card-title">🖌️ &nbsp;<span>Add Fence Panels</span></div>
+
+        <div class="tool-row" style="margin-bottom:0.75rem;">
+          <div class="tool-field" style="margin:0;">
+            <label class="tool-label">Panel type</label>
+            <select class="tool-select" id="panelType" onchange="updatePreview()">
+              <option value="half">Half panel (up to 3ft)</option>
+              <option value="full" selected>Full panel (6ft)</option>
+              <option value="tall">Tall panel (8ft+)</option>
+            </select>
+          </div>
+          <div class="tool-field" style="margin:0;">
+            <label class="tool-label">Quantity</label>
+            <input class="tool-input" type="number" id="panelQty" value="1" min="1" oninput="updatePreview()" />
+          </div>
+        </div>
+
+        <div class="tool-toggle-row">
+          <label>Double sided</label>
+          <label class="tog">
+            <input type="checkbox" id="panelDouble" onchange="updatePreview()" />
+            <span class="tog-slider"></span>
+          </label>
+        </div>
+
+        <div class="tool-field">
+          <label class="tool-label">Coats</label>
+          <div class="coats-row">
+            <input type="radio" name="coats" id="coats1" value="1" checked onchange="updatePreview()" />
+            <label for="coats1">1 coat</label>
+            <input type="radio" name="coats" id="coats2" value="2" onchange="updatePreview()" />
+            <label for="coats2">2 coats</label>
+          </div>
+        </div>
+
+        <div class="tool-field">
+          <label class="tool-label">Notes &nbsp;<small>(optional, appears on estimate)</small></label>
+          <input class="tool-input" type="text" id="panelNotes" placeholder="e.g. Front garden, featheredge panels" />
+        </div>
+
+        <div class="labor-preview" id="laborPreview">Labour cost: <strong>—</strong></div>
+
+        <button class="btn-add-item" onclick="addFenceItem()">+ Add to Estimate</button>
+      </div>
+
+      <!-- Fence Items List -->
+      <div class="tool-card">
+        <div class="tool-card-title">📝 &nbsp;<span>Fence Items</span></div>
+        <div id="fenceList"><p class="empty-dark">No items added yet.</p></div>
+      </div>
+
+      <!-- Materials -->
+      <div class="tool-card">
+        <div class="tool-card-title">🛒 &nbsp;<span>Materials &amp; Shopping List</span></div>
+        <div class="mat-add-row">
+          <div>
+            <label class="tool-label">Item</label>
+            <input class="tool-input" type="text" id="matDesc" placeholder="e.g. Ronseal Fence Paint 9L" />
+          </div>
+          <div>
+            <label class="tool-label">Cost (£)</label>
+            <input class="tool-input" type="number" id="matCost" placeholder="0.00" min="0" step="0.01" />
+          </div>
+          <div>
+            <label class="tool-label">&nbsp;</label>
+            <button class="btn-add-mat" onclick="addMaterial()">+</button>
+          </div>
+        </div>
+        <div id="matList" style="margin-top:0.9rem;"><p class="empty-dark">No materials listed.</p></div>
+      </div>
+
+      <!-- Estimate Notes -->
+      <div class="tool-card">
+        <div class="tool-card-title">💬 &nbsp;<span>Notes for Customer</span></div>
+        <textarea class="tool-textarea" id="jobNotes" rows="3" placeholder="Access requirements, payment terms, any special conditions..." oninput="updateDetails()"></textarea>
+      </div>
+
+      <!-- Labour Rates -->
+      <div class="tool-card">
+        <details class="rates-details">
+          <summary>Labour Rates</summary>
+          <p class="rate-note">Rate per panel, per coat, per side (£). Saved to your browser for next time.</p>
+          <div class="rates-grid">
+            <div class="rate-field">
+              <label>Half panel</label>
+              <input class="tool-input" type="number" id="rateHalf" min="0" step="0.5" />
+            </div>
+            <div class="rate-field">
+              <label>Full panel</label>
+              <input class="tool-input" type="number" id="rateFull" min="0" step="0.5" />
+            </div>
+            <div class="rate-field">
+              <label>Tall panel</label>
+              <input class="tool-input" type="number" id="rateTall" min="0" step="0.5" />
+            </div>
+          </div>
+          <button class="btn-save-rates" onclick="saveRates()">Save Rates</button>
+        </details>
+      </div>
+
+    </div>
+
+    <!-- ==========================================
+         ESTIMATE PREVIEW
+    =========================================== -->
+    <div class="preview">
+      <div class="preview-actions">
+        <button class="btn-print" onclick="window.print()">🖨️ &nbsp;Print / Save as PDF</button>
+        <button class="btn-clear" onclick="clearAll()">Clear</button>
+      </div>
+      <div class="estimate-doc" id="estimateDoc"></div>
+    </div>
+
+  </div>
+
+  <footer>
+    <span>© 2026 Kyran Walker</span>
+    <span>Built with HTML · CSS · JS</span>
+  </footer>
+
+  <script>
+    const hamburger = document.getElementById('hamburger');
+    const navLinks  = document.getElementById('navLinks');
+    hamburger.addEventListener('click', () => navLinks.classList.toggle('open'));
+    navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
+
+    /* =============================================
+       CONSTANTS
+    ============================================= */
+    const TYPE_LABELS = {
+      half: 'Half panel (up to 3ft)',
+      full: 'Full panel (6ft)',
+      tall: 'Tall panel (8ft+)'
+    };
+
+    /* =============================================
+       STATE
+    ============================================= */
+    function defaultRates() { return { half: 3, full: 5, tall: 7 }; }
+
+    function loadRates() {
+      try { return { ...defaultRates(), ...JSON.parse(localStorage.getItem('fence_est_rates') || '{}') }; }
+      catch { return defaultRates(); }
+    }
+
+    function genRef() {
+      return 'EST-' + (1000 + Math.floor(Math.random() * 9000));
+    }
+
+    const S = {
+      customer  : '',
+      address   : '',
+      date      : '',
+      ref       : genRef(),
+      custNotes : '',
+      items     : [],
+      materials : [],
+      rates     : loadRates()
+    };
+
+    /* =============================================
+       HELPERS
+    ============================================= */
+    function esc(s) {
+      return (s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    }
+
+    function fmt(n) {
+      return '£' + parseFloat(n || 0).toFixed(2);
+    }
+
+    function calcItemCost(item) {
+      const rate = S.rates[item.type] || 0;
+      return item.qty * item.coats * (item.double ? 2 : 1) * rate;
+    }
+
+    function calcTotals() {
+      const labour = S.items.reduce((s, i) => s + calcItemCost(i), 0);
+      const mats   = S.materials.reduce((s, m) => s + parseFloat(m.cost || 0), 0);
+      return { labour, mats, total: labour + mats };
+    }
+
+    /* =============================================
+       JOB DETAILS
+    ============================================= */
+    function updateDetails() {
+      S.customer  = document.getElementById('jobCustomer').value;
+      S.address   = document.getElementById('jobAddress').value;
+      S.date      = document.getElementById('jobDate').value;
+      S.custNotes = document.getElementById('jobNotes').value;
+      renderEstimate();
+    }
+
+    function updateRef() {
+      S.ref = document.getElementById('jobRef').value || S.ref;
+      renderEstimate();
+    }
+
+    /* =============================================
+       FENCE ITEMS
+    ============================================= */
+    function updatePreview() {
+      const type   = document.getElementById('panelType').value;
+      const qty    = parseInt(document.getElementById('panelQty').value) || 0;
+      const double = document.getElementById('panelDouble').checked;
+      const coats  = parseInt(document.querySelector('input[name="coats"]:checked')?.value || 1);
+      const rate   = S.rates[type] || 0;
+      const cost   = qty * coats * (double ? 2 : 1) * rate;
+      document.getElementById('laborPreview').innerHTML =
+        `Labour cost: <strong>${fmt(cost)}</strong>`;
+    }
+
+    function addFenceItem() {
+      const type   = document.getElementById('panelType').value;
+      const qty    = parseInt(document.getElementById('panelQty').value) || 1;
+      const double = document.getElementById('panelDouble').checked;
+      const coats  = parseInt(document.querySelector('input[name="coats"]:checked').value);
+      const notes  = document.getElementById('panelNotes').value.trim();
+
+      if (qty < 1) return;
+
+      S.items.push({ id: Date.now(), type, qty, double, coats, notes });
+      document.getElementById('panelNotes').value = '';
+      render();
+    }
+
+    function removeItem(id) {
+      S.items = S.items.filter(i => i.id !== id);
+      render();
+    }
+
+    /* =============================================
+       MATERIALS
+    ============================================= */
+    function addMaterial() {
+      const desc = document.getElementById('matDesc').value.trim();
+      const cost = parseFloat(document.getElementById('matCost').value) || 0;
+      if (!desc) { document.getElementById('matDesc').focus(); return; }
+      S.materials.push({ id: Date.now(), desc, cost });
+      document.getElementById('matDesc').value = '';
+      document.getElementById('matCost').value = '';
+      render();
+    }
+
+    function removeMat(id) {
+      S.materials = S.materials.filter(m => m.id !== id);
+      render();
+    }
+
+    /* =============================================
+       RATES
+    ============================================= */
+    function saveRates() {
+      S.rates.half = parseFloat(document.getElementById('rateHalf').value) || 0;
+      S.rates.full = parseFloat(document.getElementById('rateFull').value) || 0;
+      S.rates.tall = parseFloat(document.getElementById('rateTall').value) || 0;
+      localStorage.setItem('fence_est_rates', JSON.stringify(S.rates));
+      render();
+    }
+
+    /* =============================================
+       CLEAR
+    ============================================= */
+    function clearAll() {
+      if (!confirm('Clear all items and start a new estimate?')) return;
+      S.customer = ''; S.address = ''; S.custNotes = '';
+      S.items = []; S.materials = [];
+      S.ref = genRef();
+      document.getElementById('jobCustomer').value = '';
+      document.getElementById('jobAddress').value  = '';
+      document.getElementById('jobNotes').value    = '';
+      document.getElementById('jobRef').value      = S.ref;
+      render();
+    }
+
+    /* =============================================
+       RENDER BUILDER LISTS
+    ============================================= */
+    function renderFenceList() {
+      const el = document.getElementById('fenceList');
+      if (S.items.length === 0) {
+        el.innerHTML = '<p class="empty-dark">No items added yet.</p>';
+        return;
+      }
+      const rows = S.items.map(item => {
+        const cost   = calcItemCost(item);
+        const detail = `${item.coats} coat${item.coats > 1 ? 's' : ''}, ${item.double ? 'double sided' : 'single sided'}`;
+        return `<div class="item-row">
+          <div class="item-row-info">
+            <strong>${item.qty}x ${esc(TYPE_LABELS[item.type])}</strong>
+            <div class="item-row-detail">${detail}${item.notes ? ` · ${esc(item.notes)}` : ''}</div>
+          </div>
+          <div class="item-row-right">
+            <span class="item-cost">${fmt(cost)}</span>
+            <button class="item-remove" onclick="removeItem(${item.id})" title="Remove">✕</button>
+          </div>
+        </div>`;
+      }).join('');
+
+      const labourTotal = S.items.reduce((s, i) => s + calcItemCost(i), 0);
+      el.innerHTML = rows + `<div class="items-subtotal">Labour subtotal: ${fmt(labourTotal)}</div>`;
+    }
+
+    function renderMatList() {
+      const el = document.getElementById('matList');
+      if (S.materials.length === 0) {
+        el.innerHTML = '<p class="empty-dark">No materials listed.</p>';
+        return;
+      }
+      const matTotal = S.materials.reduce((s, m) => s + parseFloat(m.cost || 0), 0);
+      const rows = S.materials.map(m => `<div class="item-row">
+        <div class="item-row-info">
+          <strong>${esc(m.desc)}</strong>
+        </div>
+        <div class="item-row-right">
+          <span class="item-cost">${fmt(m.cost)}</span>
+          <button class="item-remove" onclick="removeMat(${m.id})" title="Remove">✕</button>
+        </div>
+      </div>`).join('');
+      el.innerHTML = rows + `<div class="items-subtotal">Materials subtotal: ${fmt(matTotal)}</div>`;
+    }
+
+    /* =============================================
+       RENDER ESTIMATE DOCUMENT
+    ============================================= */
+    function renderEstimate() {
+      const { labour, mats, total } = calcTotals();
+
+      const itemRows = S.items.length > 0
+        ? S.items.map(item => {
+            const cost   = calcItemCost(item);
+            const detail = `${item.coats} coat${item.coats > 1 ? 's' : ''}, ${item.double ? 'double sided' : 'single sided'}`;
+            return `<tr>
+              <td>${item.qty}x ${esc(TYPE_LABELS[item.type])}${item.notes ? `<div class="est-item-note">${esc(item.notes)}</div>` : ''}</td>
+              <td>${esc(detail)}</td>
+              <td>${fmt(cost)}</td>
+            </tr>`;
+          }).join('')
+        : `<tr><td colspan="3" style="color:#ccc;font-style:italic;font-size:0.8rem;">No items added</td></tr>`;
+
+      const matRows = S.materials.length > 0
+        ? S.materials.map(m => `<tr>
+            <td colspan="2">${esc(m.desc)}</td>
+            <td>${fmt(m.cost)}</td>
+          </tr>`).join('')
+        : `<tr><td colspan="3" style="color:#ccc;font-style:italic;font-size:0.8rem;">No materials listed</td></tr>`;
+
+      const customerLine = S.customer
+        ? `<div class="est-meta-val">${esc(S.customer)}</div>`
+        : `<div class="est-meta-val" style="color:#ccc;font-weight:400;font-style:italic;">Customer name</div>`;
+
+      const addrLine = S.address
+        ? `<div class="est-meta-addr">${esc(S.address).replace(/\n/g,'<br>')}</div>` : '';
+
+      const notesBlock = S.custNotes
+        ? `<div class="est-notes-box"><strong>Notes</strong>${esc(S.custNotes).replace(/\n/g,'<br>')}</div>` : '';
+
+      document.getElementById('estimateDoc').innerHTML = `
+        <div class="est-header">
+          <div>
+            <div class="est-co-name">Kyran Walker</div>
+            <div class="est-co-detail">Hailsham, East Sussex</div>
+            <div class="est-co-detail">hello@kyranwalker.com</div>
+            <div class="est-co-detail">07902 563971</div>
+          </div>
+          <div>
+            <div class="est-title">ESTIMATE</div>
+            <div class="est-ref">${esc(S.ref)}</div>
+          </div>
+        </div>
+
+        <div class="est-meta">
+          <div>
+            <span class="est-meta-lbl">For</span>
+            ${customerLine}
+            ${addrLine}
+          </div>
+          <div class="est-meta-right">
+            <div><span class="est-meta-lbl">Date</span>${esc(S.date) || '&nbsp;'}</div>
+            <div><span class="est-meta-lbl">Ref</span><span style="font-family:monospace;font-size:0.8rem;color:#333;">${esc(S.ref)}</span></div>
+          </div>
+        </div>
+
+        <div class="est-section">Fence Painting Work</div>
+        <table class="est-table">
+          <thead><tr><th>Description</th><th>Details</th><th>Price</th></tr></thead>
+          <tbody>${itemRows}</tbody>
+        </table>
+
+        <div class="est-section">Materials</div>
+        <table class="est-table">
+          <thead><tr><th colspan="2">Item</th><th>Cost</th></tr></thead>
+          <tbody>${matRows}</tbody>
+        </table>
+
+        <div class="est-totals">
+          <div class="est-total-row"><span>Labour</span><span>${fmt(labour)}</span></div>
+          <div class="est-total-row"><span>Materials</span><span>${fmt(mats)}</span></div>
+          <div class="est-total-row est-grand-total"><span>Total</span><span>${fmt(total)}</span></div>
+        </div>
+
+        ${notesBlock}
+
+        <div class="est-footer">
+          <p>This estimate is valid for 30 days from the date shown above.</p>
+          <p>No VAT applicable. Payment due within 14 days of completion.</p>
+        </div>
+      `;
+    }
+
+    /* =============================================
+       RENDER ALL
+    ============================================= */
+    function render() {
+      renderFenceList();
+      renderMatList();
+      renderEstimate();
+      updatePreview();
+    }
+
+    /* =============================================
+       INIT
+    ============================================= */
+    const today = new Date().toLocaleDateString('en-GB');
+    document.getElementById('jobDate').value = today;
+    document.getElementById('jobRef').value  = S.ref;
+    document.getElementById('rateHalf').value = S.rates.half;
+    document.getElementById('rateFull').value = S.rates.full;
+    document.getElementById('rateTall').value = S.rates.tall;
+    S.date = today;
+
+    document.getElementById('matDesc').addEventListener('keydown', e => {
+      if (e.key === 'Enter') document.getElementById('matCost').focus();
+    });
+    document.getElementById('matCost').addEventListener('keydown', e => {
+      if (e.key === 'Enter') addMaterial();
+    });
+    document.getElementById('panelNotes').addEventListener('keydown', e => {
+      if (e.key === 'Enter') addFenceItem();
+    });
+
+    render();
+  </script>
+
+</body>
+</html>
