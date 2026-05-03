@@ -59,19 +59,31 @@ const TIMELINE = {
 
   // Annual travel
   travel: [
-    { year: 1994, destination: 'Turkey' },
+    {
+      year: 1994,
+      destination: 'Turkey',
+      detail: 'All-inclusive family holiday to celebrate my first birthday.',
+    },
     {
       year: 1995,
       destination: 'France',
-      detail: 'Camping trip to the south of France with family.',
+      detail: 'Caravan site holiday in the south of France with family.',
     },
-    { year: 1996, destination: 'Spain' },
+    {
+      year: 1996,
+      destination: 'Spain',
+      detail: 'Caravan site holiday in Spain with family.',
+    },
     {
       year: 1997,
       destination: 'France',
-      detail: 'Camping trip to the south of France with family.',
+      detail: 'Caravan site holiday in the south of France with family.',
     },
-    { year: 1998, destination: 'Spain' },
+    {
+      year: 1998,
+      destination: 'Spain',
+      detail: 'Caravan site holiday in Spain with family.',
+    },
     {
       year: 2000,
       destination: 'Majorca, Spain',
