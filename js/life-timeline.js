@@ -73,6 +73,21 @@ const TIMELINE = {
     },
     { year: 1998, destination: 'Spain' },
     {
+      year: 2000,
+      destination: 'Majorca, Spain',
+      detail: 'All-inclusive family holiday - kids club, swimming, and a shopping trip in Palma.',
+    },
+    {
+      year: 2002,
+      destination: 'Minorca, Spain',
+      detail: 'All-inclusive family holiday - kids clubs and long days by the pool.',
+    },
+    {
+      year: 2003,
+      destination: 'Tunisia',
+      detail: 'All-inclusive trip with family and friends - lots of swimming and kids clubs.',
+    },
+    {
       year: 2005,
       destination: 'Poland',
       detail: 'Trip with my grandmother to visit cousins - Warsaw, Lublin, and Pulawy.',
