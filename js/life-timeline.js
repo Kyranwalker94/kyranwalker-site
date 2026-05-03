@@ -369,6 +369,13 @@ const TIMELINE = {
     },
     {
       start: 2023, end: 2023,
+      title: 'Scratchmap',
+      emoji: '🗺️',
+      detail: 'Two digital world maps showing countries visited by Kyran and Amira, built to update as we go.',
+      link: 'scratchmap.html',
+    },
+    {
+      start: 2023, end: 2023,
       title: 'Spirit Level Template',
       emoji: '📐',
       detail: '3D printed drilling template for Openreach — pre-spaced guide holes and an integrated spirit level bubble.',

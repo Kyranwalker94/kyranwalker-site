@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Scratchmap | Kyran Walker</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+  <style>
+    .scratchmap-section {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 2rem 4rem;
+    }
+    .scratchmap-tabs {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+    .scratchmap-tab {
+      font-family: var(--font-head);
+      font-weight: 700;
+      font-size: 0.95rem;
+      padding: 0.5rem 1.4rem;
+      border-radius: 2rem;
+      border: 1.5px solid var(--border);
+      background: transparent;
+      color: var(--muted);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .scratchmap-tab.active[data-person="kyran"] {
+      background: var(--accent);
+      color: #0d0d0d;
+      border-color: var(--accent);
+    }
+    .scratchmap-tab.active[data-person="amira"] {
+      background: var(--accent2);
+      color: #0d0d0d;
+      border-color: var(--accent2);
+    }
+    .scratchmap-tab:hover:not(.active) {
+      border-color: var(--text);
+      color: var(--text);
+    }
+    .scratchmap-count {
+      font-family: var(--font-head);
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--text);
+      margin: 0 0 1rem;
+    }
+    .scratchmap-count span {
+      font-family: var(--font-body);
+      font-weight: 400;
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-left: 0.25rem;
+    }
+    .scratchmap-map-wrap {
+      width: 100%;
+      background: #0e0e0e;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      overflow: hidden;
+      margin-bottom: 1.5rem;
+    }
+    #world-map {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    .scratchmap-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .country-chip {
+      font-family: var(--font-body);
+      font-size: 0.85rem;
+      font-weight: 400;
+      padding: 0.3rem 0.8rem;
+      border-radius: 1rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text);
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="../index.html" class="nav-logo">Kyran<span>.</span></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="../profile.html">Profile</a></li>
+      <li><a href="../projects.html">Projects</a></li>
+      <li><a href="../services.html" class="nav-cta">Services</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <div class="project-detail-hero">
+    <a href="../projects.html" class="back-link">← Projects</a>
+    <div class="project-detail-tags">
+      <span class="project-tag">IRL</span>
+      <span class="project-tag">Travel</span>
+    </div>
+    <h1>Scratchmap 🗺️</h1>
+    <p>Countries visited by Kyran and Amira. To update, add or remove entries in the <code>PEOPLE</code> object at the bottom of this file.</p>
+  </div>
+
+  <div class="scratchmap-section">
+    <div class="scratchmap-tabs">
+      <button class="scratchmap-tab active" data-person="kyran">Kyran</button>
+      <button class="scratchmap-tab" data-person="amira">Amira</button>
+    </div>
+    <p class="scratchmap-count" id="scratchmap-count"></p>
+    <div class="scratchmap-map-wrap">
+      <svg id="world-map" viewBox="0 0 960 500" preserveAspectRatio="xMidYMid meet"></svg>
+    </div>
+    <div class="scratchmap-chips" id="scratchmap-chips"></div>
+  </div>
+
+  <footer>
+    <span>© 2026 Kyran Walker</span>
+    <span>Built with HTML · CSS · JS</span>
+  </footer>
+
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/topojson-client@3/dist/topojson-client.min.js"></script>
+  <script>
+    // ── COUNTRY DATA ──────────────────────────────────────────────────────────
+    // Keys are ISO 3166-1 numeric codes. Values are display names.
+    // To add a country: find its numeric code at https://en.wikipedia.org/wiki/ISO_3166-1_numeric
+    // and add a new line: CODE: 'Country Name',
+    const PEOPLE = {
+      kyran: {
+        color: '#c8f04d',
+        visited: {
+          826: 'United Kingdom',
+          792: 'Turkey',
+          250: 'France',
+          724: 'Spain',
+          784: 'UAE',
+          710: 'South Africa',
+          218: 'Ecuador',
+          604: 'Peru',
+          840: 'United States',
+          554: 'New Zealand',
+           56: 'Belgium',
+          528: 'Netherlands',
+          276: 'Germany',
+          442: 'Luxembourg',
+        },
+      },
+      amira: {
+        color: '#4df0c8',
+        visited: {
+          840: 'United States',
+          554: 'New Zealand',
+          156: 'China',
+          784: 'UAE',
+        },
+      },
+    };
+
+    // ── MAP SETUP ─────────────────────────────────────────────────────────────
+    const WIDTH = 960, HEIGHT = 500;
+    const svg = d3.select('#world-map');
+
+    const projection = d3.geoNaturalEarth1()
+      .scale(153)
+      .translate([WIDTH / 2, HEIGHT / 2]);
+
+    const path = d3.geoPath().projection(projection);
+
+    svg.append('rect')
+      .attr('width', WIDTH)
+      .attr('height', HEIGHT)
+      .attr('fill', '#0e0e0e');
+
+    let countryPaths = null;
+
+    d3.json('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json').then(world => {
+      const features = topojson.feature(world, world.objects.countries).features;
+
+      countryPaths = svg.selectAll('.country')
+        .data(features)
+        .enter()
+        .append('path')
+        .attr('class', 'country')
+        .attr('d', path)
+        .attr('stroke', '#1a1a1a')
+        .attr('stroke-width', 0.4);
+
+      render('kyran');
+    });
+
+    // ── RENDER ────────────────────────────────────────────────────────────────
+    function render(personKey) {
+      const person = PEOPLE[personKey];
+      const visitedSet = new Set(Object.keys(person.visited).map(Number));
+
+      if (countryPaths) {
+        countryPaths.attr('fill', d => visitedSet.has(+d.id) ? person.color : '#252525');
+      }
+
+      const count = Object.keys(person.visited).length;
+      document.getElementById('scratchmap-count').innerHTML =
+        `${count} <span>countr${count === 1 ? 'y' : 'ies'} visited</span>`;
+
+      const chips = document.getElementById('scratchmap-chips');
+      chips.innerHTML = '';
+      Object.values(person.visited).sort().forEach(name => {
+        const chip = document.createElement('span');
+        chip.className = 'country-chip';
+        chip.textContent = name;
+        chips.appendChild(chip);
+      });
+
+      document.querySelectorAll('.scratchmap-tab').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.person === personKey);
+      });
+    }
+
+    // ── TABS ──────────────────────────────────────────────────────────────────
+    document.querySelectorAll('.scratchmap-tab').forEach(btn => {
+      btn.addEventListener('click', () => render(btn.dataset.person));
+    });
+  </script>
+
+  <script>
+    const hamburger = document.getElementById('hamburger');
+    const navLinks  = document.getElementById('navLinks');
+    hamburger.addEventListener('click', () => navLinks.classList.toggle('open'));
+    navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
+  </script>
+  <script src="/js/contact-modal.js"></script>
+</body>
+</html>
