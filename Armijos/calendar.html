@@ -529,7 +529,7 @@
   <div class="invite-note">
     <div class="invite-note-inner">
       <span>🔑</span>
-      <p>Bookings are invite-only. If you've been given an invite code, click any available date to request your spot. Bookings are confirmed by the host — keep your code to yourself!</p>
+      <p>Bookings are invite-only. If you've been given an invite code, click any available date to request your spot. Bookings are confirmed by the host, keep your code to yourself!</p>
     </div>
   </div>
 
@@ -545,7 +545,7 @@
         <p class="modal-date-str" id="eventDate"></p>
         <div class="event-banner">
           <span>🎉</span>
-          <p id="eventDesc">This is a hosted event — invitations are sent directly. Check with your host if you haven't received yours.</p>
+          <p id="eventDesc">This is a hosted event, invitations are sent directly. Check with your host if you haven't received yours.</p>
         </div>
         <button class="btn-secondary" style="width:100%;" onclick="closeModal()">Close</button>
       </div>
@@ -564,7 +564,7 @@
             <label for="codeInput">Invite code</label>
             <input type="text" id="codeInput" placeholder="Enter your invite code" autocomplete="off" style="text-transform:uppercase;" />
           </div>
-          <div class="modal-error" id="codeError">Invalid invite code — please check and try again.</div>
+          <div class="modal-error" id="codeError">Invalid invite code, please check and try again.</div>
           <div class="modal-btn-row">
             <button class="btn-primary" id="bookBtn" onclick="submitBooking()">Request Booking</button>
             <button class="btn-secondary" onclick="closeModal()">Cancel</button>
@@ -592,7 +592,7 @@
 
   <!-- ADMIN PANEL (revealed via ?admin in URL) -->
   <section class="admin-panel" id="adminPanel" style="display:none;">
-    <h2>🔐 Admin — Booking Requests</h2>
+    <h2>🔐 Admin: Booking Requests</h2>
     <div class="admin-table-wrap">
       <table class="admin-table" id="adminTable">
         <thead>
@@ -842,7 +842,7 @@
       }
 
       if (!CONFIG.inviteCodes[rawCode]) {
-        errorEl.textContent = 'Invalid invite code — please check and try again.';
+        errorEl.textContent = 'Invalid invite code, please check and try again.';
         errorEl.classList.add('show');
         document.getElementById('codeInput').focus();
         return;
@@ -855,7 +855,7 @@
 
       // Build confirmation message
       const dateStr = document.getElementById('bookingDate').textContent;
-      const msg = `Hi! It's ${name} — I'd love to come for dinner on ${dateStr}. My invite code is ${rawCode}. See you then! 🌶️`;
+      const msg = `Hi! It's ${name}, I'd love to come for dinner on ${dateStr}. My invite code is ${rawCode}. See you then! 🌶️`;
       document.getElementById('confirmMsg').textContent = msg;
 
       // Show confirmation
