@@ -657,7 +657,7 @@
 
     function calcItemMinutes(item) {
       const sides = item.double ? 2 : 1;
-      return item.qty * (5 + 25 * item.coats * sides);
+      return item.qty * sides * (10 + 25 * item.coats);
     }
 
     function calcTotalMinutes() {
@@ -718,7 +718,7 @@
       const double = document.getElementById('panelDouble').checked;
       const coats  = parseInt(document.querySelector('input[name="coats"]:checked')?.value || 1);
       const sides  = double ? 2 : 1;
-      const mins   = qty * (5 + 25 * coats * sides);
+      const mins   = qty * sides * (10 + 25 * coats);
       document.getElementById('laborPreview').innerHTML =
         mins > 0
           ? `Time estimate: <strong>${fmtTime(mins)}</strong>`
