@@ -524,7 +524,7 @@
           <input class="tool-input" type="text" id="panelNotes" placeholder="e.g. Front garden, featheredge panels" />
         </div>
 
-        <div class="labor-preview" id="laborPreview">Labour cost: <strong>—</strong></div>
+        <div class="labor-preview" id="laborPreview">Time estimate: <strong>—</strong></div>
 
         <button class="btn-add-item" onclick="addFenceItem()">+ Add to Estimate</button>
       </div>
@@ -561,26 +561,16 @@
         <textarea class="tool-textarea" id="jobNotes" rows="3" placeholder="Access requirements, payment terms, any special conditions..." oninput="updateDetails()"></textarea>
       </div>
 
-      <!-- Labour Rates -->
+      <!-- Labour Rate -->
       <div class="tool-card">
         <details class="rates-details">
-          <summary>Labour Rates</summary>
-          <p class="rate-note">Rate per panel, per coat, per side (£). Saved to your browser for next time.</p>
-          <div class="rates-grid">
-            <div class="rate-field">
-              <label>Half panel</label>
-              <input class="tool-input" type="number" id="rateHalf" min="0" step="0.5" />
-            </div>
-            <div class="rate-field">
-              <label>Full panel</label>
-              <input class="tool-input" type="number" id="rateFull" min="0" step="0.5" />
-            </div>
-            <div class="rate-field">
-              <label>Tall panel</label>
-              <input class="tool-input" type="number" id="rateTall" min="0" step="0.5" />
-            </div>
+          <summary>Labour Rate</summary>
+          <p class="rate-note">Your hourly rate for fence painting. Saved to your browser.</p>
+          <div class="rate-field" style="margin-top:0.75rem;">
+            <label>Rate per hour (£)</label>
+            <input class="tool-input" type="number" id="labourRate" min="0" step="1" style="max-width:160px;" />
           </div>
-          <button class="btn-save-rates" onclick="saveRates()">Save Rates</button>
+          <button class="btn-save-rates" onclick="saveRates()" style="margin-top:0.75rem;">Save Rate</button>
         </details>
       </div>
 
@@ -622,11 +612,9 @@
     /* =============================================
        STATE
     ============================================= */
-    function defaultRates() { return { half: 3, full: 5, tall: 7 }; }
-
-    function loadRates() {
-      try { return { ...defaultRates(), ...JSON.parse(localStorage.getItem('fence_est_rates') || '{}') }; }
-      catch { return defaultRates(); }
+    function loadLabourRate() {
+      const v = parseFloat(localStorage.getItem('fence_est_labour_rate'));
+      return isNaN(v) ? 25 : v;
     }
 
     function genRef() {
@@ -634,14 +622,14 @@
     }
 
     const S = {
-      customer  : '',
-      address   : '',
-      date      : '',
-      ref       : genRef(),
-      custNotes : '',
-      items     : [],
-      materials : [],
-      rates     : loadRates()
+      customer   : '',
+      address    : '',
+      date       : '',
+      ref        : genRef(),
+      custNotes  : '',
+      items      : [],
+      materials  : [],
+      labourRate : loadLabourRate()
     };
 
     /* =============================================
@@ -655,15 +643,55 @@
       return '£' + parseFloat(n || 0).toFixed(2);
     }
 
-    function calcItemCost(item) {
-      const rate = S.rates[item.type] || 0;
-      return item.qty * item.coats * (item.double ? 2 : 1) * rate;
+    // 5L covers 8 full (6×6ft) panels × 2 coats single-sided = 16 panel-coat-sides
+    const LITRES_PER_FULL_COAT_SIDE = 5 / 16;
+    const AREA_FACTOR = { half: 0.5, full: 1.0, tall: 8 / 6 };
+
+    function fmtTime(minutes) {
+      const h = Math.floor(minutes / 60);
+      const m = Math.round(minutes % 60);
+      if (h === 0) return `${m}m`;
+      if (m === 0) return `${h}h`;
+      return `${h}h ${m}m`;
+    }
+
+    function calcItemMinutes(item) {
+      const sides = item.double ? 2 : 1;
+      return item.qty * (5 + 25 * item.coats * sides);
+    }
+
+    function calcTotalMinutes() {
+      return S.items.reduce((s, i) => s + calcItemMinutes(i), 0);
+    }
+
+    function calcLabourCost() {
+      return (calcTotalMinutes() / 60) * S.labourRate;
+    }
+
+    function calcPaintLitres() {
+      return S.items.reduce((s, item) => {
+        const sides = item.double ? 2 : 1;
+        return s + item.qty * item.coats * sides * AREA_FACTOR[item.type] * LITRES_PER_FULL_COAT_SIDE;
+      }, 0);
+    }
+
+    function calcPaintTins() {
+      return S.items.length === 0 ? 0 : Math.ceil(calcPaintLitres() / 5);
+    }
+
+    function calcBrushesSets() {
+      const total = S.items.reduce((s, i) => s + i.qty, 0);
+      return total === 0 ? 0 : Math.ceil(total / 10);
     }
 
     function calcTotals() {
-      const labour = S.items.reduce((s, i) => s + calcItemCost(i), 0);
-      const mats   = S.materials.reduce((s, m) => s + parseFloat(m.cost || 0), 0);
-      return { labour, mats, total: labour + mats };
+      const labour     = calcLabourCost();
+      const tins       = calcPaintTins();
+      const paintCost  = tins * 15;
+      const brushSets  = calcBrushesSets();
+      const brushCost  = brushSets * 5;
+      const manualMats = S.materials.reduce((s, m) => s + parseFloat(m.cost || 0), 0);
+      return { labour, tins, paintCost, brushSets, brushCost, manualMats, total: labour + paintCost + brushCost + manualMats };
     }
 
     /* =============================================
@@ -686,14 +714,15 @@
        FENCE ITEMS
     ============================================= */
     function updatePreview() {
-      const type   = document.getElementById('panelType').value;
       const qty    = parseInt(document.getElementById('panelQty').value) || 0;
       const double = document.getElementById('panelDouble').checked;
       const coats  = parseInt(document.querySelector('input[name="coats"]:checked')?.value || 1);
-      const rate   = S.rates[type] || 0;
-      const cost   = qty * coats * (double ? 2 : 1) * rate;
+      const sides  = double ? 2 : 1;
+      const mins   = qty * (5 + 25 * coats * sides);
       document.getElementById('laborPreview').innerHTML =
-        `Labour cost: <strong>${fmt(cost)}</strong>`;
+        mins > 0
+          ? `Time estimate: <strong>${fmtTime(mins)}</strong>`
+          : `Time estimate: <strong>—</strong>`;
     }
 
     function addFenceItem() {
@@ -737,10 +766,8 @@
        RATES
     ============================================= */
     function saveRates() {
-      S.rates.half = parseFloat(document.getElementById('rateHalf').value) || 0;
-      S.rates.full = parseFloat(document.getElementById('rateFull').value) || 0;
-      S.rates.tall = parseFloat(document.getElementById('rateTall').value) || 0;
-      localStorage.setItem('fence_est_rates', JSON.stringify(S.rates));
+      S.labourRate = parseFloat(document.getElementById('labourRate').value) || 25;
+      localStorage.setItem('fence_est_labour_rate', S.labourRate);
       render();
     }
 
@@ -769,7 +796,7 @@
         return;
       }
       const rows = S.items.map(item => {
-        const cost   = calcItemCost(item);
+        const mins   = calcItemMinutes(item);
         const detail = `${item.coats} coat${item.coats > 1 ? 's' : ''}, ${item.double ? 'double sided' : 'single sided'}`;
         return `<div class="item-row">
           <div class="item-row-info">
@@ -777,14 +804,14 @@
             <div class="item-row-detail">${detail}${item.notes ? ` · ${esc(item.notes)}` : ''}</div>
           </div>
           <div class="item-row-right">
-            <span class="item-cost">${fmt(cost)}</span>
+            <span class="item-cost">${fmtTime(mins)}</span>
             <button class="item-remove" onclick="removeItem(${item.id})" title="Remove">✕</button>
           </div>
         </div>`;
       }).join('');
 
-      const labourTotal = S.items.reduce((s, i) => s + calcItemCost(i), 0);
-      el.innerHTML = rows + `<div class="items-subtotal">Labour subtotal: ${fmt(labourTotal)}</div>`;
+      const totalMins = calcTotalMinutes();
+      el.innerHTML = rows + `<div class="items-subtotal">Total time: ${fmtTime(totalMins)} · Labour: ${fmt(calcLabourCost())}</div>`;
     }
 
     function renderMatList() {
@@ -810,26 +837,39 @@
        RENDER ESTIMATE DOCUMENT
     ============================================= */
     function renderEstimate() {
-      const { labour, mats, total } = calcTotals();
+      const { labour, tins, paintCost, brushSets, brushCost, manualMats, total } = calcTotals();
+      const totalMins = calcTotalMinutes();
 
-      const itemRows = S.items.length > 0
+      const scopeRows = S.items.length > 0
         ? S.items.map(item => {
-            const cost   = calcItemCost(item);
             const detail = `${item.coats} coat${item.coats > 1 ? 's' : ''}, ${item.double ? 'double sided' : 'single sided'}`;
             return `<tr>
               <td>${item.qty}x ${esc(TYPE_LABELS[item.type])}${item.notes ? `<div class="est-item-note">${esc(item.notes)}</div>` : ''}</td>
               <td>${esc(detail)}</td>
-              <td>${fmt(cost)}</td>
+              <td>${fmtTime(calcItemMinutes(item))}</td>
             </tr>`;
           }).join('')
         : `<tr><td colspan="3" style="color:#ccc;font-style:italic;font-size:0.8rem;">No items added</td></tr>`;
 
-      const matRows = S.materials.length > 0
-        ? S.materials.map(m => `<tr>
-            <td colspan="2">${esc(m.desc)}</td>
-            <td>${fmt(m.cost)}</td>
-          </tr>`).join('')
-        : `<tr><td colspan="3" style="color:#ccc;font-style:italic;font-size:0.8rem;">No materials listed</td></tr>`;
+      const labourDetail = totalMins > 0 ? `${fmtTime(totalMins)} @ £${S.labourRate}/hr` : '—';
+
+      const paintRow = tins > 0 ? `<tr>
+        <td>Fence paint</td>
+        <td style="color:#666;">${tins} × 5L tin${tins > 1 ? 's' : ''} @ £15/tin</td>
+        <td>${fmt(paintCost)}</td>
+      </tr>` : '';
+
+      const brushRow = brushSets > 0 ? `<tr>
+        <td>Brushes and masking tape</td>
+        <td style="color:#666;">${brushSets} set${brushSets > 1 ? 's' : ''} @ £5/set</td>
+        <td>${fmt(brushCost)}</td>
+      </tr>` : '';
+
+      const manualRows = S.materials.map(m => `<tr>
+        <td>${esc(m.desc)}</td>
+        <td></td>
+        <td>${fmt(m.cost)}</td>
+      </tr>`).join('');
 
       const customerLine = S.customer
         ? `<div class="est-meta-val">${esc(S.customer)}</div>`
@@ -867,23 +907,32 @@
           </div>
         </div>
 
-        <div class="est-section">Fence Painting Work</div>
+        <div class="est-section">Scope of Work</div>
         <table class="est-table">
-          <thead><tr><th>Description</th><th>Details</th><th>Price</th></tr></thead>
-          <tbody>${itemRows}</tbody>
+          <thead><tr><th>Description</th><th>Details</th><th>Time</th></tr></thead>
+          <tbody>${scopeRows}</tbody>
         </table>
 
-        <div class="est-section">Materials</div>
+        <div class="est-section">Pricing</div>
         <table class="est-table">
-          <thead><tr><th colspan="2">Item</th><th>Cost</th></tr></thead>
-          <tbody>${matRows}</tbody>
+          <thead><tr><th>Item</th><th>Detail</th><th>Amount</th></tr></thead>
+          <tbody>
+            <tr>
+              <td>Labour</td>
+              <td style="color:#666;">${labourDetail}</td>
+              <td>${fmt(labour)}</td>
+            </tr>
+            ${paintRow}
+            ${brushRow}
+            ${manualRows}
+          </tbody>
+          <tfoot>
+            <tr>
+              <td colspan="2" style="font-family:var(--font-head);font-weight:800;border-top:2px solid #111;padding-top:0.8rem;">Total</td>
+              <td style="font-family:var(--font-head);font-weight:800;font-size:1rem;border-top:2px solid #111;padding-top:0.8rem;">${fmt(total)}</td>
+            </tr>
+          </tfoot>
         </table>
-
-        <div class="est-totals">
-          <div class="est-total-row"><span>Labour</span><span>${fmt(labour)}</span></div>
-          <div class="est-total-row"><span>Materials</span><span>${fmt(mats)}</span></div>
-          <div class="est-total-row est-grand-total"><span>Total</span><span>${fmt(total)}</span></div>
-        </div>
 
         ${notesBlock}
 
@@ -908,11 +957,9 @@
        INIT
     ============================================= */
     const today = new Date().toLocaleDateString('en-GB');
-    document.getElementById('jobDate').value = today;
-    document.getElementById('jobRef').value  = S.ref;
-    document.getElementById('rateHalf').value = S.rates.half;
-    document.getElementById('rateFull').value = S.rates.full;
-    document.getElementById('rateTall').value = S.rates.tall;
+    document.getElementById('jobDate').value    = today;
+    document.getElementById('jobRef').value     = S.ref;
+    document.getElementById('labourRate').value = S.labourRate;
     S.date = today;
 
     document.getElementById('matDesc').addEventListener('keydown', e => {
