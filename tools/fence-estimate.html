@@ -581,7 +581,8 @@
     =========================================== -->
     <div class="preview">
       <div class="preview-actions">
-        <button class="btn-print" onclick="window.print()">🖨️ &nbsp;Print / Save as PDF</button>
+        <button class="btn-print" id="downloadBtn" onclick="downloadPDF()">⬇️ &nbsp;Download PDF</button>
+        <button class="btn-clear" onclick="window.print()">🖨️ Print</button>
         <button class="btn-clear" onclick="clearAll()">Clear</button>
       </div>
       <div class="estimate-doc" id="estimateDoc"></div>
@@ -594,6 +595,7 @@
     <span>Built with HTML · CSS · JS</span>
   </footer>
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
   <script>
     const hamburger = document.getElementById('hamburger');
     const navLinks  = document.getElementById('navLinks');
@@ -941,6 +943,30 @@
           <p>No VAT applicable. Payment due within 14 days of completion.</p>
         </div>
       `;
+    }
+
+    /* =============================================
+       PDF DOWNLOAD
+    ============================================= */
+    async function downloadPDF() {
+      const btn = document.getElementById('downloadBtn');
+      btn.textContent = 'Generating...';
+      btn.disabled = true;
+
+      try {
+        await html2pdf().set({
+          margin: 12,
+          filename: (S.ref || 'estimate') + '.pdf',
+          image: { type: 'jpeg', quality: 0.98 },
+          html2canvas: { scale: 2, useCORS: true, logging: false },
+          jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+        }).from(document.getElementById('estimateDoc')).save();
+      } catch (e) {
+        alert('PDF generation failed. Use the Print button and choose Save as PDF instead.');
+      }
+
+      btn.innerHTML = '⬇️ &nbsp;Download PDF';
+      btn.disabled = false;
     }
 
     /* =============================================
