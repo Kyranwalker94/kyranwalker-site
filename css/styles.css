@@ -2019,6 +2019,7 @@ footer {
 #tl-living      { border-left-color: var(--accent); }
 #tl-working     { border-left-color: var(--accent2); }
 #tl-learning    { border-left-color: #ffd166; }
+#tl-travel      { border-left-color: #ff4d6d; }
 #tl-achievements{ border-left-color: #ff9f1c; }
 #tl-projects    { border-left-color: #c77dff; }
 
