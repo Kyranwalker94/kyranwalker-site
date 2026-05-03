@@ -555,6 +555,26 @@
         <div id="matList" style="margin-top:0.9rem;"><p class="empty-dark">No materials listed.</p></div>
       </div>
 
+      <!-- Additional Labour -->
+      <div class="tool-card">
+        <div class="tool-card-title">⏱️ &nbsp;<span>Additional Labour</span></div>
+        <div class="mat-add-row">
+          <div>
+            <label class="tool-label">Description</label>
+            <input class="tool-input" type="text" id="extraLabourDesc" placeholder="e.g. Full day rate top-up" />
+          </div>
+          <div>
+            <label class="tool-label">Cost (£)</label>
+            <input class="tool-input" type="number" id="extraLabourCost" placeholder="0.00" min="0" step="0.01" />
+          </div>
+          <div>
+            <label class="tool-label">&nbsp;</label>
+            <button class="btn-add-mat" onclick="addExtraLabour()">+</button>
+          </div>
+        </div>
+        <div id="extraLabourList" style="margin-top:0.9rem;"><p class="empty-dark">No additional labour added.</p></div>
+      </div>
+
       <!-- Estimate Notes -->
       <div class="tool-card">
         <div class="tool-card-title">💬 &nbsp;<span>Notes for Customer</span></div>
@@ -624,14 +644,15 @@
     }
 
     const S = {
-      customer   : '',
-      address    : '',
-      date       : '',
-      ref        : genRef(),
-      custNotes  : '',
-      items      : [],
-      materials  : [],
-      labourRate : loadLabourRate()
+      customer     : '',
+      address      : '',
+      date         : '',
+      ref          : genRef(),
+      custNotes    : '',
+      items        : [],
+      materials    : [],
+      extraLabour  : [],
+      labourRate   : loadLabourRate()
     };
 
     /* =============================================
@@ -687,13 +708,14 @@
     }
 
     function calcTotals() {
-      const labour     = calcLabourCost();
-      const tins       = calcPaintTins();
-      const paintCost  = tins * 15;
-      const brushSets  = calcBrushesSets();
-      const brushCost  = brushSets * 5;
-      const manualMats = S.materials.reduce((s, m) => s + parseFloat(m.cost || 0), 0);
-      return { labour, tins, paintCost, brushSets, brushCost, manualMats, total: labour + paintCost + brushCost + manualMats };
+      const labour      = calcLabourCost();
+      const extraLabour = S.extraLabour.reduce((s, l) => s + parseFloat(l.cost || 0), 0);
+      const tins        = calcPaintTins();
+      const paintCost   = tins * 15;
+      const brushSets   = calcBrushesSets();
+      const brushCost   = brushSets * 5;
+      const manualMats  = S.materials.reduce((s, m) => s + parseFloat(m.cost || 0), 0);
+      return { labour, extraLabour, tins, paintCost, brushSets, brushCost, manualMats, total: labour + extraLabour + paintCost + brushCost + manualMats };
     }
 
     /* =============================================
@@ -765,6 +787,40 @@
     }
 
     /* =============================================
+       EXTRA LABOUR
+    ============================================= */
+    function addExtraLabour() {
+      const desc = document.getElementById('extraLabourDesc').value.trim();
+      const cost = parseFloat(document.getElementById('extraLabourCost').value) || 0;
+      if (!desc) { document.getElementById('extraLabourDesc').focus(); return; }
+      S.extraLabour.push({ id: Date.now(), desc, cost });
+      document.getElementById('extraLabourDesc').value = '';
+      document.getElementById('extraLabourCost').value = '';
+      render();
+    }
+
+    function removeExtraLabour(id) {
+      S.extraLabour = S.extraLabour.filter(l => l.id !== id);
+      render();
+    }
+
+    function renderExtraLabourList() {
+      const el = document.getElementById('extraLabourList');
+      if (S.extraLabour.length === 0) {
+        el.innerHTML = '<p class="empty-dark">No additional labour added.</p>';
+        return;
+      }
+      const extraTotal = S.extraLabour.reduce((s, l) => s + parseFloat(l.cost || 0), 0);
+      el.innerHTML = S.extraLabour.map(l => `<div class="item-row">
+        <div class="item-row-info"><strong>${esc(l.desc)}</strong></div>
+        <div class="item-row-right">
+          <span class="item-cost">${fmt(l.cost)}</span>
+          <button class="item-remove" onclick="removeExtraLabour(${l.id})" title="Remove">✕</button>
+        </div>
+      </div>`).join('') + `<div class="items-subtotal">Additional labour: ${fmt(extraTotal)}</div>`;
+    }
+
+    /* =============================================
        RATES
     ============================================= */
     function saveRates() {
@@ -779,7 +835,7 @@
     function clearAll() {
       if (!confirm('Clear all items and start a new estimate?')) return;
       S.customer = ''; S.address = ''; S.custNotes = '';
-      S.items = []; S.materials = [];
+      S.items = []; S.materials = []; S.extraLabour = [];
       S.ref = genRef();
       document.getElementById('jobCustomer').value = '';
       document.getElementById('jobAddress').value  = '';
@@ -839,7 +895,7 @@
        RENDER ESTIMATE DOCUMENT
     ============================================= */
     function renderEstimate() {
-      const { labour, tins, paintCost, brushSets, brushCost, manualMats, total } = calcTotals();
+      const { labour, extraLabour, tins, paintCost, brushSets, brushCost, manualMats, total } = calcTotals();
       const totalMins = calcTotalMinutes();
 
       const scopeRows = S.items.length > 0
@@ -866,6 +922,12 @@
         <td style="color:#666;">${brushSets} set${brushSets > 1 ? 's' : ''} @ £5/set</td>
         <td>${fmt(brushCost)}</td>
       </tr>` : '';
+
+      const extraLabourRows = S.extraLabour.map(l => `<tr>
+        <td>${esc(l.desc)}</td>
+        <td style="color:#666;">Additional labour</td>
+        <td>${fmt(l.cost)}</td>
+      </tr>`).join('');
 
       const manualRows = S.materials.map(m => `<tr>
         <td>${esc(m.desc)}</td>
@@ -924,6 +986,7 @@
               <td style="color:#666;">${labourDetail}</td>
               <td>${fmt(labour)}</td>
             </tr>
+            ${extraLabourRows}
             ${paintRow}
             ${brushRow}
             ${manualRows}
@@ -975,6 +1038,7 @@
     function render() {
       renderFenceList();
       renderMatList();
+      renderExtraLabourList();
       renderEstimate();
       updatePreview();
     }
@@ -993,6 +1057,12 @@
     });
     document.getElementById('matCost').addEventListener('keydown', e => {
       if (e.key === 'Enter') addMaterial();
+    });
+    document.getElementById('extraLabourDesc').addEventListener('keydown', e => {
+      if (e.key === 'Enter') document.getElementById('extraLabourCost').focus();
+    });
+    document.getElementById('extraLabourCost').addEventListener('keydown', e => {
+      if (e.key === 'Enter') addExtraLabour();
     });
     document.getElementById('panelNotes').addEventListener('keydown', e => {
       if (e.key === 'Enter') addFenceItem();
