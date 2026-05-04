@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bookkeeping Scope Calculator | Kyran Walker</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+  <style>
+
+    .tool-hero {
+      padding: 2.5rem 2.5rem 3rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      border-bottom: 1px solid var(--border);
+    }
+    .tool-hero p {
+      color: var(--muted);
+      font-size: 1rem;
+      line-height: 1.7;
+      margin-top: 0.5rem;
+      max-width: 560px;
+    }
+
+    .tool-layout {
+      max-width: 1200px;
+      margin: 2rem auto 6rem;
+      padding: 0 2rem;
+      display: grid;
+      grid-template-columns: 1fr 480px;
+      gap: 2rem;
+      align-items: start;
+    }
+
+    .builder { display: flex; flex-direction: column; gap: 1.25rem; }
+
+    .tool-card {
+      background: #1a1a1a;
+      border: 1px solid #2d2d2d;
+      border-radius: 1rem;
+      padding: 1.5rem;
+    }
+
+    .tool-card-title {
+      font-family: var(--font-head);
+      font-weight: 700;
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #666;
+      margin-bottom: 1.25rem;
+    }
+    .tool-card-title span { color: #e0e0e0; font-size: 0.92rem; letter-spacing: normal; text-transform: none; font-family: var(--font-body); font-weight: 600; }
+
+    .tool-field { margin-bottom: 0.9rem; }
+    .tool-field:last-child { margin-bottom: 0; }
+
+    .tool-label {
+      display: block;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: #999;
+      margin-bottom: 0.3rem;
+    }
+    .tool-label small { font-weight: 400; color: #555; }
+
+    .tool-input, .tool-select, .tool-textarea {
+      width: 100%;
+      padding: 0.65rem 0.85rem;
+      background: #111;
+      border: 1px solid #2d2d2d;
+      border-radius: 0.55rem;
+      color: #f0f0f0;
+      font-size: 0.92rem;
+      font-family: var(--font-body);
+      transition: border-color 0.15s;
+      box-sizing: border-box;
+    }
+    .tool-input:focus, .tool-select:focus, .tool-textarea:focus {
+      outline: none;
+      border-color: #4df0c8;
+      box-shadow: 0 0 0 2px rgba(77,240,200,0.1);
+    }
+    .tool-select option { background: #1a1a1a; }
+    .tool-textarea { resize: vertical; min-height: 72px; }
+
+    .tool-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+
+    .tool-toggle-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.4rem 0 0.9rem;
+    }
+    .tool-toggle-row label:first-child { font-size: 0.85rem; color: #ccc; font-weight: 500; max-width: calc(100% - 56px); }
+
+    .tog { position: relative; width: 40px; height: 22px; flex-shrink: 0; }
+    .tog input { opacity: 0; width: 0; height: 0; }
+    .tog-slider {
+      position: absolute; inset: 0;
+      background: #2d2d2d; border-radius: 22px;
+      cursor: pointer; transition: 0.2s;
+      border: 1px solid #3a3a3a;
+    }
+    .tog-slider::before {
+      content: '';
+      position: absolute;
+      width: 14px; height: 14px;
+      left: 3px; bottom: 3px;
+      background: #666; border-radius: 50%;
+      transition: 0.2s;
+    }
+    .tog input:checked + .tog-slider { background: #4df0c8; border-color: #4df0c8; }
+    .tog input:checked + .tog-slider::before { transform: translateX(18px); background: #111; }
+
+    .always-on-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.35rem 0;
+      font-size: 0.85rem;
+      color: #888;
+    }
+    .always-on-tag {
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: #4df0c8;
+      opacity: 0.7;
+      flex-shrink: 0;
+      margin-left: 0.75rem;
+    }
+    .always-on-divider {
+      border: none;
+      border-top: 1px solid #222;
+      margin: 0.65rem 0 0.9rem;
+    }
+
+    .sub-field {
+      margin: 0 0 0.9rem 0;
+      padding: 0.75rem;
+      background: #111;
+      border-radius: 0.55rem;
+      border: 1px solid #222;
+    }
+
+    .vol-hint {
+      margin-top: 0.5rem;
+      font-size: 0.78rem;
+      color: #555;
+      line-height: 1.5;
+    }
+    .vol-hint.active { color: #4df0c8; opacity: 0.8; }
+
+    .coats-row { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+    .coats-row input[type="radio"] { display: none; }
+    .coats-row label {
+      flex: 1; text-align: center;
+      padding: 0.5rem 0.4rem;
+      border: 1px solid #2d2d2d;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: #777;
+      transition: 0.15s;
+      white-space: nowrap;
+    }
+    .coats-row input:checked + label { background: #4df0c8; border-color: #4df0c8; color: #111; }
+
+    .rates-details summary {
+      font-size: 0.72rem; font-weight: 600; color: #555;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      cursor: pointer; user-select: none; list-style: none;
+    }
+    .rates-details summary::-webkit-details-marker { display: none; }
+    .rates-details summary::before { content: '▶  '; font-size: 0.6rem; }
+    .rates-details[open] summary::before { content: '▼  '; }
+    .rate-note { font-size: 0.75rem; color: #555; margin: 0.6rem 0 0.5rem; }
+    .btn-save-rates {
+      padding: 0.45rem 1rem;
+      background: #1e1e1e; color: #4df0c8;
+      border: 1px solid #333; border-radius: 0.45rem;
+      font-size: 0.78rem; font-weight: 700;
+      cursor: pointer; transition: 0.15s;
+    }
+    .btn-save-rates:hover { background: #2a2a2a; }
+
+    /* Preview */
+    .preview { position: sticky; top: 1.5rem; display: flex; flex-direction: column; gap: 0.85rem; }
+
+    .preview-actions { display: flex; gap: 0.6rem; }
+
+    .btn-print {
+      flex: 1; padding: 0.75rem 1rem;
+      background: #4df0c8; color: #111;
+      border: none; border-radius: 0.6rem;
+      font-family: var(--font-head); font-weight: 700; font-size: 0.75rem;
+      cursor: pointer; transition: 0.15s; letter-spacing: 0.02em;
+    }
+    .btn-print:hover { filter: brightness(1.1); }
+
+    .btn-clear {
+      padding: 0.75rem 0.9rem;
+      background: transparent; color: #666;
+      border: 1px solid #2d2d2d; border-radius: 0.6rem;
+      font-size: 0.8rem; font-weight: 600;
+      cursor: pointer; transition: 0.15s;
+    }
+    .btn-clear:hover { border-color: #c0392b; color: #c0392b; }
+
+    /* Scope document */
+    .estimate-doc {
+      background: #ffffff;
+      color: #111;
+      border-radius: 0.75rem;
+      padding: 2.25rem;
+      font-family: var(--font-body);
+      line-height: 1.55;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.4);
+      font-size: 0.88rem;
+    }
+
+    .est-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      padding-bottom: 1.5rem;
+      border-bottom: 2px solid #111;
+      margin-bottom: 1.5rem;
+    }
+    .est-co-name { font-family: var(--font-head); font-weight: 800; font-size: 1.05rem; color: #111; letter-spacing: -0.01em; }
+    .est-co-detail { font-size: 0.75rem; color: #777; margin-top: 0.18rem; }
+
+    .est-title { font-family: var(--font-head); font-weight: 800; font-size: 1.4rem; color: #111; letter-spacing: -0.03em; line-height: 1.1; text-align: right; }
+    .est-ref { font-size: 0.72rem; color: #aaa; text-align: right; margin-top: 0.2rem; font-family: monospace; letter-spacing: 0.06em; }
+
+    .est-meta { display: flex; justify-content: space-between; gap: 1rem; margin-bottom: 1.75rem; }
+    .est-meta-lbl { font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; color: #aaa; font-weight: 700; display: block; margin-bottom: 0.2rem; }
+    .est-meta-val { font-weight: 700; font-size: 0.97rem; color: #111; }
+    .est-meta-sub { color: #777; font-size: 0.82rem; margin-top: 0.15rem; }
+    .est-meta-right { text-align: right; }
+    .est-meta-right div { color: #555; margin-bottom: 0.15rem; font-size: 0.82rem; }
+    .est-meta-right .est-meta-lbl { display: inline; margin-right: 0.3rem; }
+
+    .est-section {
+      font-family: var(--font-head); font-weight: 700;
+      font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase;
+      color: #aaa; margin: 1.5rem 0 0.5rem;
+      padding-bottom: 0.35rem; border-bottom: 1px solid #e8e8e8;
+    }
+
+    .est-table { width: 100%; border-collapse: collapse; }
+    .est-table th {
+      background: #111; color: #fff;
+      padding: 0.45rem 0.7rem;
+      text-align: left;
+      font-size: 0.62rem; letter-spacing: 0.08em; text-transform: uppercase;
+      font-family: var(--font-head);
+    }
+    .est-table th:last-child { text-align: right; }
+    .est-table td {
+      padding: 0.55rem 0.7rem;
+      border-bottom: 1px solid #f0f0f0;
+      vertical-align: top;
+      color: #222;
+    }
+    .est-table td:last-child { text-align: right; white-space: nowrap; font-weight: 600; color: #111; }
+    .est-table tr:last-child td { border-bottom: none; }
+    .est-table tfoot td { border-top: 2px solid #111; padding-top: 0.8rem; }
+
+    .est-retainer-box {
+      margin-top: 1.5rem;
+      background: #f7f7f7;
+      border-radius: 0.5rem;
+      padding: 1rem 1.1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .est-retainer-label { font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; color: #999; font-weight: 700; }
+    .est-retainer-amount { font-family: var(--font-head); font-weight: 800; font-size: 1.5rem; color: #111; letter-spacing: -0.02em; }
+    .est-retainer-amount span { font-size: 0.8rem; font-weight: 400; color: #999; font-family: var(--font-body); }
+
+    .est-notes-box {
+      margin-top: 1.25rem;
+      padding: 0.9rem 1rem;
+      background: #f7f7f7;
+      border-radius: 0.45rem;
+      font-size: 0.8rem;
+      color: #555;
+      line-height: 1.6;
+    }
+    .est-notes-box strong { color: #333; display: block; margin-bottom: 0.25rem; font-size: 0.72rem; letter-spacing: 0.06em; text-transform: uppercase; }
+
+    .est-footer {
+      margin-top: 1.5rem;
+      padding-top: 1rem;
+      border-top: 1px solid #e8e8e8;
+      font-size: 0.72rem;
+      color: #bbb;
+      line-height: 1.7;
+    }
+    .est-footer p { margin: 0; }
+
+    @media (max-width: 900px) {
+      .tool-layout { grid-template-columns: 1fr; }
+      .preview { position: static; order: -1; }
+    }
+    @media (max-width: 580px) {
+      .tool-layout { padding: 0 1rem; }
+      .estimate-doc { padding: 1.5rem 1.25rem; }
+      .tool-row { grid-template-columns: 1fr; }
+    }
+    @media print {
+      nav, footer, .tool-hero, .builder, .preview-actions { display: none !important; }
+      .tool-layout { display: block; padding: 0; margin: 0; max-width: none; }
+      .preview { position: static; }
+      .estimate-doc { box-shadow: none; border-radius: 0; padding: 1.5cm 2cm; font-size: 10pt; }
+      .est-title { font-size: 18pt; }
+      .est-table th { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="../index.html" class="nav-logo">Kyran<span>.</span></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="../profile.html">Profile</a></li>
+      <li><a href="../projects.html">Projects</a></li>
+      <li><a href="../services.html" class="nav-cta">Services</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <div class="tool-hero">
+    <p class="section-label">Tools</p>
+    <h1 class="section-title" style="margin-bottom:0;">Bookkeeping Scope Calculator</h1>
+    <p>Set out the scope of bookkeeping services required and get a suggested monthly retainer with a printable proposal ready to share with a client.</p>
+  </div>
+
+  <div class="tool-layout">
+
+    <!-- BUILDER -->
+    <div class="builder">
+
+      <!-- Business Details -->
+      <div class="tool-card">
+        <div class="tool-card-title">🏢 &nbsp;<span>Business Details</span></div>
+        <div class="tool-field">
+          <label class="tool-label">Business name</label>
+          <input class="tool-input" type="text" id="bizName" placeholder="e.g. Smith Electrical Ltd" oninput="update()" />
+        </div>
+        <div class="tool-row">
+          <div class="tool-field" style="margin:0;">
+            <label class="tool-label">Business type</label>
+            <select class="tool-select" id="bizType" onchange="update()">
+              <option value="Sole Trader">Sole Trader</option>
+              <option value="Limited Company">Limited Company</option>
+              <option value="Partnership">Partnership</option>
+            </select>
+          </div>
+          <div class="tool-field" style="margin:0;">
+            <label class="tool-label">Contact name <small>(optional)</small></label>
+            <input class="tool-input" type="text" id="contactName" placeholder="e.g. James Smith" oninput="update()" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Transaction Volume -->
+      <div class="tool-card">
+        <div class="tool-card-title">📊 &nbsp;<span>Transaction Volume</span></div>
+        <div class="tool-field" style="margin-bottom:0.5rem;">
+          <label class="tool-label">Monthly bank transactions <small>(all money in and out)</small></label>
+          <input class="tool-input" type="number" id="transactions" value="50" min="1" max="9999" oninput="update()" />
+        </div>
+        <div class="vol-hint" id="volHint"></div>
+      </div>
+
+      <!-- Services -->
+      <div class="tool-card">
+        <div class="tool-card-title">✅ &nbsp;<span>Services Required</span></div>
+
+        <div class="always-on-row">
+          <span>Bank reconciliation</span>
+          <span class="always-on-tag">Always included</span>
+        </div>
+        <div class="always-on-row">
+          <span>Transaction coding &amp; categorisation</span>
+          <span class="always-on-tag">Always included</span>
+        </div>
+        <hr class="always-on-divider">
+
+        <div class="tool-toggle-row">
+          <label>Sales invoicing &amp; accounts receivable</label>
+          <label class="tog"><input type="checkbox" id="svcInvoicing" onchange="toggleInvoicing()" /><span class="tog-slider"></span></label>
+        </div>
+        <div id="invoicingDetail" style="display:none;">
+          <div class="sub-field">
+            <label class="tool-label">Monthly invoices raised</label>
+            <input class="tool-input" type="number" id="invoiceCount" value="10" min="1" oninput="update()" />
+          </div>
+        </div>
+
+        <div class="tool-toggle-row">
+          <label>Expense receipts &amp; supplier invoices</label>
+          <label class="tog"><input type="checkbox" id="svcExpenses" onchange="update()" /><span class="tog-slider"></span></label>
+        </div>
+
+        <div class="tool-toggle-row">
+          <label>VAT returns</label>
+          <label class="tog"><input type="checkbox" id="svcVat" onchange="toggleVat()" /><span class="tog-slider"></span></label>
+        </div>
+        <div id="vatDetail" style="display:none;">
+          <div class="sub-field">
+            <label class="tool-label">VAT scheme</label>
+            <select class="tool-select" id="vatScheme" onchange="update()">
+              <option value="Standard rated">Standard rated</option>
+              <option value="Flat rate">Flat rate</option>
+              <option value="Cash accounting">Cash accounting</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="tool-toggle-row">
+          <label>CIS (Construction Industry Scheme)</label>
+          <label class="tog"><input type="checkbox" id="svcCis" onchange="update()" /><span class="tog-slider"></span></label>
+        </div>
+
+        <div class="tool-toggle-row">
+          <label>Payroll</label>
+          <label class="tog"><input type="checkbox" id="svcPayroll" onchange="togglePayroll()" /><span class="tog-slider"></span></label>
+        </div>
+        <div id="payrollDetail" style="display:none;">
+          <div class="sub-field">
+            <label class="tool-label">Number of employees</label>
+            <input class="tool-input" type="number" id="employeeCount" value="1" min="1" oninput="update()" />
+          </div>
+        </div>
+
+        <div class="tool-toggle-row">
+          <label>Monthly management accounts</label>
+          <label class="tog"><input type="checkbox" id="svcManagement" onchange="update()" /><span class="tog-slider"></span></label>
+        </div>
+
+        <div class="tool-toggle-row" style="padding-bottom:0;">
+          <label>Year-end prep &amp; accountant liaison</label>
+          <label class="tog"><input type="checkbox" id="svcYearend" onchange="update()" /><span class="tog-slider"></span></label>
+        </div>
+      </div>
+
+      <!-- Software -->
+      <div class="tool-card">
+        <div class="tool-card-title">💾 &nbsp;<span>Accounting Software</span></div>
+        <div class="coats-row">
+          <input type="radio" name="software" id="swXero" value="xero" checked onchange="update()" />
+          <label for="swXero">Xero</label>
+          <input type="radio" name="software" id="swQb" value="quickbooks" onchange="update()" />
+          <label for="swQb">QuickBooks</label>
+          <input type="radio" name="software" id="swSage" value="sage" onchange="update()" />
+          <label for="swSage">Sage</label>
+          <input type="radio" name="software" id="swSheet" value="spreadsheet" onchange="update()" />
+          <label for="swSheet">Spreadsheet</label>
+        </div>
+      </div>
+
+      <!-- Frequency -->
+      <div class="tool-card">
+        <div class="tool-card-title">🗓️ &nbsp;<span>Bookkeeping Frequency</span></div>
+        <div class="coats-row">
+          <input type="radio" name="frequency" id="freqMonthly" value="monthly" checked onchange="update()" />
+          <label for="freqMonthly">Monthly</label>
+          <input type="radio" name="frequency" id="freqFortnightly" value="fortnightly" onchange="update()" />
+          <label for="freqFortnightly">Fortnightly</label>
+          <input type="radio" name="frequency" id="freqWeekly" value="weekly" onchange="update()" />
+          <label for="freqWeekly">Weekly</label>
+        </div>
+      </div>
+
+      <!-- Notes -->
+      <div class="tool-card">
+        <div class="tool-card-title">💬 &nbsp;<span>Notes for Proposal</span></div>
+        <textarea class="tool-textarea" id="propNotes" rows="3" placeholder="Any specific requirements, software setup needed, or additional context..." oninput="update()"></textarea>
+      </div>
+
+      <!-- Rate -->
+      <div class="tool-card">
+        <details class="rates-details">
+          <summary>Hourly Rate</summary>
+          <p class="rate-note">Your hourly rate used to calculate the retainer. Saved to your browser.</p>
+          <div style="margin-top:0.75rem;">
+            <label class="tool-label">Rate per hour (£)</label>
+            <input class="tool-input" type="number" id="hourlyRate" min="0" step="1" style="max-width:160px;" />
+          </div>
+          <button class="btn-save-rates" onclick="saveRate()" style="margin-top:0.75rem;">Save Rate</button>
+        </details>
+      </div>
+
+    </div>
+
+    <!-- PREVIEW -->
+    <div class="preview">
+      <div class="preview-actions">
+        <button class="btn-print" id="downloadBtn" onclick="downloadPDF()">⬇️ &nbsp;Download PDF</button>
+        <button class="btn-clear" onclick="window.print()">🖨️ Print</button>
+        <button class="btn-clear" onclick="clearAll()">Clear</button>
+      </div>
+      <div class="estimate-doc" id="scopeDoc"></div>
+    </div>
+
+  </div>
+
+  <footer>
+    <span>© 2026 Kyran Walker</span>
+    <span>Built with HTML · CSS · JS</span>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <script>
+    const hamburger = document.getElementById('hamburger');
+    const navLinks  = document.getElementById('navLinks');
+    hamburger.addEventListener('click', () => navLinks.classList.toggle('open'));
+    navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
+
+    /* ── STATE ── */
+    function loadRate() {
+      const v = parseFloat(localStorage.getItem('bk_scope_rate'));
+      return isNaN(v) ? 20 : v;
+    }
+    function genRef() {
+      return 'BSP-' + (1000 + Math.floor(Math.random() * 9000));
+    }
+
+    const S = {
+      bizName: '', bizType: 'Sole Trader', contactName: '',
+      transactions: 50, invoiceCount: 10, employeeCount: 1,
+      vatScheme: 'Standard rated',
+      software: 'xero', frequency: 'monthly',
+      svc: { invoicing: false, expenses: false, vat: false, cis: false, payroll: false, management: false, yearend: false },
+      notes: '', rate: loadRate(), ref: genRef(),
+      date: new Date().toLocaleDateString('en-GB')
+    };
+
+    /* ── HELPERS ── */
+    function esc(s) {
+      return (s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    }
+    function fmt(n) { return '£' + parseFloat(n || 0).toFixed(2); }
+    function fmtH(h) {
+      const rounded = Math.round(h * 4) / 4;
+      return rounded % 1 === 0 ? rounded + '.0h' : rounded + 'h';
+    }
+
+    /* ── CALCULATIONS ── */
+    function calcBreakdown() {
+      const tx = parseInt(S.transactions) || 0;
+
+      const baseHrs =
+        tx <= 25  ? 1.0 :
+        tx <= 75  ? 2.0 :
+        tx <= 150 ? 3.5 :
+        tx <= 250 ? 5.0 :
+        tx <= 400 ? 7.0 : 10.0;
+
+      const swMul = { xero: 1.0, quickbooks: 1.0, sage: 1.15, spreadsheet: 1.3 }[S.software] || 1.0;
+      const freqMul = { monthly: 1.0, fortnightly: 1.1, weekly: 1.2 }[S.frequency] || 1.0;
+
+      const lines = [];
+
+      lines.push({ label: 'Bank reconciliation & transaction coding', hrs: Math.round(baseHrs * swMul * freqMul * 4) / 4 });
+
+      if (S.svc.invoicing) {
+        const inv = parseInt(S.invoiceCount) || 0;
+        const h = inv <= 10 ? 0.5 : inv <= 30 ? 1.0 : 1.75;
+        lines.push({ label: 'Sales invoicing & accounts receivable', hrs: Math.round(h * freqMul * 4) / 4 });
+      }
+
+      if (S.svc.expenses) {
+        lines.push({ label: 'Expense receipts & supplier invoices', hrs: Math.round(0.5 * freqMul * 4) / 4 });
+      }
+
+      if (S.svc.vat) {
+        lines.push({ label: 'VAT returns (quarterly, averaged)', hrs: 0.5 });
+      }
+
+      if (S.svc.cis) {
+        lines.push({ label: 'CIS returns & verification', hrs: Math.round(1.0 * freqMul * 4) / 4 });
+      }
+
+      if (S.svc.payroll) {
+        const emp = parseInt(S.employeeCount) || 1;
+        const h = Math.max(0.5, emp * 0.25);
+        lines.push({ label: `Payroll (${emp} employee${emp > 1 ? 's' : ''})`, hrs: Math.round(h * freqMul * 4) / 4 });
+      }
+
+      if (S.svc.management) {
+        lines.push({ label: 'Monthly management accounts', hrs: 2.0 });
+      }
+
+      if (S.svc.yearend) {
+        lines.push({ label: 'Year-end prep & accountant liaison', hrs: 1.0 });
+      }
+
+      const total = lines.reduce((s, l) => s + l.hrs, 0);
+      return { lines, total };
+    }
+
+    function calcRetainer() {
+      const { total } = calcBreakdown();
+      const raw = total * S.rate;
+      return Math.ceil(raw / 5) * 5;
+    }
+
+    /* ── UI UPDATES ── */
+    function toggleInvoicing() {
+      S.svc.invoicing = document.getElementById('svcInvoicing').checked;
+      document.getElementById('invoicingDetail').style.display = S.svc.invoicing ? 'block' : 'none';
+      update();
+    }
+    function toggleVat() {
+      S.svc.vat = document.getElementById('svcVat').checked;
+      document.getElementById('vatDetail').style.display = S.svc.vat ? 'block' : 'none';
+      update();
+    }
+    function togglePayroll() {
+      S.svc.payroll = document.getElementById('svcPayroll').checked;
+      document.getElementById('payrollDetail').style.display = S.svc.payroll ? 'block' : 'none';
+      update();
+    }
+
+    function update() {
+      S.bizName      = document.getElementById('bizName').value.trim();
+      S.bizType      = document.getElementById('bizType').value;
+      S.contactName  = document.getElementById('contactName').value.trim();
+      S.transactions = parseInt(document.getElementById('transactions').value) || 0;
+      S.invoiceCount = parseInt(document.getElementById('invoiceCount').value) || 0;
+      S.employeeCount= parseInt(document.getElementById('employeeCount').value) || 1;
+      S.vatScheme    = document.getElementById('vatScheme').value;
+      S.software     = document.querySelector('input[name="software"]:checked')?.value || 'xero';
+      S.frequency    = document.querySelector('input[name="frequency"]:checked')?.value || 'monthly';
+      S.svc.expenses   = document.getElementById('svcExpenses').checked;
+      S.svc.cis        = document.getElementById('svcCis').checked;
+      S.svc.management = document.getElementById('svcManagement').checked;
+      S.svc.yearend    = document.getElementById('svcYearend').checked;
+      S.notes          = document.getElementById('propNotes').value.trim();
+
+      updateVolHint();
+      renderScope();
+    }
+
+    function updateVolHint() {
+      const tx = S.transactions;
+      const el = document.getElementById('volHint');
+      const hints = [
+        [25,  'Low volume - quick to maintain each month'],
+        [75,  'Typical for a small sole trader or side business'],
+        [150, 'Active small business - straightforward monthly work'],
+        [250, 'Busy business - regular upkeep keeps it manageable'],
+        [400, 'High volume - consider fortnightly frequency'],
+        [Infinity, 'Very high volume - weekly bookkeeping recommended']
+      ];
+      const match = hints.find(([limit]) => tx <= limit);
+      if (match && tx > 0) {
+        el.textContent = match[1];
+        el.className = 'vol-hint active';
+      } else {
+        el.textContent = '';
+        el.className = 'vol-hint';
+      }
+    }
+
+    function saveRate() {
+      S.rate = parseFloat(document.getElementById('hourlyRate').value) || 20;
+      localStorage.setItem('bk_scope_rate', S.rate);
+      update();
+    }
+
+    /* ── RENDER DOCUMENT ── */
+    function renderScope() {
+      const { lines, total } = calcBreakdown();
+      const retainer = calcRetainer();
+
+      const softwareLabels = { xero: 'Xero', quickbooks: 'QuickBooks', sage: 'Sage 50', spreadsheet: 'Spreadsheet' };
+      const freqLabels = { monthly: 'Monthly', fortnightly: 'Fortnightly', weekly: 'Weekly' };
+
+      const bizLine = S.bizName
+        ? `<div class="est-meta-val">${esc(S.bizName)}</div>`
+        : `<div class="est-meta-val" style="color:#ccc;font-weight:400;font-style:italic;">Business name</div>`;
+
+      const subLines = [S.bizType, S.contactName].filter(Boolean).map(esc).join(' &middot; ');
+
+      // Services table
+      const svcRows = [];
+      svcRows.push(`<tr><td>Bank reconciliation</td><td>${freqLabels[S.frequency]}</td><td style="color:#666;font-style:italic;">Included</td></tr>`);
+      svcRows.push(`<tr><td>Transaction coding &amp; categorisation</td><td>${freqLabels[S.frequency]}</td><td style="color:#666;font-style:italic;">~${S.transactions} transactions/month</td></tr>`);
+      if (S.svc.invoicing) {
+        svcRows.push(`<tr><td>Sales invoicing &amp; accounts receivable</td><td>${freqLabels[S.frequency]}</td><td style="color:#666;font-style:italic;">Up to ${S.invoiceCount} invoices/month</td></tr>`);
+      }
+      if (S.svc.expenses) {
+        svcRows.push(`<tr><td>Expense receipts &amp; supplier invoices</td><td>${freqLabels[S.frequency]}</td><td></td></tr>`);
+      }
+      if (S.svc.vat) {
+        svcRows.push(`<tr><td>VAT returns</td><td>Quarterly</td><td style="color:#666;font-style:italic;">${esc(S.vatScheme)}</td></tr>`);
+      }
+      if (S.svc.cis) {
+        svcRows.push(`<tr><td>CIS returns &amp; verification</td><td>Monthly</td><td></td></tr>`);
+      }
+      if (S.svc.payroll) {
+        svcRows.push(`<tr><td>Payroll</td><td>${freqLabels[S.frequency]}</td><td style="color:#666;font-style:italic;">${S.employeeCount} employee${S.employeeCount > 1 ? 's' : ''}</td></tr>`);
+      }
+      if (S.svc.management) {
+        svcRows.push(`<tr><td>Monthly management accounts</td><td>Monthly</td><td></td></tr>`);
+      }
+      if (S.svc.yearend) {
+        svcRows.push(`<tr><td>Year-end prep &amp; accountant liaison</td><td>Annual</td><td></td></tr>`);
+      }
+
+      // Hours table
+      const hrsRows = lines.map(l => `<tr><td>${esc(l.label)}</td><td>${fmtH(l.hrs)}</td></tr>`).join('');
+      const hrsTotal = `<tr><td style="font-family:var(--font-head);font-weight:800;border-top:2px solid #111;padding-top:0.8rem;">Total estimate</td><td style="font-family:var(--font-head);font-weight:800;font-size:1rem;border-top:2px solid #111;padding-top:0.8rem;">${fmtH(total)}<span style="font-size:0.75rem;font-weight:400;color:#999;font-family:var(--font-body);"> /month</span></td></tr>`;
+
+      const rateNote = `<div style="text-align:right;font-size:0.75rem;color:#aaa;margin-top:0.4rem;">@ ${fmt(S.rate)}/hr &middot; Software: ${softwareLabels[S.software]}</div>`;
+
+      const notesBlock = S.notes
+        ? `<div class="est-notes-box"><strong>Notes</strong>${esc(S.notes).replace(/\n/g,'<br>')}</div>` : '';
+
+      const validDate = new Date();
+      validDate.setDate(validDate.getDate() + 30);
+
+      document.getElementById('scopeDoc').innerHTML = `
+        <div class="est-header">
+          <div>
+            <div class="est-co-name">Kyran Walker</div>
+            <div class="est-co-detail">Hailsham, East Sussex</div>
+            <div class="est-co-detail">enquiry@kyranwalker.com</div>
+            <div class="est-co-detail">07902 563971</div>
+          </div>
+          <div>
+            <div class="est-title">SCOPE<br>PROPOSAL</div>
+            <div class="est-ref">${esc(S.ref)}</div>
+          </div>
+        </div>
+
+        <div class="est-meta">
+          <div>
+            <span class="est-meta-lbl">For</span>
+            ${bizLine}
+            ${subLines ? `<div class="est-meta-sub">${subLines}</div>` : ''}
+          </div>
+          <div class="est-meta-right">
+            <div><span class="est-meta-lbl">Date</span>${S.date}</div>
+            <div><span class="est-meta-lbl">Valid until</span>${validDate.toLocaleDateString('en-GB')}</div>
+            <div><span class="est-meta-lbl">Ref</span><span style="font-family:monospace;font-size:0.8rem;color:#333;">${esc(S.ref)}</span></div>
+          </div>
+        </div>
+
+        <div class="est-section">Services Included</div>
+        <table class="est-table">
+          <thead><tr><th>Service</th><th>Frequency</th><th>Notes</th></tr></thead>
+          <tbody>${svcRows.join('')}</tbody>
+        </table>
+
+        <div class="est-section">Estimated Hours</div>
+        <table class="est-table">
+          <thead><tr><th>Activity</th><th>Hours / month</th></tr></thead>
+          <tbody>${hrsRows || '<tr><td colspan="2" style="color:#ccc;font-style:italic;font-size:0.8rem;">No services selected</td></tr>'}</tbody>
+          <tfoot>${hrsTotal}</tfoot>
+        </table>
+        ${rateNote}
+
+        <div class="est-retainer-box">
+          <div>
+            <div class="est-retainer-label">Suggested Monthly Retainer</div>
+            <div style="font-size:0.75rem;color:#999;margin-top:0.2rem;">Based on estimated scope, rounded to nearest £5</div>
+          </div>
+          <div class="est-retainer-amount">${fmt(retainer).replace('.00','')} <span>/ month</span></div>
+        </div>
+
+        ${notesBlock}
+
+        <div class="est-footer">
+          <p>This proposal is valid for 30 days from the date shown above.</p>
+          <p>The retainer is based on estimated scope and transaction volume. Actual hours may vary. Any significant change in scope will be discussed and agreed before taking effect.</p>
+          <p>No VAT applicable. Xero subscription costs not included.</p>
+        </div>
+      `;
+    }
+
+    /* ── CLEAR ── */
+    function clearAll() {
+      if (!confirm('Clear all details and start a new proposal?')) return;
+      ['bizName','contactName','propNotes'].forEach(id => document.getElementById(id).value = '');
+      document.getElementById('bizType').value = 'Sole Trader';
+      document.getElementById('transactions').value = 50;
+      document.getElementById('invoiceCount').value = 10;
+      document.getElementById('employeeCount').value = 1;
+      document.getElementById('vatScheme').value = 'Standard rated';
+      document.getElementById('swXero').checked = true;
+      document.getElementById('freqMonthly').checked = true;
+      ['svcInvoicing','svcExpenses','svcVat','svcCis','svcPayroll','svcManagement','svcYearend'].forEach(id => {
+        document.getElementById(id).checked = false;
+      });
+      ['invoicingDetail','vatDetail','payrollDetail'].forEach(id => {
+        document.getElementById(id).style.display = 'none';
+      });
+      S.svc = { invoicing: false, expenses: false, vat: false, cis: false, payroll: false, management: false, yearend: false };
+      S.ref = genRef();
+      update();
+    }
+
+    /* ── PDF ── */
+    async function downloadPDF() {
+      const btn = document.getElementById('downloadBtn');
+      btn.textContent = 'Generating...';
+      btn.disabled = true;
+      try {
+        await html2pdf().set({
+          margin: 12,
+          filename: (S.ref || 'scope-proposal') + '.pdf',
+          image: { type: 'jpeg', quality: 0.98 },
+          html2canvas: { scale: 2, useCORS: true, logging: false },
+          jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+        }).from(document.getElementById('scopeDoc')).save();
+      } catch (e) {
+        alert('PDF generation failed. Use the Print button and choose Save as PDF instead.');
+      }
+      btn.innerHTML = '⬇️ &nbsp;Download PDF';
+      btn.disabled = false;
+    }
+
+    /* ── INIT ── */
+    document.getElementById('hourlyRate').value = S.rate;
+    update();
+  </script>
+
+  <script src="/js/contact-modal.js"></script>
+</body>
+</html>
