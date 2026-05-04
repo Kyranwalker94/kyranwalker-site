@@ -730,9 +730,6 @@
       const notesBlock = S.notes
         ? `<div class="est-notes-box"><strong>Notes</strong>${esc(S.notes).replace(/\n/g,'<br>')}</div>` : '';
 
-      const validDate = new Date();
-      validDate.setDate(validDate.getDate() + 30);
-
       document.getElementById('scopeDoc').innerHTML = `
         <div class="est-header">
           <div>
@@ -755,7 +752,6 @@
           </div>
           <div class="est-meta-right">
             <div><span class="est-meta-lbl">Date</span>${S.date}</div>
-            <div><span class="est-meta-lbl">Valid until</span>${validDate.toLocaleDateString('en-GB')}</div>
             <div><span class="est-meta-lbl">Ref</span><span style="font-family:monospace;font-size:0.8rem;color:#333;">${esc(S.ref)}</span></div>
           </div>
         </div>
@@ -785,8 +781,8 @@
         ${notesBlock}
 
         <div class="est-footer">
-          <p>This proposal is valid for 30 days from the date shown above.</p>
-          <p>The retainer is based on estimated scope and transaction volume. Actual hours may vary. Any significant change in scope will be discussed and agreed before taking effect.</p>
+          <p>This estimate is intended as a guide only. It is not a formal quote or offer of services.</p>
+          <p>For an official quote, please contact Kyran Walker directly to discuss your requirements. Rates and scope will be confirmed in writing before any work begins.</p>
           <p>No VAT applicable. Xero subscription costs not included.</p>
         </div>
       `;
