@@ -492,7 +492,7 @@
             <select class="tool-select" id="panelType" onchange="updatePreview()">
               <option value="half">Half panel (up to 3ft)</option>
               <option value="full" selected>Full panel (6ft)</option>
-              <option value="tall">Tall panel (8ft+)</option>
+              <option value="tall">Tall/wide panel (8ft+)</option>
             </select>
           </div>
           <div class="tool-field" style="margin:0;">
@@ -628,8 +628,10 @@
     const TYPE_LABELS = {
       half: 'Half panel (up to 3ft)',
       full: 'Full panel (6ft)',
-      tall: 'Tall panel (8ft+)'
+      tall: 'Tall/wide panel (8ft+)'
     };
+
+    const BASE_MINS = { half: 30, full: 35, tall: 40 };
 
     /* =============================================
        STATE
@@ -680,7 +682,7 @@
 
     function calcItemMinutes(item) {
       const sides = item.double ? 2 : 1;
-      return item.qty * sides * (10 + 25 * item.coats);
+      return item.qty * sides * (BASE_MINS[item.type] + 25 * (item.coats - 1));
     }
 
     function calcTotalMinutes() {
@@ -742,7 +744,8 @@
       const double = document.getElementById('panelDouble').checked;
       const coats  = parseInt(document.querySelector('input[name="coats"]:checked')?.value || 1);
       const sides  = double ? 2 : 1;
-      const mins   = qty * sides * (10 + 25 * coats);
+      const type   = document.getElementById('panelType').value;
+      const mins   = qty * sides * (BASE_MINS[type] + 25 * (coats - 1));
       document.getElementById('laborPreview').innerHTML =
         mins > 0
           ? `Time estimate: <strong>${fmtTime(mins)}</strong>`
