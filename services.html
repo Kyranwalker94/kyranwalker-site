@@ -399,9 +399,94 @@
       filter: brightness(1.08);
     }
 
+    /* ── TOOLS SECTION ── */
+    .tools-section {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 5rem 2.5rem 6rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .tools-section-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      padding-bottom: 1.25rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .cat-tools { background: rgba(77,200,240,0.08); border: 1px solid rgba(77,200,240,0.2); }
+
+    .tools-section-header h2 {
+      font-family: var(--font-head);
+      font-size: 1.4rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+
+    .tools-section-header p {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-top: 0.15rem;
+    }
+
+    .tools-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1rem;
+    }
+
+    .tool-card-link {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 1rem;
+      padding: 1.5rem;
+      text-decoration: none;
+      color: inherit;
+      transition: border-color 0.2s, transform 0.2s;
+      position: relative;
+    }
+
+    .tool-card-link:hover {
+      border-color: rgba(77,200,240,0.5);
+      transform: translateY(-2px);
+    }
+
+    .tool-card-link .svc-card-icon { font-size: 1.5rem; }
+
+    .tool-card-link .svc-card-title {
+      font-family: var(--font-head);
+      font-weight: 700;
+      font-size: 0.95rem;
+    }
+
+    .tool-card-link .svc-card-desc {
+      font-size: 0.85rem;
+      color: var(--muted);
+      line-height: 1.6;
+      flex: 1;
+    }
+
+    .tool-launch-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: rgba(77,200,240,0.9);
+      margin-top: 0.25rem;
+    }
+
     @media (max-width: 768px) {
       .rate-banner-inner { flex-direction: column; align-items: flex-start; }
       .service-cards { grid-template-columns: 1fr; }
+      .tools-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -677,6 +762,27 @@
     <div class="cta-band" id="contact" style="margin:0;">
       <h2 class="cta-band-title">Not sure if I can help? <span>Just ask.</span></h2>
       <a href="#" class="btn-primary" onclick="openContactModal(); return false;">Get In Touch →</a>
+    </div>
+  </div>
+
+  <!-- TOOLS -->
+  <div class="tools-section">
+    <div class="tools-section-header">
+      <div class="category-icon-wrap cat-tools">🔧</div>
+      <div>
+        <h2>Tools</h2>
+        <p>Free web tools for estimates, quotes, and calculations, open to use, no login needed</p>
+      </div>
+    </div>
+    <div class="tools-grid">
+
+      <a href="tools/fence-estimate.html" class="tool-card-link">
+        <div class="svc-card-icon">🖌️</div>
+        <div class="svc-card-title">Fence Paint Estimator</div>
+        <p class="svc-card-desc">Build a fence painting quote online. Add panels by type, size, coats, and sides, list materials, and get a printable estimate document in real time.</p>
+        <span class="tool-launch-tag">Launch tool →</span>
+      </a>
+
     </div>
   </div>
 
