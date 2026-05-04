@@ -410,7 +410,13 @@
 
         <div class="tool-toggle-row">
           <label>Expense receipts &amp; supplier invoices</label>
-          <label class="tog"><input type="checkbox" id="svcExpenses" onchange="update()" /><span class="tog-slider"></span></label>
+          <label class="tog"><input type="checkbox" id="svcExpenses" onchange="toggleExpenses()" /><span class="tog-slider"></span></label>
+        </div>
+        <div id="expensesDetail" style="display:none;">
+          <div class="sub-field">
+            <label class="tool-label">Monthly receipts &amp; supplier invoices</label>
+            <input class="tool-input" type="number" id="receiptCount" value="20" min="1" oninput="update()" />
+          </div>
         </div>
 
         <div class="tool-toggle-row">
@@ -431,17 +437,6 @@
         <div class="tool-toggle-row">
           <label>CIS (Construction Industry Scheme)</label>
           <label class="tog"><input type="checkbox" id="svcCis" onchange="update()" /><span class="tog-slider"></span></label>
-        </div>
-
-        <div class="tool-toggle-row">
-          <label>Payroll</label>
-          <label class="tog"><input type="checkbox" id="svcPayroll" onchange="togglePayroll()" /><span class="tog-slider"></span></label>
-        </div>
-        <div id="payrollDetail" style="display:none;">
-          <div class="sub-field">
-            <label class="tool-label">Number of employees</label>
-            <input class="tool-input" type="number" id="employeeCount" value="1" min="1" oninput="update()" />
-          </div>
         </div>
 
         <div class="tool-toggle-row">
@@ -539,10 +534,10 @@
 
     const S = {
       bizName: '', bizType: 'Sole Trader', contactName: '',
-      transactions: 50, invoiceCount: 10, employeeCount: 1,
+      transactions: 50, invoiceCount: 10, receiptCount: 20,
       vatScheme: 'Standard rated',
       software: 'xero', frequency: 'monthly',
-      svc: { invoicing: false, expenses: false, vat: false, cis: false, payroll: false, management: false, yearend: false },
+      svc: { invoicing: false, expenses: false, vat: false, cis: false, management: false, yearend: false },
       notes: '', rate: loadRate(), ref: genRef(),
       date: new Date().toLocaleDateString('en-GB')
     };
@@ -582,7 +577,9 @@
       }
 
       if (S.svc.expenses) {
-        lines.push({ label: 'Expense receipts & supplier invoices', hrs: Math.round(0.5 * freqMul * 4) / 4 });
+        const rec = parseInt(S.receiptCount) || 0;
+        const h = rec <= 10 ? 0.25 : rec <= 30 ? 0.5 : rec <= 60 ? 0.75 : 1.0;
+        lines.push({ label: 'Expense receipts & supplier invoices', hrs: Math.round(h * freqMul * 4) / 4 });
       }
 
       if (S.svc.vat) {
@@ -591,12 +588,6 @@
 
       if (S.svc.cis) {
         lines.push({ label: 'CIS returns & verification', hrs: Math.round(1.0 * freqMul * 4) / 4 });
-      }
-
-      if (S.svc.payroll) {
-        const emp = parseInt(S.employeeCount) || 1;
-        const h = Math.max(0.5, emp * 0.25);
-        lines.push({ label: `Payroll (${emp} employee${emp > 1 ? 's' : ''})`, hrs: Math.round(h * freqMul * 4) / 4 });
       }
 
       if (S.svc.management) {
@@ -623,14 +614,14 @@
       document.getElementById('invoicingDetail').style.display = S.svc.invoicing ? 'block' : 'none';
       update();
     }
+    function toggleExpenses() {
+      S.svc.expenses = document.getElementById('svcExpenses').checked;
+      document.getElementById('expensesDetail').style.display = S.svc.expenses ? 'block' : 'none';
+      update();
+    }
     function toggleVat() {
       S.svc.vat = document.getElementById('svcVat').checked;
       document.getElementById('vatDetail').style.display = S.svc.vat ? 'block' : 'none';
-      update();
-    }
-    function togglePayroll() {
-      S.svc.payroll = document.getElementById('svcPayroll').checked;
-      document.getElementById('payrollDetail').style.display = S.svc.payroll ? 'block' : 'none';
       update();
     }
 
@@ -640,11 +631,10 @@
       S.contactName  = document.getElementById('contactName').value.trim();
       S.transactions = parseInt(document.getElementById('transactions').value) || 0;
       S.invoiceCount = parseInt(document.getElementById('invoiceCount').value) || 0;
-      S.employeeCount= parseInt(document.getElementById('employeeCount').value) || 1;
+      S.receiptCount = parseInt(document.getElementById('receiptCount').value) || 0;
       S.vatScheme    = document.getElementById('vatScheme').value;
       S.software     = document.querySelector('input[name="software"]:checked')?.value || 'xero';
       S.frequency    = document.querySelector('input[name="frequency"]:checked')?.value || 'monthly';
-      S.svc.expenses   = document.getElementById('svcExpenses').checked;
       S.svc.cis        = document.getElementById('svcCis').checked;
       S.svc.management = document.getElementById('svcManagement').checked;
       S.svc.yearend    = document.getElementById('svcYearend').checked;
@@ -703,7 +693,7 @@
         svcRows.push(`<tr><td>Sales invoicing &amp; accounts receivable</td><td>${freqLabels[S.frequency]}</td><td style="color:#666;font-style:italic;">Up to ${S.invoiceCount} invoices/month</td></tr>`);
       }
       if (S.svc.expenses) {
-        svcRows.push(`<tr><td>Expense receipts &amp; supplier invoices</td><td>${freqLabels[S.frequency]}</td><td></td></tr>`);
+        svcRows.push(`<tr><td>Expense receipts &amp; supplier invoices</td><td>${freqLabels[S.frequency]}</td><td style="color:#666;font-style:italic;">~${S.receiptCount} receipts/month</td></tr>`);
       }
       if (S.svc.vat) {
         svcRows.push(`<tr><td>VAT returns</td><td>Quarterly</td><td style="color:#666;font-style:italic;">${esc(S.vatScheme)}</td></tr>`);
@@ -795,17 +785,17 @@
       document.getElementById('bizType').value = 'Sole Trader';
       document.getElementById('transactions').value = 50;
       document.getElementById('invoiceCount').value = 10;
-      document.getElementById('employeeCount').value = 1;
+      document.getElementById('receiptCount').value = 20;
       document.getElementById('vatScheme').value = 'Standard rated';
       document.getElementById('swXero').checked = true;
       document.getElementById('freqMonthly').checked = true;
-      ['svcInvoicing','svcExpenses','svcVat','svcCis','svcPayroll','svcManagement','svcYearend'].forEach(id => {
+      ['svcInvoicing','svcExpenses','svcVat','svcCis','svcManagement','svcYearend'].forEach(id => {
         document.getElementById(id).checked = false;
       });
-      ['invoicingDetail','vatDetail','payrollDetail'].forEach(id => {
+      ['invoicingDetail','expensesDetail','vatDetail'].forEach(id => {
         document.getElementById(id).style.display = 'none';
       });
-      S.svc = { invoicing: false, expenses: false, vat: false, cis: false, payroll: false, management: false, yearend: false };
+      S.svc = { invoicing: false, expenses: false, vat: false, cis: false, management: false, yearend: false };
       S.ref = genRef();
       update();
     }
