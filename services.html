@@ -124,6 +124,7 @@
     }
 
     .cat-home    { background: rgba(200,240,77,0.08);  border: 1px solid rgba(200,240,77,0.2); }
+    .cat-garden  { background: rgba(80,200,80,0.08);   border: 1px solid rgba(80,200,80,0.2); }
     .cat-tech    { background: rgba(77,240,200,0.08);  border: 1px solid rgba(77,240,200,0.2); }
     .cat-finance { background: rgba(240,200,77,0.08);  border: 1px solid rgba(240,200,77,0.2); }
     .cat-digital { background: rgba(200,77,240,0.08);  border: 1px solid rgba(200,77,240,0.2); }
@@ -176,6 +177,7 @@
     }
 
     .svc-card.home-card:hover    { border-color: rgba(200,240,77,0.5); }
+    .svc-card.garden-card:hover  { border-color: rgba(80,200,80,0.5); }
     .svc-card.tech-card:hover    { border-color: rgba(77,240,200,0.5); }
     .svc-card.finance-card:hover { border-color: rgba(240,200,77,0.5); }
     .svc-card.digital-card:hover { border-color: rgba(200,77,240,0.5); }
@@ -602,7 +604,7 @@
         <div class="category-icon-wrap cat-home">🏠</div>
         <div>
           <h2>Home & Property</h2>
-          <p>Practical, reliable help around the home and garden</p>
+          <p>Practical, reliable help around the home</p>
         </div>
       </div>
       <div class="service-cards">
@@ -612,25 +614,6 @@
           <div class="svc-card-title">General Handyman</div>
           <p class="svc-card-desc">Flat-pack assembly, shelving, picture hanging, minor repairs, door adjustments, and all the jobs that have been sitting on the to-do list.</p>
           <span class="svc-card-tag popular">⭐ Popular</span>
-        </div>
-
-        <div class="svc-card home-card">
-          <div class="svc-card-icon">🌿</div>
-          <div class="svc-card-title">Gardening & Maintenance</div>
-          <p class="svc-card-desc">Lawn mowing, hedge trimming, weeding, planting, and general garden tidying. Regular or one-off visits welcome.</p>
-          <span class="svc-card-tag popular">⭐ Popular</span>
-        </div>
-
-        <div class="svc-card home-card">
-          <div class="svc-card-icon">🥕</div>
-          <div class="svc-card-title">Allotment Digging & Prep</div>
-          <p class="svc-card-desc">Digging, clearing, composting, bed preparation, and general allotment maintenance, whether you're starting fresh or keeping on top of things.</p>
-        </div>
-
-        <div class="svc-card home-card">
-          <div class="svc-card-icon">🚛</div>
-          <div class="svc-card-title">House & Garden Clearance</div>
-          <p class="svc-card-desc">Full or partial clearances, ideal for house moves, estate clearances, or a long-overdue declutter. Items taken away and disposed of responsibly.</p>
         </div>
 
         <div class="svc-card home-card">
@@ -646,10 +629,43 @@
           <p class="svc-card-desc">Wall-mounting flat screen TVs, cable management, aerial and satellite dish setup, and Freeview box installation.</p>
         </div>
 
-        <div class="svc-card home-card">
+      </div>
+    </div>
+
+    <!-- ── GARDEN ── -->
+    <div class="service-category" id="garden">
+      <div class="service-category-header">
+        <div class="category-icon-wrap cat-garden">🌿</div>
+        <div>
+          <h2>Garden</h2>
+          <p>Outdoor maintenance, clearances, and seasonal work</p>
+        </div>
+      </div>
+      <div class="service-cards">
+
+        <div class="svc-card garden-card">
+          <div class="svc-card-icon">🌿</div>
+          <div class="svc-card-title">Gardening & Maintenance</div>
+          <p class="svc-card-desc">Lawn mowing, hedge trimming, weeding, planting, and general garden tidying. Regular or one-off visits welcome.</p>
+          <span class="svc-card-tag popular">⭐ Popular</span>
+        </div>
+
+        <div class="svc-card garden-card">
+          <div class="svc-card-icon">🥕</div>
+          <div class="svc-card-title">Allotment Digging & Prep</div>
+          <p class="svc-card-desc">Digging, clearing, composting, bed preparation, and general allotment maintenance, whether you're starting fresh or keeping on top of things.</p>
+        </div>
+
+        <div class="svc-card garden-card">
+          <div class="svc-card-icon">🚛</div>
+          <div class="svc-card-title">Garden Clearance</div>
+          <p class="svc-card-desc">Full or partial garden clearances, ideal for overgrown plots, seasonal clear-outs, or getting a neglected space back under control. Green waste taken away and disposed of responsibly.</p>
+        </div>
+
+        <div class="svc-card garden-card">
           <div class="svc-card-icon">🖌️</div>
-          <div class="svc-card-title">Fence & Exterior Painting</div>
-          <p class="svc-card-desc">Fence panels, gates, sheds, and garden structures painted to a clean, lasting finish. Single or double sided, one or two coats. Happy to quote by panel count for a transparent price upfront.</p>
+          <div class="svc-card-title">Fence Painting</div>
+          <p class="svc-card-desc">Fence panels painted to a clean, lasting finish. Single or double sided, one or two coats. Happy to quote by panel count for a transparent price upfront.</p>
           <a href="tools/fence-estimate.html" class="svc-tool-link" onclick="event.stopPropagation()">🖌️ Paint estimator →</a>
         </div>
 
