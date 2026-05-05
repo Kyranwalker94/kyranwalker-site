@@ -350,6 +350,16 @@
           <label class="tool-label">Address</label>
           <textarea class="tool-textarea" id="jobAddress" rows="3" placeholder="12 Example Road&#10;Hailsham&#10;BN27 1AB" oninput="update()" style="min-height:68px;"></textarea>
         </div>
+        <div class="tool-row" style="margin-bottom:0.75rem;">
+          <div class="tool-field" style="margin:0;">
+            <label class="tool-label">Email</label>
+            <input class="tool-input" type="email" id="jobEmail" placeholder="you@example.com" oninput="update()" />
+          </div>
+          <div class="tool-field" style="margin:0;">
+            <label class="tool-label">Phone</label>
+            <input class="tool-input" type="tel" id="jobPhone" placeholder="07700 000000" oninput="update()" />
+          </div>
+        </div>
         <div class="tool-row">
           <div class="tool-field" style="margin:0;">
             <label class="tool-label">Date</label>
@@ -560,7 +570,7 @@
     }
 
     const S = {
-      customer: '', address: '', date: '', ref: genRef(),
+      customer: '', address: '', email: '', phone: '', date: '', ref: genRef(),
       custNotes: '',
       gardenSize: 'medium',
       tasks: { lawn: false, hedges: false, weeding: false, planting: false, tidy: false, leaves: false },
@@ -605,6 +615,8 @@
     function update() {
       S.customer   = document.getElementById('jobCustomer').value;
       S.address    = document.getElementById('jobAddress').value;
+      S.email      = document.getElementById('jobEmail').value;
+      S.phone      = document.getElementById('jobPhone').value;
       S.date       = document.getElementById('jobDate').value;
       S.custNotes  = document.getElementById('jobNotes').value;
       S.gardenSize = document.querySelector('input[name="gardenSize"]:checked')?.value || 'medium';
@@ -675,11 +687,13 @@
 
     function clearAll() {
       if (!confirm('Clear all details and start a new estimate?')) return;
-      S.customer = ''; S.address = ''; S.custNotes = '';
+      S.customer = ''; S.address = ''; S.email = ''; S.phone = ''; S.custNotes = '';
       S.materials = [];
       S.ref = genRef();
       document.getElementById('jobCustomer').value = '';
       document.getElementById('jobAddress').value  = '';
+      document.getElementById('jobEmail').value    = '';
+      document.getElementById('jobPhone').value    = '';
       document.getElementById('jobNotes').value    = '';
       document.getElementById('jobRef').value      = S.ref;
       document.getElementById('sizeMedium').checked = true;
@@ -733,6 +747,7 @@
         ? '<div class="est-meta-val">' + esc(S.customer) + '</div>'
         : '<div class="est-meta-val" style="color:#ccc;font-weight:400;font-style:italic;">Customer name</div>';
       const addrLine = S.address ? '<div class="est-meta-addr">' + esc(S.address).replace(/\n/g,'<br>') + '</div>' : '';
+      const contactLine = (S.email || S.phone) ? '<div class="est-meta-addr">' + [S.email, S.phone].filter(Boolean).map(esc).join(' &middot; ') + '</div>' : '';
       const notesBlock = S.custNotes ? '<div class="est-notes-box"><strong>Notes</strong>' + esc(S.custNotes).replace(/\n/g,'<br>') + '</div>' : '';
 
       const isRegular = S.visitType === 'regular';
@@ -816,7 +831,7 @@
         '<div class="est-meta">' +
           '<div>' +
             '<span class="est-meta-lbl">For</span>' +
-            customerLine + addrLine +
+            customerLine + addrLine + contactLine +
           '</div>' +
           '<div class="est-meta-right">' +
             '<div><span class="est-meta-lbl">Date</span>' + (esc(S.date) || '&nbsp;') + '</div>' +

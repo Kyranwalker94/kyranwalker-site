@@ -371,6 +371,16 @@
             <input class="tool-input" type="text" id="contactName" placeholder="e.g. James Smith" oninput="update()" />
           </div>
         </div>
+        <div class="tool-row" style="margin-top:0.75rem;">
+          <div class="tool-field" style="margin:0;">
+            <label class="tool-label">Email</label>
+            <input class="tool-input" type="email" id="bizEmail" placeholder="you@example.com" oninput="update()" />
+          </div>
+          <div class="tool-field" style="margin:0;">
+            <label class="tool-label">Phone</label>
+            <input class="tool-input" type="tel" id="bizPhone" placeholder="07700 000000" oninput="update()" />
+          </div>
+        </div>
       </div>
 
       <!-- Transaction Volume -->
@@ -517,7 +527,7 @@
     }
 
     const S = {
-      bizName: '', bizType: 'Sole Trader', contactName: '',
+      bizName: '', bizType: 'Sole Trader', contactName: '', email: '', phone: '',
       transactions: 50, invoiceCount: 10, receiptCount: 20,
       vatScheme: 'Standard rated',
       software: 'xero', frequency: 'monthly',
@@ -614,6 +624,8 @@
       S.bizName      = document.getElementById('bizName').value.trim();
       S.bizType      = document.getElementById('bizType').value;
       S.contactName  = document.getElementById('contactName').value.trim();
+      S.email        = document.getElementById('bizEmail').value.trim();
+      S.phone        = document.getElementById('bizPhone').value.trim();
       S.transactions = parseInt(document.getElementById('transactions').value) || 0;
       S.invoiceCount = parseInt(document.getElementById('invoiceCount').value) || 0;
       S.receiptCount = parseInt(document.getElementById('receiptCount').value) || 0;
@@ -663,6 +675,7 @@
         : `<div class="est-meta-val" style="color:#ccc;font-weight:400;font-style:italic;">Business name</div>`;
 
       const subLines = [S.bizType, S.contactName].filter(Boolean).map(esc).join(' &middot; ');
+      const contactLine = (S.email || S.phone) ? [S.email, S.phone].filter(Boolean).map(esc).join(' &middot; ') : '';
 
       // Services table
       const svcRows = [];
@@ -718,6 +731,7 @@
             <span class="est-meta-lbl">For</span>
             ${bizLine}
             ${subLines ? `<div class="est-meta-sub">${subLines}</div>` : ''}
+            ${contactLine ? `<div class="est-meta-addr">${contactLine}</div>` : ''}
           </div>
           <div class="est-meta-right">
             <div><span class="est-meta-lbl">Date</span>${S.date}</div>
