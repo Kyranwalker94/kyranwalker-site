@@ -376,6 +376,51 @@
         <div class="size-hint active" id="sizeHint"></div>
       </div>
 
+      <!-- Garden Clearance -->
+      <div class="tool-card">
+        <div class="tool-card-title">🚛 &nbsp;<span>Garden Clearance</span></div>
+        <div class="tool-toggle-row" style="padding-bottom:0.5rem;">
+          <label>Include a one-off garden clearance</label>
+          <label class="tog"><input type="checkbox" id="clearanceEnabled" onchange="toggleClearance()" /><span class="tog-slider"></span></label>
+        </div>
+        <div id="clearanceDetail" style="display:none;margin-top:0.5rem;">
+          <label class="tool-label" style="margin-bottom:0.5rem;">Scale of clearance</label>
+          <div class="seg-row" style="margin-bottom:0.5rem;">
+            <input type="radio" name="clearanceScale" id="clLight" value="light" onchange="update()" />
+            <label for="clLight">Light</label>
+            <input type="radio" name="clearanceScale" id="clModerate" value="moderate" checked onchange="update()" />
+            <label for="clModerate">Moderate</label>
+            <input type="radio" name="clearanceScale" id="clHeavy" value="heavy" onchange="update()" />
+            <label for="clHeavy">Heavy</label>
+            <input type="radio" name="clearanceScale" id="clExtensive" value="extensive" onchange="update()" />
+            <label for="clExtensive">Extensive</label>
+          </div>
+          <div class="size-hint active" id="clearanceHint"></div>
+        </div>
+      </div>
+
+      <!-- Visit Type -->
+      <div class="tool-card">
+        <div class="tool-card-title">📅 &nbsp;<span>Visit Type</span></div>
+        <div class="seg-row" style="margin-bottom:0.75rem;">
+          <input type="radio" name="visitType" id="typeOneoff" value="oneoff" checked onchange="update()" />
+          <label for="typeOneoff">One-off visit</label>
+          <input type="radio" name="visitType" id="typeRegular" value="regular" onchange="update()" />
+          <label for="typeRegular">Regular maintenance</label>
+        </div>
+        <div class="freq-wrap" id="freqWrap">
+          <label class="tool-label">Frequency</label>
+          <div class="seg-row">
+            <input type="radio" name="frequency" id="freqWeekly" value="weekly" onchange="update()" />
+            <label for="freqWeekly">Weekly</label>
+            <input type="radio" name="frequency" id="freqFortnight" value="fortnightly" checked onchange="update()" />
+            <label for="freqFortnight">Fortnightly</label>
+            <input type="radio" name="frequency" id="freqMonthly" value="monthly" onchange="update()" />
+            <label for="freqMonthly">Monthly</label>
+          </div>
+        </div>
+      </div>
+
       <!-- Tasks per Visit -->
       <div class="tool-card">
         <div class="tool-card-title">✅ &nbsp;<span>Tasks per Visit</span></div>
@@ -411,51 +456,6 @@
         </div>
 
         <div class="labor-preview" id="visitPreview" style="margin-top:1rem;">Select tasks above to see estimated visit time.</div>
-      </div>
-
-      <!-- Visit Type -->
-      <div class="tool-card">
-        <div class="tool-card-title">📅 &nbsp;<span>Visit Type</span></div>
-        <div class="seg-row" style="margin-bottom:0.75rem;">
-          <input type="radio" name="visitType" id="typeOneoff" value="oneoff" checked onchange="update()" />
-          <label for="typeOneoff">One-off visit</label>
-          <input type="radio" name="visitType" id="typeRegular" value="regular" onchange="update()" />
-          <label for="typeRegular">Regular maintenance</label>
-        </div>
-        <div class="freq-wrap" id="freqWrap">
-          <label class="tool-label">Frequency</label>
-          <div class="seg-row">
-            <input type="radio" name="frequency" id="freqWeekly" value="weekly" onchange="update()" />
-            <label for="freqWeekly">Weekly</label>
-            <input type="radio" name="frequency" id="freqFortnight" value="fortnightly" checked onchange="update()" />
-            <label for="freqFortnight">Fortnightly</label>
-            <input type="radio" name="frequency" id="freqMonthly" value="monthly" onchange="update()" />
-            <label for="freqMonthly">Monthly</label>
-          </div>
-        </div>
-      </div>
-
-      <!-- Garden Clearance -->
-      <div class="tool-card">
-        <div class="tool-card-title">🚛 &nbsp;<span>Garden Clearance</span></div>
-        <div class="tool-toggle-row" style="padding-bottom:0.5rem;">
-          <label>Include a one-off garden clearance</label>
-          <label class="tog"><input type="checkbox" id="clearanceEnabled" onchange="toggleClearance()" /><span class="tog-slider"></span></label>
-        </div>
-        <div id="clearanceDetail" style="display:none;margin-top:0.5rem;">
-          <label class="tool-label" style="margin-bottom:0.5rem;">Scale of clearance</label>
-          <div class="seg-row" style="margin-bottom:0.5rem;">
-            <input type="radio" name="clearanceScale" id="clLight" value="light" onchange="update()" />
-            <label for="clLight">Light</label>
-            <input type="radio" name="clearanceScale" id="clModerate" value="moderate" checked onchange="update()" />
-            <label for="clModerate">Moderate</label>
-            <input type="radio" name="clearanceScale" id="clHeavy" value="heavy" onchange="update()" />
-            <label for="clHeavy">Heavy</label>
-            <input type="radio" name="clearanceScale" id="clExtensive" value="extensive" onchange="update()" />
-            <label for="clExtensive">Extensive</label>
-          </div>
-          <div class="size-hint active" id="clearanceHint"></div>
-        </div>
       </div>
 
       <!-- Materials -->
