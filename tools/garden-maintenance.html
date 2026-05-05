@@ -538,13 +538,22 @@
     const FREQ_VISITS = { weekly: 4, fortnightly: 2, monthly: 1 };
     const FREQ_LABELS = { weekly: 'Weekly', fortnightly: 'Fortnightly', monthly: 'Monthly' };
 
-    const CLEARANCE_HOURS = { light: 3, moderate: 6, heavy: 10, extensive: 16 };
+    const CLEARANCE_HOURS = {
+      light:    { small: 2,  medium: 3,  large: 5  },
+      moderate: { small: 4,  medium: 6,  large: 9  },
+      heavy:    { small: 7,  medium: 10, large: 15 },
+      extensive:{ small: 11, medium: 16, large: 24 },
+    };
     const CLEARANCE_HINTS = {
       light:    'Mainly cutting back and tidying — manageable overgrowth',
       moderate: 'Established overgrowth across beds and lawn, several areas to clear',
       heavy:    'Significantly neglected, dense growth across the whole garden',
       extensive: 'Long-neglected, full clearance required including all waste removal',
     };
+
+    function getClearanceHours() {
+      return CLEARANCE_HOURS[S.clearanceScale][S.gardenSize];
+    }
 
     function genRef() {
       return 'GDN-' + (1000 + Math.floor(Math.random() * 9000));
@@ -611,7 +620,9 @@
       S.clearance      = document.getElementById('clearanceEnabled').checked;
       S.clearanceScale = document.querySelector('input[name="clearanceScale"]:checked')?.value || 'moderate';
       if (S.clearance) {
-        document.getElementById('clearanceHint').textContent = CLEARANCE_HINTS[S.clearanceScale];
+        const clH = getClearanceHours();
+        document.getElementById('clearanceHint').textContent =
+          CLEARANCE_HINTS[S.clearanceScale] + ' — est. ' + clH + 'h for a ' + S.gardenSize + ' garden';
       }
 
       // Show/hide frequency
@@ -733,7 +744,7 @@
 
       let clearanceBlock = '';
       if (S.clearance) {
-        const clHours = CLEARANCE_HOURS[S.clearanceScale];
+        const clHours = getClearanceHours();
         const clCost  = clHours * S.labourRate;
         const scaleLabels = { light: 'Light', moderate: 'Moderate', heavy: 'Heavy', extensive: 'Extensive' };
         clearanceBlock =
