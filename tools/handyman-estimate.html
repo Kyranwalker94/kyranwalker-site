@@ -392,18 +392,6 @@
         <textarea class="tool-textarea" id="jobNotes" rows="3" placeholder="Access requirements, anything specific about the job, or questions you have..." oninput="updateDetails()"></textarea>
       </div>
 
-      <!-- Labour Rate -->
-      <div class="tool-card">
-        <details class="rates-details">
-          <summary>Labour Rate</summary>
-          <p class="rate-note">Your hourly rate for handyman work. Saved to your browser.</p>
-          <div class="tool-field" style="margin-top:0.75rem;">
-            <label class="tool-label">Rate per hour (£)</label>
-            <input class="tool-input" type="number" id="labourRate" min="0" step="1" style="max-width:160px;" />
-          </div>
-          <button class="btn-save-rates" onclick="saveRates()" style="margin-top:0.75rem;">Save Rate</button>
-        </details>
-      </div>
 
     </div>
 
@@ -455,11 +443,6 @@
       tv_mount:   60,
     };
 
-    function loadLabourRate() {
-      const v = parseFloat(localStorage.getItem('handyman_est_rate'));
-      return isNaN(v) ? 20 : v;
-    }
-
     function genRef() {
       return 'HMN-' + (1000 + Math.floor(Math.random() * 9000));
     }
@@ -467,7 +450,7 @@
     const S = {
       customer: '', address: '', date: '', ref: genRef(),
       custNotes: '', items: [], materials: [], extraLabour: [],
-      labourRate: loadLabourRate()
+      labourRate: 20
     };
 
     function esc(s) {
@@ -554,12 +537,6 @@
 
     function removeExtraLabour(id) {
       S.extraLabour = S.extraLabour.filter(l => l.id !== id);
-      render();
-    }
-
-    function saveRates() {
-      S.labourRate = parseFloat(document.getElementById('labourRate').value) || 20;
-      localStorage.setItem('handyman_est_rate', S.labourRate);
       render();
     }
 
@@ -740,9 +717,8 @@
     }
 
     const today = new Date().toLocaleDateString('en-GB');
-    document.getElementById('jobDate').value    = today;
-    document.getElementById('jobRef').value     = S.ref;
-    document.getElementById('labourRate').value = S.labourRate;
+    document.getElementById('jobDate').value = today;
+    document.getElementById('jobRef').value  = S.ref;
     S.date = today;
 
     document.getElementById('matDesc').addEventListener('keydown', e => { if (e.key === 'Enter') document.getElementById('matCost').focus(); });

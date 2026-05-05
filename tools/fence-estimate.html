@@ -581,18 +581,6 @@
         <textarea class="tool-textarea" id="jobNotes" rows="3" placeholder="Access requirements, anything specific about the job, or questions you have..." oninput="updateDetails()"></textarea>
       </div>
 
-      <!-- Labour Rate -->
-      <div class="tool-card">
-        <details class="rates-details">
-          <summary>Labour Rate</summary>
-          <p class="rate-note">Your hourly rate for fence painting. Saved to your browser.</p>
-          <div class="rate-field" style="margin-top:0.75rem;">
-            <label>Rate per hour (£)</label>
-            <input class="tool-input" type="number" id="labourRate" min="0" step="1" style="max-width:160px;" />
-          </div>
-          <button class="btn-save-rates" onclick="saveRates()" style="margin-top:0.75rem;">Save Rate</button>
-        </details>
-      </div>
 
     </div>
 
@@ -636,11 +624,6 @@
     /* =============================================
        STATE
     ============================================= */
-    function loadLabourRate() {
-      const v = parseFloat(localStorage.getItem('fence_est_labour_rate'));
-      return isNaN(v) ? 25 : v;
-    }
-
     function genRef() {
       return 'EST-' + (1000 + Math.floor(Math.random() * 9000));
     }
@@ -654,7 +637,7 @@
       items        : [],
       materials    : [],
       extraLabour  : [],
-      labourRate   : loadLabourRate()
+      labourRate   : 25
     };
 
     /* =============================================
@@ -821,15 +804,6 @@
           <button class="item-remove" onclick="removeExtraLabour(${l.id})" title="Remove">✕</button>
         </div>
       </div>`).join('') + `<div class="items-subtotal">Additional labour: ${fmt(extraTotal)}</div>`;
-    }
-
-    /* =============================================
-       RATES
-    ============================================= */
-    function saveRates() {
-      S.labourRate = parseFloat(document.getElementById('labourRate').value) || 25;
-      localStorage.setItem('fence_est_labour_rate', S.labourRate);
-      render();
     }
 
     /* =============================================
@@ -1050,9 +1024,8 @@
        INIT
     ============================================= */
     const today = new Date().toLocaleDateString('en-GB');
-    document.getElementById('jobDate').value    = today;
-    document.getElementById('jobRef').value     = S.ref;
-    document.getElementById('labourRate').value = S.labourRate;
+    document.getElementById('jobDate').value = today;
+    document.getElementById('jobRef').value  = S.ref;
     S.date = today;
 
     document.getElementById('matDesc').addEventListener('keydown', e => {

@@ -484,18 +484,6 @@
         <textarea class="tool-textarea" id="propNotes" rows="3" placeholder="Any specific requirements, questions, or additional context..." oninput="update()"></textarea>
       </div>
 
-      <!-- Rate -->
-      <div class="tool-card">
-        <details class="rates-details">
-          <summary>Hourly Rate</summary>
-          <p class="rate-note">Your hourly rate used to calculate the retainer. Saved to your browser.</p>
-          <div style="margin-top:0.75rem;">
-            <label class="tool-label">Rate per hour (£)</label>
-            <input class="tool-input" type="number" id="hourlyRate" min="0" step="1" style="max-width:160px;" />
-          </div>
-          <button class="btn-save-rates" onclick="saveRate()" style="margin-top:0.75rem;">Save Rate</button>
-        </details>
-      </div>
 
     </div>
 
@@ -524,10 +512,6 @@
     navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
 
     /* ── STATE ── */
-    function loadRate() {
-      const v = parseFloat(localStorage.getItem('bk_scope_rate'));
-      return isNaN(v) ? 20 : v;
-    }
     function genRef() {
       return 'BSP-' + (1000 + Math.floor(Math.random() * 9000));
     }
@@ -538,7 +522,7 @@
       vatScheme: 'Standard rated',
       software: 'xero', frequency: 'monthly',
       svc: { invoicing: false, expenses: false, vat: false, cis: false, management: false, yearend: false },
-      notes: '', rate: loadRate(), ref: genRef(),
+      notes: '', rate: 20, ref: genRef(),
       date: new Date().toLocaleDateString('en-GB')
     };
 
@@ -664,12 +648,6 @@
         el.textContent = '';
         el.className = 'vol-hint';
       }
-    }
-
-    function saveRate() {
-      S.rate = parseFloat(document.getElementById('hourlyRate').value) || 20;
-      localStorage.setItem('bk_scope_rate', S.rate);
-      update();
     }
 
     /* ── RENDER DOCUMENT ── */
@@ -821,7 +799,6 @@
     }
 
     /* ── INIT ── */
-    document.getElementById('hourlyRate').value = S.rate;
     update();
   </script>
 

@@ -435,6 +435,29 @@
         </div>
       </div>
 
+      <!-- Garden Clearance -->
+      <div class="tool-card">
+        <div class="tool-card-title">🚛 &nbsp;<span>Garden Clearance</span></div>
+        <div class="tool-toggle-row" style="padding-bottom:0.5rem;">
+          <label>Include a one-off garden clearance</label>
+          <label class="tog"><input type="checkbox" id="clearanceEnabled" onchange="toggleClearance()" /><span class="tog-slider"></span></label>
+        </div>
+        <div id="clearanceDetail" style="display:none;margin-top:0.5rem;">
+          <label class="tool-label" style="margin-bottom:0.5rem;">Scale of clearance</label>
+          <div class="seg-row" style="margin-bottom:0.5rem;">
+            <input type="radio" name="clearanceScale" id="clLight" value="light" onchange="update()" />
+            <label for="clLight">Light</label>
+            <input type="radio" name="clearanceScale" id="clModerate" value="moderate" checked onchange="update()" />
+            <label for="clModerate">Moderate</label>
+            <input type="radio" name="clearanceScale" id="clHeavy" value="heavy" onchange="update()" />
+            <label for="clHeavy">Heavy</label>
+            <input type="radio" name="clearanceScale" id="clExtensive" value="extensive" onchange="update()" />
+            <label for="clExtensive">Extensive</label>
+          </div>
+          <div class="size-hint active" id="clearanceHint"></div>
+        </div>
+      </div>
+
       <!-- Materials -->
       <div class="tool-card">
         <div class="tool-card-title">🛒 &nbsp;<span>Materials &amp; Supplies</span></div>
@@ -461,18 +484,6 @@
         <textarea class="tool-textarea" id="jobNotes" rows="3" placeholder="Access instructions, gate codes, anything specific about the garden, or questions you have..." oninput="update()"></textarea>
       </div>
 
-      <!-- Labour Rate -->
-      <div class="tool-card">
-        <details class="rates-details">
-          <summary>Labour Rate</summary>
-          <p class="rate-note">Your hourly rate for garden work. Saved to your browser.</p>
-          <div class="tool-field" style="margin-top:0.75rem;">
-            <label class="tool-label">Rate per hour (£)</label>
-            <input class="tool-input" type="number" id="labourRate" min="0" step="1" style="max-width:160px;" />
-          </div>
-          <button class="btn-save-rates" onclick="saveRate()" style="margin-top:0.75rem;">Save Rate</button>
-        </details>
-      </div>
 
     </div>
 
@@ -527,10 +538,13 @@
     const FREQ_VISITS = { weekly: 4, fortnightly: 2, monthly: 1 };
     const FREQ_LABELS = { weekly: 'Weekly', fortnightly: 'Fortnightly', monthly: 'Monthly' };
 
-    function loadLabourRate() {
-      const v = parseFloat(localStorage.getItem('garden_est_rate'));
-      return isNaN(v) ? 20 : v;
-    }
+    const CLEARANCE_HOURS = { light: 3, moderate: 6, heavy: 10, extensive: 16 };
+    const CLEARANCE_HINTS = {
+      light:    'Mainly cutting back and tidying — manageable overgrowth',
+      moderate: 'Established overgrowth across beds and lawn, several areas to clear',
+      heavy:    'Significantly neglected, dense growth across the whole garden',
+      extensive: 'Long-neglected, full clearance required including all waste removal',
+    };
 
     function genRef() {
       return 'GDN-' + (1000 + Math.floor(Math.random() * 9000));
@@ -543,8 +557,9 @@
       tasks: { lawn: false, hedges: false, weeding: false, planting: false, tidy: false, leaves: false },
       visitType: 'oneoff',
       frequency: 'fortnightly',
+      clearance: false, clearanceScale: 'moderate',
       materials: [],
-      labourRate: loadLabourRate()
+      labourRate: 20
     };
 
     function esc(s) {
@@ -593,6 +608,11 @@
       S.tasks.planting = document.getElementById('taskPlanting').checked;
       S.tasks.tidy     = document.getElementById('taskTidy').checked;
       S.tasks.leaves   = document.getElementById('taskLeaves').checked;
+      S.clearance      = document.getElementById('clearanceEnabled').checked;
+      S.clearanceScale = document.querySelector('input[name="clearanceScale"]:checked')?.value || 'moderate';
+      if (S.clearance) {
+        document.getElementById('clearanceHint').textContent = CLEARANCE_HINTS[S.clearanceScale];
+      }
 
       // Show/hide frequency
       document.getElementById('freqWrap').classList.toggle('visible', S.visitType === 'regular');
@@ -636,9 +656,9 @@
       renderEstimate();
     }
 
-    function saveRate() {
-      S.labourRate = parseFloat(document.getElementById('labourRate').value) || 20;
-      localStorage.setItem('garden_est_rate', S.labourRate);
+    function toggleClearance() {
+      document.getElementById('clearanceDetail').style.display =
+        document.getElementById('clearanceEnabled').checked ? 'block' : 'none';
       update();
     }
 
@@ -657,6 +677,10 @@
       ['taskLawn','taskHedges','taskWeeding','taskPlanting','taskTidy','taskLeaves'].forEach(id => {
         document.getElementById(id).checked = false;
       });
+      document.getElementById('clearanceEnabled').checked = false;
+      document.getElementById('clearanceDetail').style.display = 'none';
+      document.getElementById('clModerate').checked = true;
+      S.clearance = false; S.clearanceScale = 'moderate';
       update();
     }
 
@@ -706,6 +730,34 @@
 
       const visitTypeLabel = isRegular ? freqLabel + ' maintenance' : 'One-off visit';
       const sizeLabel = { small: 'Small garden', medium: 'Medium garden', large: 'Large garden' }[S.gardenSize];
+
+      let clearanceBlock = '';
+      if (S.clearance) {
+        const clHours = CLEARANCE_HOURS[S.clearanceScale];
+        const clCost  = clHours * S.labourRate;
+        const scaleLabels = { light: 'Light', moderate: 'Moderate', heavy: 'Heavy', extensive: 'Extensive' };
+        clearanceBlock =
+          '<div class="est-section">One-off Garden Clearance</div>' +
+          '<table class="est-table">' +
+            '<thead><tr><th>Item</th><th>Detail</th><th>Amount</th></tr></thead>' +
+            '<tbody>' +
+              '<tr><td>Garden clearance</td><td style="color:#666;">' + scaleLabels[S.clearanceScale] + ' &middot; ' + clHours + 'h @ £' + S.labourRate + '/hr</td><td>' + fmt(clCost) + '</td></tr>' +
+            '</tbody>' +
+            '<tfoot>' +
+              '<tr>' +
+                '<td colspan="2" style="font-family:var(--font-head);font-weight:800;">Clearance total</td>' +
+                '<td style="font-family:var(--font-head);font-weight:800;font-size:1rem;">' + fmt(clCost) + '</td>' +
+              '</tr>' +
+            '</tfoot>' +
+          '</table>' +
+          '<div class="est-cost-box" style="margin-top:1rem;">' +
+            '<div>' +
+              '<div class="est-cost-label">One-off Clearance Cost</div>' +
+              '<div class="est-cost-sub">' + scaleLabels[S.clearanceScale] + ' clearance &middot; ' + clHours + ' hours</div>' +
+            '</div>' +
+            '<div class="est-cost-amount">' + fmt(clCost).replace('.00','') + '</div>' +
+          '</div>';
+      }
 
       let costBoxes = '';
       if (isRegular) {
@@ -785,6 +837,7 @@
         '</table>' +
 
         costBoxes +
+        clearanceBlock +
         notesBlock +
 
         '<div class="est-footer">' +
@@ -813,9 +866,8 @@
     }
 
     const today = new Date().toLocaleDateString('en-GB');
-    document.getElementById('jobDate').value    = today;
-    document.getElementById('jobRef').value     = S.ref;
-    document.getElementById('labourRate').value = S.labourRate;
+    document.getElementById('jobDate').value = today;
+    document.getElementById('jobRef').value  = S.ref;
     S.date = today;
 
     document.getElementById('matDesc').addEventListener('keydown', e => { if (e.key === 'Enter') document.getElementById('matCost').focus(); });
