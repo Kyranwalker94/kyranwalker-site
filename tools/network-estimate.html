@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Network & Wi-Fi Estimator | Kyran Walker</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+  <style>
+    .tool-hero{padding:2.5rem 2.5rem 3rem;max-width:1200px;margin:0 auto;border-bottom:1px solid var(--border);}
+    .tool-hero p{color:var(--muted);font-size:1rem;line-height:1.7;margin-top:0.5rem;max-width:560px;}
+    .tool-layout{max-width:1200px;margin:2rem auto 6rem;padding:0 2rem;display:grid;grid-template-columns:1fr 460px;gap:2rem;align-items:start;}
+    .builder{display:flex;flex-direction:column;gap:1.25rem;}
+    .tool-card{background:#1a1a1a;border:1px solid #2d2d2d;border-radius:1rem;padding:1.5rem;}
+    .tool-card-title{font-family:var(--font-head);font-weight:700;font-size:0.72rem;letter-spacing:0.08em;text-transform:uppercase;color:#666;margin-bottom:1.25rem;}
+    .tool-card-title span{color:#e0e0e0;font-size:0.92rem;letter-spacing:normal;text-transform:none;font-family:var(--font-body);font-weight:600;}
+    .tool-field{margin-bottom:0.9rem;}.tool-field:last-child{margin-bottom:0;}
+    .tool-label{display:block;font-size:0.78rem;font-weight:600;color:#999;margin-bottom:0.3rem;}
+    .tool-label small{font-weight:400;color:#555;}
+    .tool-input,.tool-select,.tool-textarea{width:100%;padding:0.65rem 0.85rem;background:#111;border:1px solid #2d2d2d;border-radius:0.55rem;color:#f0f0f0;font-size:0.92rem;font-family:var(--font-body);transition:border-color 0.15s;box-sizing:border-box;}
+    .tool-input:focus,.tool-select:focus,.tool-textarea:focus{outline:none;border-color:#4df0c8;box-shadow:0 0 0 2px rgba(77,240,200,0.1);}
+    .tool-select option{background:#1a1a1a;}.tool-textarea{resize:vertical;min-height:72px;}
+    .tool-row{display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;}
+    .labor-preview{background:#111;border:1px solid #2d2d2d;border-radius:0.55rem;padding:0.6rem 0.85rem;font-size:0.85rem;color:#666;margin:0.75rem 0;}
+    .labor-preview strong{color:#4df0c8;}
+    .btn-add-item{width:100%;padding:0.75rem;background:#4df0c8;color:#111;border:none;border-radius:0.6rem;font-family:var(--font-head);font-weight:700;font-size:0.78rem;cursor:pointer;transition:0.15s;letter-spacing:0.02em;}
+    .btn-add-item:hover{filter:brightness(1.1);transform:translateY(-1px);}
+    .item-row{display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;padding:0.7rem 0;border-bottom:1px solid #222;}
+    .item-row:last-of-type{border-bottom:none;}
+    .item-row-info{flex:1;min-width:0;}.item-row-info strong{font-size:0.88rem;color:#e0e0e0;display:block;}
+    .item-row-detail{font-size:0.76rem;color:#666;margin-top:0.15rem;line-height:1.4;}
+    .item-row-right{display:flex;align-items:center;gap:0.6rem;flex-shrink:0;}
+    .item-cost{font-family:var(--font-head);font-weight:700;font-size:0.9rem;color:#4df0c8;}
+    .item-remove{background:none;border:1px solid #333;border-radius:0.35rem;color:#555;font-size:0.72rem;padding:0.18rem 0.45rem;cursor:pointer;transition:0.12s;line-height:1.4;}
+    .item-remove:hover{background:#c0392b;border-color:#c0392b;color:white;}
+    .items-subtotal{text-align:right;font-size:0.82rem;color:#777;padding-top:0.65rem;margin-top:0.2rem;}
+    .empty-dark{color:#444;font-size:0.85rem;text-align:center;padding:0.75rem 0;}
+    .mat-add-row{display:grid;grid-template-columns:1fr 110px 52px;gap:0.5rem;align-items:end;margin-bottom:0.25rem;}
+    .btn-add-mat{padding:0.65rem 0;background:#2a2a2a;color:#4df0c8;border:1px solid #3a3a3a;border-radius:0.55rem;font-weight:700;font-size:0.9rem;cursor:pointer;transition:0.15s;text-align:center;}
+    .btn-add-mat:hover{background:#333;}
+    .preview{position:sticky;top:1.5rem;display:flex;flex-direction:column;gap:0.85rem;}
+    .preview-actions{display:flex;gap:0.6rem;}
+    .btn-print{flex:1;padding:0.75rem 1rem;background:#4df0c8;color:#111;border:none;border-radius:0.6rem;font-family:var(--font-head);font-weight:700;font-size:0.75rem;cursor:pointer;transition:0.15s;letter-spacing:0.02em;}
+    .btn-print:hover{filter:brightness(1.1);}
+    .btn-clear{padding:0.75rem 0.9rem;background:transparent;color:#666;border:1px solid #2d2d2d;border-radius:0.6rem;font-size:0.8rem;font-weight:600;cursor:pointer;transition:0.15s;}
+    .btn-clear:hover{border-color:#c0392b;color:#c0392b;}
+    .estimate-doc{background:#fff;color:#111;border-radius:0.75rem;padding:2.25rem;font-family:var(--font-body);line-height:1.55;box-shadow:0 8px 40px rgba(0,0,0,0.4);font-size:0.88rem;}
+    .est-header{display:flex;justify-content:space-between;align-items:flex-start;padding-bottom:1.5rem;border-bottom:2px solid #111;margin-bottom:1.5rem;}
+    .est-co-name{font-family:var(--font-head);font-weight:800;font-size:1.05rem;color:#111;letter-spacing:-0.01em;}
+    .est-co-detail{font-size:0.75rem;color:#777;margin-top:0.18rem;}
+    .est-title{font-family:var(--font-head);font-weight:800;font-size:1.7rem;color:#111;letter-spacing:-0.03em;line-height:1;text-align:right;}
+    .est-ref{font-size:0.72rem;color:#aaa;text-align:right;margin-top:0.2rem;font-family:monospace;letter-spacing:0.06em;}
+    .est-meta{display:flex;justify-content:space-between;gap:1rem;margin-bottom:1.75rem;}
+    .est-meta-lbl{font-size:0.65rem;letter-spacing:0.1em;text-transform:uppercase;color:#aaa;font-weight:700;display:block;margin-bottom:0.2rem;}
+    .est-meta-val{font-weight:700;font-size:0.97rem;color:#111;}
+    .est-meta-addr{color:#666;font-size:0.82rem;margin-top:0.2rem;line-height:1.5;}
+    .est-meta-right{text-align:right;}.est-meta-right .est-meta-lbl{display:inline;margin-right:0.3rem;}
+    .est-meta-right div{color:#555;margin-bottom:0.15rem;font-size:0.82rem;}
+    .est-section{font-family:var(--font-head);font-weight:700;font-size:0.65rem;letter-spacing:0.1em;text-transform:uppercase;color:#aaa;margin:1.5rem 0 0.5rem;padding-bottom:0.35rem;border-bottom:1px solid #e8e8e8;}
+    .est-table{width:100%;border-collapse:collapse;}
+    .est-table th{background:#111;color:#fff;padding:0.45rem 0.7rem;text-align:left;font-size:0.62rem;letter-spacing:0.08em;text-transform:uppercase;font-family:var(--font-head);}
+    .est-table th:last-child{text-align:right;}
+    .est-table td{padding:0.55rem 0.7rem;border-bottom:1px solid #f0f0f0;vertical-align:top;color:#222;}
+    .est-table td:last-child{text-align:right;white-space:nowrap;font-weight:600;color:#111;}
+    .est-table tr:last-child td{border-bottom:none;}
+    .est-item-note{font-size:0.74rem;color:#999;margin-top:0.15rem;font-style:italic;}
+    .est-cost-box{margin-top:1.5rem;background:#f7f7f7;border-radius:0.5rem;padding:1rem 1.1rem;display:flex;align-items:center;justify-content:space-between;}
+    .est-cost-label{font-size:0.72rem;letter-spacing:0.08em;text-transform:uppercase;color:#999;font-weight:700;}
+    .est-cost-sub{font-size:0.75rem;color:#bbb;margin-top:0.2rem;}
+    .est-cost-amount{font-family:var(--font-head);font-weight:800;font-size:1.5rem;color:#111;letter-spacing:-0.02em;white-space:nowrap;}
+    .est-notes-box{margin-top:1.25rem;padding:0.9rem 1rem;background:#f7f7f7;border-radius:0.45rem;font-size:0.8rem;color:#555;line-height:1.6;}
+    .est-notes-box strong{color:#333;display:block;margin-bottom:0.25rem;font-size:0.72rem;letter-spacing:0.06em;text-transform:uppercase;}
+    .est-footer{margin-top:1.5rem;padding-top:1rem;border-top:1px solid #e8e8e8;font-size:0.72rem;color:#bbb;line-height:1.7;}
+    .est-footer p{margin:0;}
+    @media(max-width:900px){.tool-layout{grid-template-columns:1fr;}.preview{position:static;order:-1;}}
+    @media(max-width:580px){.tool-layout{padding:0 1rem;}.mat-add-row{grid-template-columns:1fr 90px 44px;}.tool-row{grid-template-columns:1fr;}.estimate-doc{padding:1.5rem 1.25rem;}}
+    @media print{nav,footer,.tool-hero,.builder,.preview-actions{display:none !important;}.tool-layout{display:block;padding:0;margin:0;max-width:none;}.preview{position:static;}.estimate-doc{box-shadow:none;border-radius:0;padding:1.5cm 2cm;font-size:10pt;}.est-title{font-size:22pt;}.est-table th{-webkit-print-color-adjust:exact;print-color-adjust:exact;}}
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="../index.html" class="nav-logo">Kyran<span>.</span></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="../profile.html">Profile</a></li>
+      <li><a href="../projects.html">Projects</a></li>
+      <li><a href="../services.html" class="nav-cta">Services</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+  </nav>
+
+  <div class="tool-hero">
+    <p class="section-label">Tools</p>
+    <h1 class="section-title" style="margin-bottom:0;">Network &amp; Wi-Fi Estimator</h1>
+    <p>Use this tool to build an estimate for home or small business networking. Add your items on the left, include any equipment costs, and download or print the result to send with your enquiry — Kyran will confirm the price in writing before any work begins.</p>
+  </div>
+
+  <div class="tool-layout">
+    <div class="builder">
+
+      <div class="tool-card">
+        <div class="tool-card-title">📋 &nbsp;<span>Job Details</span></div>
+        <div class="tool-field"><label class="tool-label">Your name</label><input class="tool-input" type="text" id="jobCustomer" placeholder="e.g. Mr and Mrs Smith" oninput="updateDetails()" /></div>
+        <div class="tool-field"><label class="tool-label">Address</label><textarea class="tool-textarea" id="jobAddress" rows="3" placeholder="12 Example Road&#10;Hailsham&#10;BN27 1AB" oninput="updateDetails()" style="min-height:68px;"></textarea></div>
+        <div class="tool-row" style="margin-bottom:0.75rem;">
+          <div class="tool-field" style="margin:0;"><label class="tool-label">Email</label><input class="tool-input" type="email" id="jobEmail" placeholder="you@example.com" oninput="updateDetails()" /></div>
+          <div class="tool-field" style="margin:0;"><label class="tool-label">Phone</label><input class="tool-input" type="tel" id="jobPhone" placeholder="07700 000000" oninput="updateDetails()" /></div>
+        </div>
+        <div class="tool-row">
+          <div class="tool-field" style="margin:0;"><label class="tool-label">Date</label><input class="tool-input" type="text" id="jobDate" oninput="updateDetails()" /></div>
+          <div class="tool-field" style="margin:0;"><label class="tool-label">Reference</label><input class="tool-input" type="text" id="jobRef" oninput="updateRef()" /></div>
+        </div>
+      </div>
+
+      <div class="tool-card">
+        <div class="tool-card-title">📡 &nbsp;<span>Add Item</span></div>
+        <div class="tool-field"><label class="tool-label">Item type</label>
+          <select class="tool-select" id="taskType" onchange="updatePreview()">
+            <option value="router_setup">Router setup &amp; configuration</option>
+            <option value="wifi_extender">Wi-Fi extender / mesh node install</option>
+            <option value="powerline">Powerline adapter setup</option>
+            <option value="ethernet_run">Ethernet cable run (per room)</option>
+            <option value="switch_setup">Network switch setup</option>
+            <option value="nas_setup">NAS setup &amp; configuration</option>
+            <option value="full_survey">Full network survey &amp; report</option>
+            <option value="guest_network">Guest network setup</option>
+          </select>
+        </div>
+        <div class="tool-row" style="margin-bottom:0.75rem;">
+          <div class="tool-field" style="margin:0;"><label class="tool-label">Quantity</label><input class="tool-input" type="number" id="taskQty" value="1" min="1" oninput="updatePreview()" /></div>
+          <div class="tool-field" style="margin:0;"><label class="tool-label">Notes &nbsp;<small>(optional)</small></label><input class="tool-input" type="text" id="taskNotes" placeholder="e.g. upstairs bedroom, 5 ports" /></div>
+        </div>
+        <div class="labor-preview" id="laborPreview">Time estimate: <strong>—</strong></div>
+        <button class="btn-add-item" onclick="addTask()">+ Add to Estimate</button>
+      </div>
+
+      <div class="tool-card">
+        <div class="tool-card-title">📝 &nbsp;<span>Items</span></div>
+        <div id="taskList"><p class="empty-dark">No items added yet.</p></div>
+      </div>
+
+      <div class="tool-card">
+        <div class="tool-card-title">🛒 &nbsp;<span>Equipment &amp; Materials</span></div>
+        <div class="mat-add-row">
+          <div><label class="tool-label">Item</label><input class="tool-input" type="text" id="matDesc" placeholder="e.g. TP-Link mesh kit, Cat6 cable" /></div>
+          <div><label class="tool-label">Cost (£)</label><input class="tool-input" type="number" id="matCost" placeholder="0.00" min="0" step="0.01" /></div>
+          <div><label class="tool-label">&nbsp;</label><button class="btn-add-mat" onclick="addMaterial()">+</button></div>
+        </div>
+        <div id="matList" style="margin-top:0.9rem;"><p class="empty-dark">No equipment listed.</p></div>
+      </div>
+
+      <div class="tool-card">
+        <div class="tool-card-title">💬 &nbsp;<span>Notes for Kyran</span></div>
+        <textarea class="tool-textarea" id="jobNotes" rows="3" placeholder="Property size, current router/ISP, speed issues, number of devices..." oninput="updateDetails()"></textarea>
+      </div>
+
+    </div>
+
+    <div class="preview">
+      <div class="preview-actions">
+        <button class="btn-print" id="downloadBtn" onclick="downloadPDF()">⬇️ &nbsp;Download PDF</button>
+        <button class="btn-clear" onclick="window.print()">🖨️ Print</button>
+        <button class="btn-clear" onclick="clearAll()">Clear</button>
+      </div>
+      <div class="estimate-doc" id="estimateDoc"></div>
+    </div>
+  </div>
+
+  <footer><span>© 2026 Kyran Walker</span><span>Built with HTML · CSS · JS</span></footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <script>
+    const hamburger=document.getElementById('hamburger'),navLinks=document.getElementById('navLinks');
+    hamburger.addEventListener('click',()=>navLinks.classList.toggle('open'));
+    navLinks.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>navLinks.classList.remove('open')));
+
+    const TASK_LABELS={router_setup:'Router setup & configuration',wifi_extender:'Wi-Fi extender / mesh node install',powerline:'Powerline adapter setup',ethernet_run:'Ethernet cable run (per room)',switch_setup:'Network switch setup',nas_setup:'NAS setup & configuration',full_survey:'Full network survey & report',guest_network:'Guest network setup'};
+    const TASK_MINS={router_setup:45,wifi_extender:30,powerline:20,ethernet_run:60,switch_setup:30,nas_setup:60,full_survey:60,guest_network:20};
+
+    function genRef(){return 'NET-'+(1000+Math.floor(Math.random()*9000));}
+    const S={customer:'',address:'',email:'',phone:'',date:'',ref:genRef(),custNotes:'',items:[],materials:[],labourRate:20};
+
+    function esc(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+    function fmt(n){return '£'+parseFloat(n||0).toFixed(2);}
+    function fmtTime(m){const h=Math.floor(m/60),r=Math.round(m%60);return h===0?r+'m':r===0?h+'h':h+'h '+r+'m';}
+
+    function updateDetails(){S.customer=document.getElementById('jobCustomer').value;S.address=document.getElementById('jobAddress').value;S.email=document.getElementById('jobEmail').value;S.phone=document.getElementById('jobPhone').value;S.date=document.getElementById('jobDate').value;S.custNotes=document.getElementById('jobNotes').value;renderEstimate();}
+    function updateRef(){S.ref=document.getElementById('jobRef').value||S.ref;renderEstimate();}
+    function updatePreview(){const qty=parseInt(document.getElementById('taskQty').value)||0,type=document.getElementById('taskType').value,mins=qty*TASK_MINS[type];document.getElementById('laborPreview').innerHTML=mins>0?'Time estimate: <strong>'+fmtTime(mins)+'</strong>':'Time estimate: <strong>—</strong>';}
+    function addTask(){const type=document.getElementById('taskType').value,qty=parseInt(document.getElementById('taskQty').value)||1,notes=document.getElementById('taskNotes').value.trim();S.items.push({id:Date.now(),type,qty,notes});document.getElementById('taskNotes').value='';render();}
+    function removeItem(id){S.items=S.items.filter(i=>i.id!==id);render();}
+    function addMaterial(){const desc=document.getElementById('matDesc').value.trim(),cost=parseFloat(document.getElementById('matCost').value)||0;if(!desc){document.getElementById('matDesc').focus();return;}S.materials.push({id:Date.now(),desc,cost});document.getElementById('matDesc').value='';document.getElementById('matCost').value='';render();}
+    function removeMat(id){S.materials=S.materials.filter(m=>m.id!==id);render();}
+    function clearAll(){if(!confirm('Clear all items and start a new estimate?'))return;S.customer='';S.address='';S.email='';S.phone='';S.custNotes='';S.items=[];S.materials=[];S.ref=genRef();['jobCustomer','jobAddress','jobEmail','jobPhone','jobNotes'].forEach(id=>document.getElementById(id).value='');document.getElementById('jobRef').value=S.ref;render();}
+
+    function renderTaskList(){const el=document.getElementById('taskList');if(!S.items.length){el.innerHTML='<p class="empty-dark">No items added yet.</p>';return;}const tot=S.items.reduce((s,i)=>s+i.qty*TASK_MINS[i.type],0);el.innerHTML=S.items.map(i=>'<div class="item-row"><div class="item-row-info"><strong>'+(i.qty>1?i.qty+'× ':'')+esc(TASK_LABELS[i.type])+'</strong>'+(i.notes?'<div class="item-row-detail">'+esc(i.notes)+'</div>':'')+
+    '</div><div class="item-row-right"><span class="item-cost">'+fmtTime(i.qty*TASK_MINS[i.type])+'</span><button class="item-remove" onclick="removeItem('+i.id+')" title="Remove">✕</button></div></div>').join('')+'<div class="items-subtotal">Total: '+fmtTime(tot)+' · Labour: '+fmt((tot/60)*S.labourRate)+'</div>';}
+    function renderMatList(){const el=document.getElementById('matList');if(!S.materials.length){el.innerHTML='<p class="empty-dark">No equipment listed.</p>';return;}const tot=S.materials.reduce((s,m)=>s+parseFloat(m.cost||0),0);el.innerHTML=S.materials.map(m=>'<div class="item-row"><div class="item-row-info"><strong>'+esc(m.desc)+'</strong></div><div class="item-row-right"><span class="item-cost">'+fmt(m.cost)+'</span><button class="item-remove" onclick="removeMat('+m.id+')" title="Remove">✕</button></div></div>').join('')+'<div class="items-subtotal">Equipment: '+fmt(tot)+'</div>';}
+
+    function renderEstimate(){
+      const totalMins=S.items.reduce((s,i)=>s+i.qty*TASK_MINS[i.type],0);
+      const labour=(totalMins/60)*S.labourRate,mats=S.materials.reduce((s,m)=>s+parseFloat(m.cost||0),0),total=labour+mats;
+      const scopeRows=S.items.length>0?S.items.map(i=>'<tr><td>'+(i.qty>1?i.qty+'× ':'')+esc(TASK_LABELS[i.type])+(i.notes?'<div class="est-item-note">'+esc(i.notes)+'</div>':'')+'</td><td>'+fmtTime(i.qty*TASK_MINS[i.type])+'</td></tr>').join(''):'<tr><td colspan="2" style="color:#ccc;font-style:italic;font-size:0.8rem;">No items added</td></tr>';
+      const matRows=S.materials.map(m=>'<tr><td>'+esc(m.desc)+'</td><td style="color:#666;">Equipment</td><td>'+fmt(m.cost)+'</td></tr>').join('');
+      const customerLine=S.customer?'<div class="est-meta-val">'+esc(S.customer)+'</div>':'<div class="est-meta-val" style="color:#ccc;font-weight:400;font-style:italic;">Customer name</div>';
+      const addrLine=S.address?'<div class="est-meta-addr">'+esc(S.address).replace(/\n/g,'<br>')+'</div>':'';
+      const contactLine=(S.email||S.phone)?'<div class="est-meta-addr">'+[S.email,S.phone].filter(Boolean).map(esc).join(' &middot; ')+'</div>':'';
+      const notesBlock=S.custNotes?'<div class="est-notes-box"><strong>Notes</strong>'+esc(S.custNotes).replace(/\n/g,'<br>')+'</div>':'';
+      document.getElementById('estimateDoc').innerHTML=
+        '<div class="est-header"><div><div class="est-co-name">Kyran Walker</div><div class="est-co-detail">Hailsham, East Sussex</div><div class="est-co-detail">enquiry@kyranwalker.com</div><div class="est-co-detail">07902 563971</div></div><div><div class="est-title">ESTIMATE</div><div class="est-ref">'+esc(S.ref)+'</div></div></div>'+
+        '<div class="est-meta"><div><span class="est-meta-lbl">For</span>'+customerLine+addrLine+contactLine+'</div><div class="est-meta-right"><div><span class="est-meta-lbl">Date</span>'+(esc(S.date)||'&nbsp;')+'</div><div><span class="est-meta-lbl">Ref</span><span style="font-family:monospace;font-size:0.8rem;color:#333;">'+esc(S.ref)+'</span></div></div></div>'+
+        '<div class="est-section">Scope of Work</div><table class="est-table"><thead><tr><th>Item</th><th>Est. time</th></tr></thead><tbody>'+scopeRows+'</tbody></table>'+
+        '<div class="est-section">Pricing</div><table class="est-table"><thead><tr><th>Item</th><th>Detail</th><th>Amount</th></tr></thead><tbody><tr><td>Labour</td><td style="color:#666;">'+(totalMins>0?fmtTime(totalMins)+' @ £'+S.labourRate+'/hr':'—')+'</td><td>'+fmt(labour)+'</td></tr>'+matRows+'</tbody><tfoot><tr><td colspan="2" style="font-family:var(--font-head);font-weight:800;border-top:2px solid #111;padding-top:0.8rem;">Total</td><td style="font-family:var(--font-head);font-weight:800;font-size:1rem;border-top:2px solid #111;padding-top:0.8rem;">'+fmt(total)+'</td></tr></tfoot></table>'+
+        '<div class="est-cost-box"><div><div class="est-cost-label">Estimated Total</div><div class="est-cost-sub">Guide price — equipment not included unless listed above</div></div><div class="est-cost-amount">'+fmt(total).replace('.00','')+'</div></div>'+
+        notesBlock+'<div class="est-footer"><p>This is a guide estimate only and is not a formal quote.</p><p>Download or print this estimate and include it with your enquiry to enquiry@kyranwalker.com or call 07902 563971. Kyran will confirm the price in writing before any work begins. No VAT applicable.</p></div>';
+    }
+
+    async function downloadPDF(){const btn=document.getElementById('downloadBtn');btn.textContent='Generating...';btn.disabled=true;try{await html2pdf().set({margin:12,filename:(S.ref||'estimate')+'.pdf',image:{type:'jpeg',quality:0.98},html2canvas:{scale:2,useCORS:true,logging:false},jsPDF:{unit:'mm',format:'a4',orientation:'portrait'}}).from(document.getElementById('estimateDoc')).save();}catch(e){alert('PDF generation failed. Use the Print button and choose Save as PDF instead.');}btn.innerHTML='⬇️ &nbsp;Download PDF';btn.disabled=false;}
+    function render(){renderTaskList();renderMatList();renderEstimate();updatePreview();}
+
+    const today=new Date().toLocaleDateString('en-GB');
+    document.getElementById('jobDate').value=today;document.getElementById('jobRef').value=S.ref;S.date=today;
+    document.getElementById('matDesc').addEventListener('keydown',e=>{if(e.key==='Enter')document.getElementById('matCost').focus();});
+    document.getElementById('matCost').addEventListener('keydown',e=>{if(e.key==='Enter')addMaterial();});
+    document.getElementById('taskNotes').addEventListener('keydown',e=>{if(e.key==='Enter')addTask();});
+    render();
+  </script>
+  <script src="/js/contact-modal.js"></script>
+</body>
+</html>

@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Photo &amp; Media Digitisation Estimator | Kyran Walker</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+  <style>
+    .tool-hero{padding:2.5rem 2.5rem 3rem;max-width:1200px;margin:0 auto;border-bottom:1px solid var(--border);}
+    .tool-hero p{color:var(--muted);font-size:1rem;line-height:1.7;margin-top:0.5rem;max-width:560px;}
+    .tool-layout{max-width:1200px;margin:2rem auto 6rem;padding:0 2rem;display:grid;grid-template-columns:1fr 480px;gap:2rem;align-items:start;}
+    .builder{display:flex;flex-direction:column;gap:1.25rem;}
+    .tool-card{background:#1a1a1a;border:1px solid #2d2d2d;border-radius:1rem;padding:1.5rem;}
+    .tool-card-title{font-family:var(--font-head);font-weight:700;font-size:0.72rem;letter-spacing:0.08em;text-transform:uppercase;color:#666;margin-bottom:1.25rem;}
+    .tool-card-title span{color:#e0e0e0;font-size:0.92rem;letter-spacing:normal;text-transform:none;font-family:var(--font-body);font-weight:600;}
+    .tool-field{margin-bottom:0.9rem;}.tool-field:last-child{margin-bottom:0;}
+    .tool-label{display:block;font-size:0.78rem;font-weight:600;color:#999;margin-bottom:0.3rem;}
+    .tool-label small{font-weight:400;color:#555;}
+    .tool-input,.tool-select,.tool-textarea{width:100%;padding:0.65rem 0.85rem;background:#111;border:1px solid #2d2d2d;border-radius:0.55rem;color:#f0f0f0;font-size:0.92rem;font-family:var(--font-body);transition:border-color 0.15s;box-sizing:border-box;}
+    .tool-input:focus,.tool-select:focus,.tool-textarea:focus{outline:none;border-color:#4df0c8;box-shadow:0 0 0 2px rgba(77,240,200,0.1);}
+    .tool-select option{background:#1a1a1a;}.tool-textarea{resize:vertical;min-height:72px;}
+    .tool-row{display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;}
+    .qty-row{display:grid;grid-template-columns:1fr 80px;gap:0.75rem;align-items:end;margin-bottom:0.9rem;}
+    .qty-row:last-child{margin-bottom:0;}
+    .qty-label{font-size:0.85rem;color:#ccc;font-weight:500;padding-bottom:0.3rem;}
+    .qty-sub{font-size:0.73rem;color:#555;margin-top:0.15rem;}
+    .coats-row{display:flex;gap:0.5rem;flex-wrap:wrap;}
+    .coats-row input[type="radio"]{display:none;}
+    .coats-row label{flex:1;text-align:center;padding:0.5rem 0.4rem;border:1px solid #2d2d2d;border-radius:0.5rem;cursor:pointer;font-size:0.82rem;font-weight:600;color:#777;transition:0.15s;white-space:nowrap;}
+    .coats-row input:checked + label{background:#4df0c8;border-color:#4df0c8;color:#111;}
+    .toggle-row{display:flex;align-items:center;justify-content:space-between;padding:0.4rem 0 0.9rem;}
+    .toggle-row label:first-child{font-size:0.85rem;color:#ccc;font-weight:500;max-width:calc(100% - 56px);}
+    .tog{position:relative;width:40px;height:22px;flex-shrink:0;}
+    .tog input{opacity:0;width:0;height:0;}
+    .tog-slider{position:absolute;inset:0;background:#2d2d2d;border-radius:22px;cursor:pointer;transition:0.2s;border:1px solid #3a3a3a;}
+    .tog-slider::before{content:'';position:absolute;width:14px;height:14px;left:3px;bottom:3px;background:#666;border-radius:50%;transition:0.2s;}
+    .tog input:checked + .tog-slider{background:#4df0c8;border-color:#4df0c8;}
+    .tog input:checked + .tog-slider::before{transform:translateX(18px);background:#111;}
+    .preview{position:sticky;top:1.5rem;display:flex;flex-direction:column;gap:0.85rem;}
+    .preview-actions{display:flex;gap:0.6rem;}
+    .btn-print{flex:1;padding:0.75rem 1rem;background:#4df0c8;color:#111;border:none;border-radius:0.6rem;font-family:var(--font-head);font-weight:700;font-size:0.75rem;cursor:pointer;transition:0.15s;letter-spacing:0.02em;}
+    .btn-print:hover{filter:brightness(1.1);}
+    .btn-clear{padding:0.75rem 0.9rem;background:transparent;color:#666;border:1px solid #2d2d2d;border-radius:0.6rem;font-size:0.8rem;font-weight:600;cursor:pointer;transition:0.15s;}
+    .btn-clear:hover{border-color:#c0392b;color:#c0392b;}
+    .estimate-doc{background:#fff;color:#111;border-radius:0.75rem;padding:2.25rem;font-family:var(--font-body);line-height:1.55;box-shadow:0 8px 40px rgba(0,0,0,0.4);font-size:0.88rem;}
+    .est-header{display:flex;justify-content:space-between;align-items:flex-start;padding-bottom:1.5rem;border-bottom:2px solid #111;margin-bottom:1.5rem;}
+    .est-co-name{font-family:var(--font-head);font-weight:800;font-size:1.05rem;color:#111;letter-spacing:-0.01em;}
+    .est-co-detail{font-size:0.75rem;color:#777;margin-top:0.18rem;}
+    .est-title{font-family:var(--font-head);font-weight:800;font-size:1.4rem;color:#111;letter-spacing:-0.03em;line-height:1.1;text-align:right;}
+    .est-ref{font-size:0.72rem;color:#aaa;text-align:right;margin-top:0.2rem;font-family:monospace;letter-spacing:0.06em;}
+    .est-meta{display:flex;justify-content:space-between;gap:1rem;margin-bottom:1.75rem;}
+    .est-meta-lbl{font-size:0.65rem;letter-spacing:0.1em;text-transform:uppercase;color:#aaa;font-weight:700;display:block;margin-bottom:0.2rem;}
+    .est-meta-val{font-weight:700;font-size:0.97rem;color:#111;}
+    .est-meta-addr{color:#666;font-size:0.82rem;margin-top:0.2rem;line-height:1.5;}
+    .est-meta-right{text-align:right;}.est-meta-right .est-meta-lbl{display:inline;margin-right:0.3rem;}
+    .est-meta-right div{color:#555;margin-bottom:0.15rem;font-size:0.82rem;}
+    .est-section{font-family:var(--font-head);font-weight:700;font-size:0.65rem;letter-spacing:0.1em;text-transform:uppercase;color:#aaa;margin:1.5rem 0 0.5rem;padding-bottom:0.35rem;border-bottom:1px solid #e8e8e8;}
+    .est-table{width:100%;border-collapse:collapse;}
+    .est-table th{background:#111;color:#fff;padding:0.45rem 0.7rem;text-align:left;font-size:0.62rem;letter-spacing:0.08em;text-transform:uppercase;font-family:var(--font-head);}
+    .est-table th:last-child{text-align:right;}
+    .est-table td{padding:0.55rem 0.7rem;border-bottom:1px solid #f0f0f0;vertical-align:top;color:#222;}
+    .est-table td:last-child{text-align:right;white-space:nowrap;font-weight:600;color:#111;}
+    .est-table tr:last-child td{border-bottom:none;}
+    .est-cost-box{margin-top:1.5rem;background:#f7f7f7;border-radius:0.5rem;padding:1rem 1.1rem;display:flex;align-items:center;justify-content:space-between;}
+    .est-cost-label{font-size:0.72rem;letter-spacing:0.08em;text-transform:uppercase;color:#999;font-weight:700;}
+    .est-cost-sub{font-size:0.75rem;color:#bbb;margin-top:0.2rem;}
+    .est-cost-amount{font-family:var(--font-head);font-weight:800;font-size:1.5rem;color:#111;letter-spacing:-0.02em;white-space:nowrap;}
+    .est-notes-box{margin-top:1.25rem;padding:0.9rem 1rem;background:#f7f7f7;border-radius:0.45rem;font-size:0.8rem;color:#555;line-height:1.6;}
+    .est-notes-box strong{color:#333;display:block;margin-bottom:0.25rem;font-size:0.72rem;letter-spacing:0.06em;text-transform:uppercase;}
+    .est-footer{margin-top:1.5rem;padding-top:1rem;border-top:1px solid #e8e8e8;font-size:0.72rem;color:#bbb;line-height:1.7;}
+    .est-footer p{margin:0;}
+    @media(max-width:900px){.tool-layout{grid-template-columns:1fr;}.preview{position:static;order:-1;}}
+    @media(max-width:580px){.tool-layout{padding:0 1rem;}.tool-row{grid-template-columns:1fr;}.estimate-doc{padding:1.5rem 1.25rem;}}
+    @media print{nav,footer,.tool-hero,.builder,.preview-actions{display:none !important;}.tool-layout{display:block;padding:0;margin:0;max-width:none;}.preview{position:static;}.estimate-doc{box-shadow:none;border-radius:0;padding:1.5cm 2cm;font-size:10pt;}.est-title{font-size:18pt;}.est-table th{-webkit-print-color-adjust:exact;print-color-adjust:exact;}}
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="../index.html" class="nav-logo">Kyran<span>.</span></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="../profile.html">Profile</a></li>
+      <li><a href="../projects.html">Projects</a></li>
+      <li><a href="../services.html" class="nav-cta">Services</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+  </nav>
+
+  <div class="tool-hero">
+    <p class="section-label">Tools</p>
+    <h1 class="section-title" style="margin-bottom:0;">Photo &amp; Media Digitisation Estimator</h1>
+    <p>Use this tool to get a guide price for digitising your old photos, tapes, and films. Enter your quantities below, choose your output format, then download or print the result to include with your enquiry.</p>
+  </div>
+
+  <div class="tool-layout">
+    <div class="builder">
+
+      <div class="tool-card">
+        <div class="tool-card-title">👤 &nbsp;<span>Your Details</span></div>
+        <div class="tool-field"><label class="tool-label">Your name</label><input class="tool-input" type="text" id="clientName" placeholder="e.g. Mrs Jane Brown" oninput="update()" /></div>
+        <div class="tool-row">
+          <div class="tool-field" style="margin:0;"><label class="tool-label">Email</label><input class="tool-input" type="email" id="clientEmail" placeholder="you@example.com" oninput="update()" /></div>
+          <div class="tool-field" style="margin:0;"><label class="tool-label">Phone</label><input class="tool-input" type="tel" id="clientPhone" placeholder="07700 000000" oninput="update()" /></div>
+        </div>
+      </div>
+
+      <div class="tool-card">
+        <div class="tool-card-title">🖼️ &nbsp;<span>Photos &amp; Slides</span></div>
+        <div class="qty-row">
+          <div>
+            <div class="qty-label">Loose photo prints</div>
+            <div class="qty-sub">Scanned at 600dpi as high-res JPEGs</div>
+          </div>
+          <input class="tool-input" type="number" id="qtyPhotos" value="0" min="0" step="10" oninput="update()" />
+        </div>
+        <div class="qty-row">
+          <div>
+            <div class="qty-label">Photo albums</div>
+            <div class="qty-sub">Standard album, approx 40 photos each</div>
+          </div>
+          <input class="tool-input" type="number" id="qtyAlbums" value="0" min="0" oninput="update()" />
+        </div>
+        <div class="qty-row" style="margin-bottom:0;">
+          <div>
+            <div class="qty-label">Slides or negatives (per roll / sheet)</div>
+            <div class="qty-sub">36-exposure rolls or equivalent</div>
+          </div>
+          <input class="tool-input" type="number" id="qtySlides" value="0" min="0" oninput="update()" />
+        </div>
+      </div>
+
+      <div class="tool-card">
+        <div class="tool-card-title">📼 &nbsp;<span>Video Tapes &amp; Film</span></div>
+        <div class="qty-row">
+          <div>
+            <div class="qty-label">VHS tapes</div>
+            <div class="qty-sub">Converted to MP4, up to 3h per tape</div>
+          </div>
+          <input class="tool-input" type="number" id="qtyVhs" value="0" min="0" oninput="update()" />
+        </div>
+        <div class="qty-row">
+          <div>
+            <div class="qty-label">Camcorder tapes (Mini-DV / Hi8 / 8mm)</div>
+            <div class="qty-sub">Converted to MP4, up to 1h per tape</div>
+          </div>
+          <input class="tool-input" type="number" id="qtyCamcorder" value="0" min="0" oninput="update()" />
+        </div>
+        <div class="qty-row" style="margin-bottom:0;">
+          <div>
+            <div class="qty-label">Cine film reels (Super 8 / 8mm)</div>
+            <div class="qty-sub">Converted to MP4, approx 3 mins per reel</div>
+          </div>
+          <input class="tool-input" type="number" id="qtyCine" value="0" min="0" oninput="update()" />
+        </div>
+      </div>
+
+      <div class="tool-card">
+        <div class="tool-card-title">💾 &nbsp;<span>Output Format</span></div>
+        <div class="coats-row">
+          <input type="radio" name="output" id="outUsb" value="usb" checked onchange="update()" />
+          <label for="outUsb">USB drive</label>
+          <input type="radio" name="output" id="outCloud" value="cloud" onchange="update()" />
+          <label for="outCloud">Cloud link</label>
+          <input type="radio" name="output" id="outBoth" value="both" onchange="update()" />
+          <label for="outBoth">USB + Cloud</label>
+        </div>
+        <div style="margin-top:0.9rem;">
+          <div class="toggle-row" style="padding-bottom:0;">
+            <label>Basic photo organisation / labelling</label>
+            <label class="tog"><input type="checkbox" id="optOrganise" onchange="update()" /><span class="tog-slider"></span></label>
+          </div>
+        </div>
+      </div>
+
+      <div class="tool-card">
+        <div class="tool-card-title">💬 &nbsp;<span>Notes for Kyran</span></div>
+        <textarea class="tool-textarea" id="propNotes" rows="3" placeholder="Condition of items, approximate dates, any special requests..." oninput="update()"></textarea>
+      </div>
+
+    </div>
+
+    <div class="preview">
+      <div class="preview-actions">
+        <button class="btn-print" id="downloadBtn" onclick="downloadPDF()">⬇️ &nbsp;Download PDF</button>
+        <button class="btn-clear" onclick="window.print()">🖨️ Print</button>
+        <button class="btn-clear" onclick="clearAll()">Clear</button>
+      </div>
+      <div class="estimate-doc" id="estimateDoc"></div>
+    </div>
+  </div>
+
+  <footer><span>© 2026 Kyran Walker</span><span>Built with HTML · CSS · JS</span></footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <script>
+    const hamburger=document.getElementById('hamburger'),navLinks=document.getElementById('navLinks');
+    hamburger.addEventListener('click',()=>navLinks.classList.toggle('open'));
+    navLinks.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>navLinks.classList.remove('open')));
+
+    function genRef(){return 'DIG-'+(1000+Math.floor(Math.random()*9000));}
+
+    /* Labour rates per item (in pence per item, converted to £) */
+    const RATES={
+      photos:0.15,    /* per print */
+      albums:6.00,    /* per album (40 photos + handling) */
+      slides:0.25,    /* per slide/negative */
+      vhs:12.00,      /* per VHS tape */
+      camcorder:8.00, /* per camcorder tape */
+      cine:18.00,     /* per cine reel */
+      usb:8.00,       /* USB drive material */
+      organise_per100:3.00 /* per 100 items organised */
+    };
+
+    const S={name:'',email:'',phone:'',ref:genRef(),notes:'',output:'usb',organise:false,
+      photos:0,albums:0,slides:0,vhs:0,camcorder:0,cine:0,
+      date:new Date().toLocaleDateString('en-GB')};
+
+    function esc(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+    function fmt(n){return '£'+parseFloat(n||0).toFixed(2);}
+
+    function calcBreakdown(){
+      const lines=[];
+      const totalPhotoItems=(S.photos||0)+(S.albums||0)*40+(S.slides||0);
+      if(S.photos>0) lines.push({label:'Photo prints ('+S.photos+')',cost:S.photos*RATES.photos});
+      if(S.albums>0) lines.push({label:'Photo albums ('+S.albums+', est. '+(S.albums*40)+' photos)',cost:S.albums*RATES.albums});
+      if(S.slides>0) lines.push({label:'Slides / negatives ('+S.slides+' rolls)',cost:S.slides*RATES.slides});
+      if(S.vhs>0) lines.push({label:'VHS tapes ('+S.vhs+')',cost:S.vhs*RATES.vhs});
+      if(S.camcorder>0) lines.push({label:'Camcorder tapes ('+S.camcorder+')',cost:S.camcorder*RATES.camcorder});
+      if(S.cine>0) lines.push({label:'Cine film reels ('+S.cine+')',cost:S.cine*RATES.cine});
+      const outputLabels={usb:'USB drive',cloud:'Cloud upload link',both:'USB drive + Cloud link'};
+      if(S.output==='usb'||S.output==='both') lines.push({label:'USB drive (materials)',cost:S.output==='both'?RATES.usb*2:RATES.usb});
+      if(S.organise&&totalPhotoItems>0){
+        const batches=Math.ceil(totalPhotoItems/100);
+        lines.push({label:'Photo organisation & labelling',cost:batches*RATES.organise_per100});
+      }
+      const total=lines.reduce((s,l)=>s+l.cost,0);
+      return{lines,total,outputLabel:outputLabels[S.output]};
+    }
+
+    function update(){
+      S.name=document.getElementById('clientName').value.trim();
+      S.email=document.getElementById('clientEmail').value.trim();
+      S.phone=document.getElementById('clientPhone').value.trim();
+      S.photos=parseInt(document.getElementById('qtyPhotos').value)||0;
+      S.albums=parseInt(document.getElementById('qtyAlbums').value)||0;
+      S.slides=parseInt(document.getElementById('qtySlides').value)||0;
+      S.vhs=parseInt(document.getElementById('qtyVhs').value)||0;
+      S.camcorder=parseInt(document.getElementById('qtyCamcorder').value)||0;
+      S.cine=parseInt(document.getElementById('qtyCine').value)||0;
+      S.output=document.querySelector('input[name="output"]:checked')?.value||'usb';
+      S.organise=document.getElementById('optOrganise').checked;
+      S.notes=document.getElementById('propNotes').value.trim();
+      renderEstimate();
+    }
+
+    function renderEstimate(){
+      const{lines,total,outputLabel}=calcBreakdown();
+      const rounded=Math.ceil(total/5)*5;
+      const clientLine=S.name?'<div class="est-meta-val">'+esc(S.name)+'</div>':'<div class="est-meta-val" style="color:#ccc;font-weight:400;font-style:italic;">Your name</div>';
+      const contactLine=(S.email||S.phone)?'<div class="est-meta-addr">'+[S.email,S.phone].filter(Boolean).map(esc).join(' &middot; ')+'</div>':'';
+      const scopeRows=lines.length>0?lines.map(l=>'<tr><td>'+esc(l.label)+'</td><td>'+fmt(l.cost)+'</td></tr>').join(''):'<tr><td colspan="2" style="color:#ccc;font-style:italic;font-size:0.8rem;">Enter quantities above</td></tr>';
+      const totalRow=lines.length>0?'<tr><td style="font-family:var(--font-head);font-weight:800;border-top:2px solid #111;padding-top:0.8rem;">Total</td><td style="font-family:var(--font-head);font-weight:800;font-size:1rem;border-top:2px solid #111;padding-top:0.8rem;">'+fmt(total)+'</td></tr>':'';
+      const notesBlock=S.notes?'<div class="est-notes-box"><strong>Notes</strong>'+esc(S.notes).replace(/\n/g,'<br>')+'</div>':'';
+      document.getElementById('estimateDoc').innerHTML=
+        '<div class="est-header"><div><div class="est-co-name">Kyran Walker</div><div class="est-co-detail">Hailsham, East Sussex</div><div class="est-co-detail">enquiry@kyranwalker.com</div><div class="est-co-detail">07902 563971</div></div><div><div class="est-title">DIGITISATION<br>ESTIMATE</div><div class="est-ref">'+esc(S.ref)+'</div></div></div>'+
+        '<div class="est-meta"><div><span class="est-meta-lbl">For</span>'+clientLine+contactLine+'</div><div class="est-meta-right"><div><span class="est-meta-lbl">Date</span>'+S.date+'</div><div><span class="est-meta-lbl">Output</span>'+esc(outputLabel)+'</div><div><span class="est-meta-lbl">Ref</span><span style="font-family:monospace;font-size:0.8rem;color:#333;">'+esc(S.ref)+'</span></div></div></div>'+
+        '<div class="est-section">Items to Digitise</div><table class="est-table"><thead><tr><th>Item</th><th>Cost</th></tr></thead><tbody>'+scopeRows+'</tbody>'+(totalRow?'<tfoot>'+totalRow+'</tfoot>':'')+'</table>'+
+        '<div class="est-cost-box"><div><div class="est-cost-label">Estimated Total</div><div class="est-cost-sub">Guide price, rounded to nearest £5</div></div><div class="est-cost-amount">'+fmt(rounded).replace('.00','')+'</div></div>'+
+        notesBlock+'<div class="est-footer"><p>This is a guide estimate only and is not a formal quote. Final price may vary based on condition and exact item count.</p><p>Download or print this estimate and include it with your enquiry to enquiry@kyranwalker.com or call 07902 563971. Kyran will confirm the price in writing before any work begins. No VAT applicable. Return postage not included.</p></div>';
+    }
+
+    async function downloadPDF(){const btn=document.getElementById('downloadBtn');btn.textContent='Generating...';btn.disabled=true;try{await html2pdf().set({margin:12,filename:(S.ref||'estimate')+'.pdf',image:{type:'jpeg',quality:0.98},html2canvas:{scale:2,useCORS:true,logging:false},jsPDF:{unit:'mm',format:'a4',orientation:'portrait'}}).from(document.getElementById('estimateDoc')).save();}catch(e){alert('PDF generation failed. Use the Print button and choose Save as PDF instead.');}btn.innerHTML='⬇️ &nbsp;Download PDF';btn.disabled=false;}
+
+    function clearAll(){if(!confirm('Clear all details and start again?'))return;['clientName','propNotes'].forEach(id=>document.getElementById(id).value='');['qtyPhotos','qtyAlbums','qtySlides','qtyVhs','qtyCamcorder','qtyCine'].forEach(id=>document.getElementById(id).value=0);document.getElementById('outUsb').checked=true;document.getElementById('optOrganise').checked=false;S.ref=genRef();update();}
+
+    update();
+  </script>
+  <script src="/js/contact-modal.js"></script>
+</body>
+</html>
