@@ -483,6 +483,24 @@
       margin-top: 0.25rem;
     }
 
+    .svc-tool-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.2rem;
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: var(--muted);
+      text-decoration: none;
+      align-self: flex-end;
+      padding: 0.2rem 0.5rem;
+      border: 1px solid var(--border);
+      border-radius: 0.35rem;
+      transition: color 0.15s, border-color 0.15s;
+      letter-spacing: 0.02em;
+      margin-top: 0.25rem;
+    }
+    .svc-tool-link:hover { color: var(--accent); border-color: var(--accent); }
+
     @media (max-width: 768px) {
       .rate-banner-inner { flex-direction: column; align-items: flex-start; }
       .service-cards { grid-template-columns: 1fr; }
@@ -553,6 +571,7 @@
           <div class="svc-card-title">Bookkeeping</div>
           <p class="svc-card-desc">Regular or catch-up bookkeeping for small businesses and sole traders. Xero specialist. Includes transaction coding, bank reconciliation, and tidy records ready for your accountant.</p>
           <span class="svc-card-tag popular">⭐ Popular</span>
+          <a href="tools/bookkeeping-scope.html" class="svc-tool-link" onclick="event.stopPropagation()">🧮 Scope calculator →</a>
         </div>
 
         <div class="svc-card finance-card">
@@ -637,6 +656,7 @@
           <div class="svc-card-icon">🖌️</div>
           <div class="svc-card-title">Fence & Exterior Painting</div>
           <p class="svc-card-desc">Fence panels, gates, sheds, and garden structures painted to a clean, lasting finish. Single or double sided, one or two coats. Happy to quote by panel count for a transparent price upfront.</p>
+          <a href="tools/fence-estimate.html" class="svc-tool-link" onclick="event.stopPropagation()">🖌️ Paint estimator →</a>
         </div>
 
       </div>
