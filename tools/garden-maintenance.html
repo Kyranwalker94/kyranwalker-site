@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Garden Maintenance Estimator | Kyran Walker</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+  <style>
+
+    .tool-hero {
+      padding: 2.5rem 2.5rem 3rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      border-bottom: 1px solid var(--border);
+    }
+    .tool-hero p {
+      color: var(--muted);
+      font-size: 1rem;
+      line-height: 1.7;
+      margin-top: 0.5rem;
+      max-width: 560px;
+    }
+
+    .tool-layout {
+      max-width: 1200px;
+      margin: 2rem auto 6rem;
+      padding: 0 2rem;
+      display: grid;
+      grid-template-columns: 1fr 480px;
+      gap: 2rem;
+      align-items: start;
+    }
+
+    .builder { display: flex; flex-direction: column; gap: 1.25rem; }
+
+    .tool-card {
+      background: #1a1a1a;
+      border: 1px solid #2d2d2d;
+      border-radius: 1rem;
+      padding: 1.5rem;
+    }
+
+    .tool-card-title {
+      font-family: var(--font-head);
+      font-weight: 700;
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #666;
+      margin-bottom: 1.25rem;
+    }
+    .tool-card-title span { color: #e0e0e0; font-size: 0.92rem; letter-spacing: normal; text-transform: none; font-family: var(--font-body); font-weight: 600; }
+
+    .tool-field { margin-bottom: 0.9rem; }
+    .tool-field:last-child { margin-bottom: 0; }
+
+    .tool-label {
+      display: block;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: #999;
+      margin-bottom: 0.3rem;
+    }
+    .tool-label small { font-weight: 400; color: #555; }
+
+    .tool-input, .tool-select, .tool-textarea {
+      width: 100%;
+      padding: 0.65rem 0.85rem;
+      background: #111;
+      border: 1px solid #2d2d2d;
+      border-radius: 0.55rem;
+      color: #f0f0f0;
+      font-size: 0.92rem;
+      font-family: var(--font-body);
+      transition: border-color 0.15s;
+      box-sizing: border-box;
+    }
+    .tool-input:focus, .tool-select:focus, .tool-textarea:focus {
+      outline: none;
+      border-color: #50c850;
+      box-shadow: 0 0 0 2px rgba(80,200,80,0.1);
+    }
+    .tool-select option { background: #1a1a1a; }
+    .tool-textarea { resize: vertical; min-height: 72px; }
+
+    .tool-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+
+    /* Segment selector (size, visit type, frequency) */
+    .seg-row { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+    .seg-row input[type="radio"] { display: none; }
+    .seg-row label {
+      flex: 1; text-align: center;
+      padding: 0.5rem 0.4rem;
+      border: 1px solid #2d2d2d;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: #777;
+      transition: 0.15s;
+      white-space: nowrap;
+      min-width: 80px;
+    }
+    .seg-row input:checked + label { background: #50c850; border-color: #50c850; color: #111; }
+
+    .size-hint {
+      margin-top: 0.5rem;
+      font-size: 0.78rem;
+      color: #555;
+      line-height: 1.5;
+      min-height: 1.2em;
+    }
+    .size-hint.active { color: #50c850; opacity: 0.85; }
+
+    /* Task toggles */
+    .tool-toggle-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.4rem 0 0.9rem;
+    }
+    .tool-toggle-row label:first-child { font-size: 0.85rem; color: #ccc; font-weight: 500; max-width: calc(100% - 56px); }
+
+    .tog { position: relative; width: 40px; height: 22px; flex-shrink: 0; }
+    .tog input { opacity: 0; width: 0; height: 0; }
+    .tog-slider {
+      position: absolute; inset: 0;
+      background: #2d2d2d; border-radius: 22px;
+      cursor: pointer; transition: 0.2s;
+      border: 1px solid #3a3a3a;
+    }
+    .tog-slider::before {
+      content: '';
+      position: absolute;
+      width: 14px; height: 14px;
+      left: 3px; bottom: 3px;
+      background: #666; border-radius: 50%;
+      transition: 0.2s;
+    }
+    .tog input:checked + .tog-slider { background: #50c850; border-color: #50c850; }
+    .tog input:checked + .tog-slider::before { transform: translateX(18px); background: #111; }
+
+    .toggle-time-badge {
+      font-size: 0.7rem;
+      color: #555;
+      font-weight: 400;
+      margin-left: 0.35rem;
+    }
+
+    .freq-wrap { display: none; margin-top: 0.75rem; }
+    .freq-wrap.visible { display: block; }
+
+    /* Labour preview box */
+    .labor-preview {
+      background: #111;
+      border: 1px solid #2d2d2d;
+      border-radius: 0.55rem;
+      padding: 0.6rem 0.85rem;
+      font-size: 0.85rem;
+      color: #666;
+      margin: 0.5rem 0 0;
+    }
+    .labor-preview strong { color: #50c850; }
+
+    /* Materials */
+    .item-row {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 0.7rem 0;
+      border-bottom: 1px solid #222;
+    }
+    .item-row:last-of-type { border-bottom: none; }
+    .item-row-info { flex: 1; min-width: 0; }
+    .item-row-info strong { font-size: 0.88rem; color: #e0e0e0; display: block; }
+    .item-row-right { display: flex; align-items: center; gap: 0.6rem; flex-shrink: 0; }
+    .item-cost { font-family: var(--font-head); font-weight: 700; font-size: 0.9rem; color: #50c850; }
+    .item-remove {
+      background: none; border: 1px solid #333; border-radius: 0.35rem;
+      color: #555; font-size: 0.72rem; padding: 0.18rem 0.45rem;
+      cursor: pointer; transition: 0.12s; line-height: 1.4;
+    }
+    .item-remove:hover { background: #c0392b; border-color: #c0392b; color: white; }
+
+    .items-subtotal { text-align: right; font-size: 0.82rem; color: #777; padding-top: 0.65rem; margin-top: 0.2rem; }
+    .empty-dark { color: #444; font-size: 0.85rem; text-align: center; padding: 0.75rem 0; }
+
+    .mat-add-row { display: grid; grid-template-columns: 1fr 110px 52px; gap: 0.5rem; align-items: end; margin-bottom: 0.25rem; }
+    .btn-add-mat {
+      padding: 0.65rem 0;
+      background: #2a2a2a; color: #50c850;
+      border: 1px solid #3a3a3a; border-radius: 0.55rem;
+      font-weight: 700; font-size: 0.9rem;
+      cursor: pointer; transition: 0.15s; text-align: center;
+    }
+    .btn-add-mat:hover { background: #333; }
+
+    .rates-details summary {
+      font-size: 0.72rem; font-weight: 600; color: #555;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      cursor: pointer; user-select: none; list-style: none;
+    }
+    .rates-details summary::-webkit-details-marker { display: none; }
+    .rates-details summary::before { content: '▶  '; font-size: 0.6rem; }
+    .rates-details[open] summary::before { content: '▼  '; }
+    .rate-note { font-size: 0.75rem; color: #555; margin: 0.6rem 0 0.5rem; }
+    .btn-save-rates {
+      padding: 0.45rem 1rem;
+      background: #1e1e1e; color: #50c850;
+      border: 1px solid #333; border-radius: 0.45rem;
+      font-size: 0.78rem; font-weight: 700;
+      cursor: pointer; transition: 0.15s;
+    }
+    .btn-save-rates:hover { background: #2a2a2a; }
+
+    /* Preview */
+    .preview { position: sticky; top: 1.5rem; display: flex; flex-direction: column; gap: 0.85rem; }
+    .preview-actions { display: flex; gap: 0.6rem; }
+
+    .btn-print {
+      flex: 1; padding: 0.75rem 1rem;
+      background: #50c850; color: #111;
+      border: none; border-radius: 0.6rem;
+      font-family: var(--font-head); font-weight: 700; font-size: 0.75rem;
+      cursor: pointer; transition: 0.15s; letter-spacing: 0.02em;
+    }
+    .btn-print:hover { filter: brightness(1.1); }
+
+    .btn-clear {
+      padding: 0.75rem 0.9rem;
+      background: transparent; color: #666;
+      border: 1px solid #2d2d2d; border-radius: 0.6rem;
+      font-size: 0.8rem; font-weight: 600;
+      cursor: pointer; transition: 0.15s;
+    }
+    .btn-clear:hover { border-color: #c0392b; color: #c0392b; }
+
+    /* Estimate doc */
+    .estimate-doc {
+      background: #ffffff;
+      color: #111;
+      border-radius: 0.75rem;
+      padding: 2.25rem;
+      font-family: var(--font-body);
+      line-height: 1.55;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.4);
+      font-size: 0.88rem;
+    }
+
+    .est-header { display: flex; justify-content: space-between; align-items: flex-start; padding-bottom: 1.5rem; border-bottom: 2px solid #111; margin-bottom: 1.5rem; }
+    .est-co-name { font-family: var(--font-head); font-weight: 800; font-size: 1.05rem; color: #111; letter-spacing: -0.01em; }
+    .est-co-detail { font-size: 0.75rem; color: #777; margin-top: 0.18rem; }
+    .est-title { font-family: var(--font-head); font-weight: 800; font-size: 1.7rem; color: #111; letter-spacing: -0.03em; line-height: 1; text-align: right; }
+    .est-ref { font-size: 0.72rem; color: #aaa; text-align: right; margin-top: 0.2rem; font-family: monospace; letter-spacing: 0.06em; }
+
+    .est-meta { display: flex; justify-content: space-between; gap: 1rem; margin-bottom: 1.75rem; }
+    .est-meta-lbl { font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; color: #aaa; font-weight: 700; display: block; margin-bottom: 0.2rem; }
+    .est-meta-val { font-weight: 700; font-size: 0.97rem; color: #111; }
+    .est-meta-addr { color: #666; font-size: 0.82rem; margin-top: 0.2rem; line-height: 1.5; }
+    .est-meta-right { text-align: right; }
+    .est-meta-right .est-meta-lbl { display: inline; margin-right: 0.3rem; }
+    .est-meta-right div { color: #555; margin-bottom: 0.15rem; font-size: 0.82rem; }
+
+    .est-section { font-family: var(--font-head); font-weight: 700; font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; color: #aaa; margin: 1.5rem 0 0.5rem; padding-bottom: 0.35rem; border-bottom: 1px solid #e8e8e8; }
+
+    .est-table { width: 100%; border-collapse: collapse; }
+    .est-table th { background: #111; color: #fff; padding: 0.45rem 0.7rem; text-align: left; font-size: 0.62rem; letter-spacing: 0.08em; text-transform: uppercase; font-family: var(--font-head); }
+    .est-table th:last-child { text-align: right; }
+    .est-table td { padding: 0.55rem 0.7rem; border-bottom: 1px solid #f0f0f0; vertical-align: top; color: #222; }
+    .est-table td:last-child { text-align: right; white-space: nowrap; font-weight: 600; color: #111; }
+    .est-table tr:last-child td { border-bottom: none; }
+    .est-table tfoot td { border-top: 2px solid #111; padding-top: 0.8rem; }
+
+    .est-cost-box {
+      margin-top: 1.5rem;
+      background: #f7f7f7;
+      border-radius: 0.5rem;
+      padding: 1rem 1.1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .est-cost-label { font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; color: #999; font-weight: 700; }
+    .est-cost-sub { font-size: 0.75rem; color: #bbb; margin-top: 0.2rem; }
+    .est-cost-amount { font-family: var(--font-head); font-weight: 800; font-size: 1.5rem; color: #111; letter-spacing: -0.02em; white-space: nowrap; }
+    .est-cost-amount span { font-size: 0.8rem; font-weight: 400; color: #999; font-family: var(--font-body); }
+
+    .est-notes-box { margin-top: 1.25rem; padding: 0.9rem 1rem; background: #f7f7f7; border-radius: 0.45rem; font-size: 0.8rem; color: #555; line-height: 1.6; }
+    .est-notes-box strong { color: #333; display: block; margin-bottom: 0.25rem; font-size: 0.72rem; letter-spacing: 0.06em; text-transform: uppercase; }
+
+    .est-footer { margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid #e8e8e8; font-size: 0.72rem; color: #bbb; line-height: 1.7; }
+    .est-footer p { margin: 0; }
+
+    @media (max-width: 900px) {
+      .tool-layout { grid-template-columns: 1fr; }
+      .preview { position: static; order: -1; }
+    }
+    @media (max-width: 580px) {
+      .tool-layout { padding: 0 1rem; }
+      .mat-add-row { grid-template-columns: 1fr 90px 44px; }
+      .tool-row { grid-template-columns: 1fr; }
+      .estimate-doc { padding: 1.5rem 1.25rem; }
+    }
+    @media print {
+      nav, footer, .tool-hero, .builder, .preview-actions { display: none !important; }
+      .tool-layout { display: block; padding: 0; margin: 0; max-width: none; }
+      .preview { position: static; }
+      .estimate-doc { box-shadow: none; border-radius: 0; padding: 1.5cm 2cm; font-size: 10pt; }
+      .est-title { font-size: 22pt; }
+      .est-table th { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="../index.html" class="nav-logo">Kyran<span>.</span></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="../profile.html">Profile</a></li>
+      <li><a href="../projects.html">Projects</a></li>
+      <li><a href="../services.html" class="nav-cta">Services</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <div class="tool-hero">
+    <p class="section-label">Tools</p>
+    <h1 class="section-title" style="margin-bottom:0;">Garden Maintenance Estimator</h1>
+    <p>Set your garden size, select the tasks included per visit, and choose one-off or regular. The estimate on the right updates in real time with per-visit cost and, for regular bookings, a monthly cost.</p>
+  </div>
+
+  <div class="tool-layout">
+
+    <div class="builder">
+
+      <!-- Visit Details -->
+      <div class="tool-card">
+        <div class="tool-card-title">📋 &nbsp;<span>Visit Details</span></div>
+        <div class="tool-field">
+          <label class="tool-label">Customer name</label>
+          <input class="tool-input" type="text" id="jobCustomer" placeholder="e.g. Mr and Mrs Smith" oninput="update()" />
+        </div>
+        <div class="tool-field">
+          <label class="tool-label">Address</label>
+          <textarea class="tool-textarea" id="jobAddress" rows="3" placeholder="12 Example Road&#10;Hailsham&#10;BN27 1AB" oninput="update()" style="min-height:68px;"></textarea>
+        </div>
+        <div class="tool-row">
+          <div class="tool-field" style="margin:0;">
+            <label class="tool-label">Date</label>
+            <input class="tool-input" type="text" id="jobDate" oninput="update()" />
+          </div>
+          <div class="tool-field" style="margin:0;">
+            <label class="tool-label">Reference</label>
+            <input class="tool-input" type="text" id="jobRef" oninput="updateRef()" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Garden Size -->
+      <div class="tool-card">
+        <div class="tool-card-title">🌿 &nbsp;<span>Garden Size</span></div>
+        <div class="seg-row">
+          <input type="radio" name="gardenSize" id="sizeSmall" value="small" onchange="update()" />
+          <label for="sizeSmall">Small</label>
+          <input type="radio" name="gardenSize" id="sizeMedium" value="medium" checked onchange="update()" />
+          <label for="sizeMedium">Medium</label>
+          <input type="radio" name="gardenSize" id="sizeLarge" value="large" onchange="update()" />
+          <label for="sizeLarge">Large</label>
+        </div>
+        <div class="size-hint active" id="sizeHint"></div>
+      </div>
+
+      <!-- Tasks per Visit -->
+      <div class="tool-card">
+        <div class="tool-card-title">✅ &nbsp;<span>Tasks per Visit</span></div>
+
+        <div class="tool-toggle-row">
+          <label>Lawn mowing<span class="toggle-time-badge" id="hintLawn"></span></label>
+          <label class="tog"><input type="checkbox" id="taskLawn" onchange="update()" /><span class="tog-slider"></span></label>
+        </div>
+
+        <div class="tool-toggle-row">
+          <label>Hedge trimming<span class="toggle-time-badge" id="hintHedges"></span></label>
+          <label class="tog"><input type="checkbox" id="taskHedges" onchange="update()" /><span class="tog-slider"></span></label>
+        </div>
+
+        <div class="tool-toggle-row">
+          <label>Weeding &amp; bed care<span class="toggle-time-badge">~30m</span></label>
+          <label class="tog"><input type="checkbox" id="taskWeeding" onchange="update()" /><span class="tog-slider"></span></label>
+        </div>
+
+        <div class="tool-toggle-row">
+          <label>Planting or bedding out<span class="toggle-time-badge">~30m</span></label>
+          <label class="tog"><input type="checkbox" id="taskPlanting" onchange="update()" /><span class="tog-slider"></span></label>
+        </div>
+
+        <div class="tool-toggle-row">
+          <label>General tidy &amp; sweeping<span class="toggle-time-badge">~20m</span></label>
+          <label class="tog"><input type="checkbox" id="taskTidy" onchange="update()" /><span class="tog-slider"></span></label>
+        </div>
+
+        <div class="tool-toggle-row" style="padding-bottom:0;">
+          <label>Leaf &amp; debris clearing<span class="toggle-time-badge">~20m</span></label>
+          <label class="tog"><input type="checkbox" id="taskLeaves" onchange="update()" /><span class="tog-slider"></span></label>
+        </div>
+
+        <div class="labor-preview" id="visitPreview" style="margin-top:1rem;">Select tasks above to see estimated visit time.</div>
+      </div>
+
+      <!-- Visit Type -->
+      <div class="tool-card">
+        <div class="tool-card-title">📅 &nbsp;<span>Visit Type</span></div>
+        <div class="seg-row" style="margin-bottom:0.75rem;">
+          <input type="radio" name="visitType" id="typeOneoff" value="oneoff" checked onchange="update()" />
+          <label for="typeOneoff">One-off visit</label>
+          <input type="radio" name="visitType" id="typeRegular" value="regular" onchange="update()" />
+          <label for="typeRegular">Regular maintenance</label>
+        </div>
+        <div class="freq-wrap" id="freqWrap">
+          <label class="tool-label">Frequency</label>
+          <div class="seg-row">
+            <input type="radio" name="frequency" id="freqWeekly" value="weekly" onchange="update()" />
+            <label for="freqWeekly">Weekly</label>
+            <input type="radio" name="frequency" id="freqFortnight" value="fortnightly" checked onchange="update()" />
+            <label for="freqFortnight">Fortnightly</label>
+            <input type="radio" name="frequency" id="freqMonthly" value="monthly" onchange="update()" />
+            <label for="freqMonthly">Monthly</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Materials -->
+      <div class="tool-card">
+        <div class="tool-card-title">🛒 &nbsp;<span>Materials &amp; Supplies</span></div>
+        <div class="mat-add-row">
+          <div>
+            <label class="tool-label">Item</label>
+            <input class="tool-input" type="text" id="matDesc" placeholder="e.g. Compost bags, bark chips" />
+          </div>
+          <div>
+            <label class="tool-label">Cost (£)</label>
+            <input class="tool-input" type="number" id="matCost" placeholder="0.00" min="0" step="0.01" />
+          </div>
+          <div>
+            <label class="tool-label">&nbsp;</label>
+            <button class="btn-add-mat" onclick="addMaterial()">+</button>
+          </div>
+        </div>
+        <div id="matList" style="margin-top:0.9rem;"><p class="empty-dark">No materials listed.</p></div>
+      </div>
+
+      <!-- Notes -->
+      <div class="tool-card">
+        <div class="tool-card-title">💬 &nbsp;<span>Notes for Customer</span></div>
+        <textarea class="tool-textarea" id="jobNotes" rows="3" placeholder="Access instructions, gate codes, any specific requirements..." oninput="update()"></textarea>
+      </div>
+
+      <!-- Labour Rate -->
+      <div class="tool-card">
+        <details class="rates-details">
+          <summary>Labour Rate</summary>
+          <p class="rate-note">Your hourly rate for garden work. Saved to your browser.</p>
+          <div class="tool-field" style="margin-top:0.75rem;">
+            <label class="tool-label">Rate per hour (£)</label>
+            <input class="tool-input" type="number" id="labourRate" min="0" step="1" style="max-width:160px;" />
+          </div>
+          <button class="btn-save-rates" onclick="saveRate()" style="margin-top:0.75rem;">Save Rate</button>
+        </details>
+      </div>
+
+    </div>
+
+    <!-- Preview -->
+    <div class="preview">
+      <div class="preview-actions">
+        <button class="btn-print" id="downloadBtn" onclick="downloadPDF()">⬇️ &nbsp;Download PDF</button>
+        <button class="btn-clear" onclick="window.print()">🖨️ Print</button>
+        <button class="btn-clear" onclick="clearAll()">Clear</button>
+      </div>
+      <div class="estimate-doc" id="estimateDoc"></div>
+    </div>
+
+  </div>
+
+  <footer>
+    <span>© 2026 Kyran Walker</span>
+    <span>Built with HTML · CSS · JS</span>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <script>
+    const hamburger = document.getElementById('hamburger');
+    const navLinks  = document.getElementById('navLinks');
+    hamburger.addEventListener('click', () => navLinks.classList.toggle('open'));
+    navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
+
+    const TASK_MINS = {
+      lawn:     { small: 20, medium: 35, large: 60 },
+      hedges:   { small: 30, medium: 50, large: 90 },
+      weeding:  30,
+      planting: 30,
+      tidy:     20,
+      leaves:   20,
+    };
+
+    const TASK_NAMES = {
+      lawn:     'Lawn mowing',
+      hedges:   'Hedge trimming',
+      weeding:  'Weeding & bed care',
+      planting: 'Planting or bedding out',
+      tidy:     'General tidy & sweeping',
+      leaves:   'Leaf & debris clearing',
+    };
+
+    const SIZE_HINTS = {
+      small:  'Compact garden or courtyard — typical of a terrace or flat',
+      medium: 'Average suburban garden — most semi-detached or detached properties',
+      large:  'Large garden or rural plot with significant grounds',
+    };
+
+    const FREQ_VISITS = { weekly: 4, fortnightly: 2, monthly: 1 };
+    const FREQ_LABELS = { weekly: 'Weekly', fortnightly: 'Fortnightly', monthly: 'Monthly' };
+
+    function loadLabourRate() {
+      const v = parseFloat(localStorage.getItem('garden_est_rate'));
+      return isNaN(v) ? 20 : v;
+    }
+
+    function genRef() {
+      return 'GDN-' + (1000 + Math.floor(Math.random() * 9000));
+    }
+
+    const S = {
+      customer: '', address: '', date: '', ref: genRef(),
+      custNotes: '',
+      gardenSize: 'medium',
+      tasks: { lawn: false, hedges: false, weeding: false, planting: false, tidy: false, leaves: false },
+      visitType: 'oneoff',
+      frequency: 'fortnightly',
+      materials: [],
+      labourRate: loadLabourRate()
+    };
+
+    function esc(s) {
+      return (s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    }
+    function fmt(n) { return '£' + parseFloat(n || 0).toFixed(2); }
+    function fmtTime(minutes) {
+      const h = Math.floor(minutes / 60);
+      const m = Math.round(minutes % 60);
+      if (h === 0) return m + 'm';
+      if (m === 0) return h + 'h';
+      return h + 'h ' + m + 'm';
+    }
+
+    function getTaskMins(key) {
+      const val = TASK_MINS[key];
+      return typeof val === 'object' ? val[S.gardenSize] : val;
+    }
+
+    function calcVisitMinutes() {
+      return Object.keys(S.tasks).filter(k => S.tasks[k]).reduce((s, k) => s + getTaskMins(k), 0);
+    }
+
+    function calcVisitCost() {
+      const matCost = S.materials.reduce((s, m) => s + parseFloat(m.cost || 0), 0);
+      return (calcVisitMinutes() / 60) * S.labourRate + matCost;
+    }
+
+    function updateRef() {
+      S.ref = document.getElementById('jobRef').value || S.ref;
+      renderEstimate();
+    }
+
+    function update() {
+      S.customer   = document.getElementById('jobCustomer').value;
+      S.address    = document.getElementById('jobAddress').value;
+      S.date       = document.getElementById('jobDate').value;
+      S.custNotes  = document.getElementById('jobNotes').value;
+      S.gardenSize = document.querySelector('input[name="gardenSize"]:checked')?.value || 'medium';
+      S.visitType  = document.querySelector('input[name="visitType"]:checked')?.value || 'oneoff';
+      S.frequency  = document.querySelector('input[name="frequency"]:checked')?.value || 'fortnightly';
+
+      S.tasks.lawn     = document.getElementById('taskLawn').checked;
+      S.tasks.hedges   = document.getElementById('taskHedges').checked;
+      S.tasks.weeding  = document.getElementById('taskWeeding').checked;
+      S.tasks.planting = document.getElementById('taskPlanting').checked;
+      S.tasks.tidy     = document.getElementById('taskTidy').checked;
+      S.tasks.leaves   = document.getElementById('taskLeaves').checked;
+
+      // Show/hide frequency
+      document.getElementById('freqWrap').classList.toggle('visible', S.visitType === 'regular');
+
+      // Update size hint
+      const hintEl = document.getElementById('sizeHint');
+      hintEl.textContent = SIZE_HINTS[S.gardenSize];
+      hintEl.className = 'size-hint active';
+
+      // Update task time badges
+      document.getElementById('hintLawn').textContent   = '~' + getTaskMins('lawn') + 'm';
+      document.getElementById('hintHedges').textContent = '~' + getTaskMins('hedges') + 'm';
+
+      // Update visit preview
+      const visitMins = calcVisitMinutes();
+      const previewEl = document.getElementById('visitPreview');
+      if (visitMins === 0) {
+        previewEl.innerHTML = 'Select tasks above to see estimated visit time.';
+      } else {
+        const labourCost = (visitMins / 60) * S.labourRate;
+        previewEl.innerHTML = 'Visit time: <strong>' + fmtTime(visitMins) + '</strong> &middot; Labour: <strong>' + fmt(labourCost) + '</strong>';
+      }
+
+      renderEstimate();
+    }
+
+    function addMaterial() {
+      const desc = document.getElementById('matDesc').value.trim();
+      const cost = parseFloat(document.getElementById('matCost').value) || 0;
+      if (!desc) { document.getElementById('matDesc').focus(); return; }
+      S.materials.push({ id: Date.now(), desc, cost });
+      document.getElementById('matDesc').value = '';
+      document.getElementById('matCost').value = '';
+      renderMatList();
+      renderEstimate();
+    }
+
+    function removeMat(id) {
+      S.materials = S.materials.filter(m => m.id !== id);
+      renderMatList();
+      renderEstimate();
+    }
+
+    function saveRate() {
+      S.labourRate = parseFloat(document.getElementById('labourRate').value) || 20;
+      localStorage.setItem('garden_est_rate', S.labourRate);
+      update();
+    }
+
+    function clearAll() {
+      if (!confirm('Clear all details and start a new estimate?')) return;
+      S.customer = ''; S.address = ''; S.custNotes = '';
+      S.materials = [];
+      S.ref = genRef();
+      document.getElementById('jobCustomer').value = '';
+      document.getElementById('jobAddress').value  = '';
+      document.getElementById('jobNotes').value    = '';
+      document.getElementById('jobRef').value      = S.ref;
+      document.getElementById('sizeMedium').checked = true;
+      document.getElementById('typeOneoff').checked = true;
+      document.getElementById('freqFortnight').checked = true;
+      ['taskLawn','taskHedges','taskWeeding','taskPlanting','taskTidy','taskLeaves'].forEach(id => {
+        document.getElementById(id).checked = false;
+      });
+      update();
+    }
+
+    function renderMatList() {
+      const el = document.getElementById('matList');
+      if (S.materials.length === 0) { el.innerHTML = '<p class="empty-dark">No materials listed.</p>'; return; }
+      const matTotal = S.materials.reduce((s, m) => s + parseFloat(m.cost || 0), 0);
+      el.innerHTML = S.materials.map(m =>
+        '<div class="item-row">' +
+          '<div class="item-row-info"><strong>' + esc(m.desc) + '</strong></div>' +
+          '<div class="item-row-right">' +
+            '<span class="item-cost">' + fmt(m.cost) + '</span>' +
+            '<button class="item-remove" onclick="removeMat(' + m.id + ')" title="Remove">✕</button>' +
+          '</div>' +
+        '</div>'
+      ).join('') + '<div class="items-subtotal">Materials: ' + fmt(matTotal) + '</div>';
+    }
+
+    function renderEstimate() {
+      const activeTasks = Object.keys(S.tasks).filter(k => S.tasks[k]);
+      const visitMins  = calcVisitMinutes();
+      const labourCost = (visitMins / 60) * S.labourRate;
+      const matCost    = S.materials.reduce((s, m) => s + parseFloat(m.cost || 0), 0);
+      const visitTotal = labourCost + matCost;
+
+      const taskRows = activeTasks.length > 0
+        ? activeTasks.map(k =>
+            '<tr><td>' + TASK_NAMES[k] + '</td><td>' + fmtTime(getTaskMins(k)) + '</td></tr>'
+          ).join('')
+        : '<tr><td colspan="2" style="color:#ccc;font-style:italic;font-size:0.8rem;">No tasks selected</td></tr>';
+
+      const matRows = S.materials.length > 0
+        ? '<tr><td>Materials &amp; supplies</td><td style="color:#666;"></td><td>' + fmt(matCost) + '</td></tr>'
+        : '';
+
+      const labourDetail = visitMins > 0 ? fmtTime(visitMins) + ' @ £' + S.labourRate + '/hr' : '—';
+
+      const customerLine = S.customer
+        ? '<div class="est-meta-val">' + esc(S.customer) + '</div>'
+        : '<div class="est-meta-val" style="color:#ccc;font-weight:400;font-style:italic;">Customer name</div>';
+      const addrLine = S.address ? '<div class="est-meta-addr">' + esc(S.address).replace(/\n/g,'<br>') + '</div>' : '';
+      const notesBlock = S.custNotes ? '<div class="est-notes-box"><strong>Notes</strong>' + esc(S.custNotes).replace(/\n/g,'<br>') + '</div>' : '';
+
+      const isRegular = S.visitType === 'regular';
+      const freqLabel = FREQ_LABELS[S.frequency];
+      const visits    = FREQ_VISITS[S.frequency];
+
+      const visitTypeLabel = isRegular ? freqLabel + ' maintenance' : 'One-off visit';
+      const sizeLabel = { small: 'Small garden', medium: 'Medium garden', large: 'Large garden' }[S.gardenSize];
+
+      let costBoxes = '';
+      if (isRegular) {
+        const monthlyCost = visitTotal * visits;
+        costBoxes =
+          '<div class="est-cost-box">' +
+            '<div>' +
+              '<div class="est-cost-label">Estimated Cost per Visit</div>' +
+              '<div class="est-cost-sub">' + freqLabel + ' &middot; ' + sizeLabel + '</div>' +
+            '</div>' +
+            '<div class="est-cost-amount">' + fmt(visitTotal).replace('.00','') + ' <span>/ visit</span></div>' +
+          '</div>' +
+          '<div class="est-cost-box" style="margin-top:0.75rem;background:#f0f0f0;">' +
+            '<div>' +
+              '<div class="est-cost-label">Estimated Monthly Cost</div>' +
+              '<div class="est-cost-sub">' + visits + ' visit' + (visits > 1 ? 's' : '') + ' per month</div>' +
+            '</div>' +
+            '<div class="est-cost-amount">' + fmt(monthlyCost).replace('.00','') + ' <span>/ month</span></div>' +
+          '</div>';
+      } else {
+        costBoxes =
+          '<div class="est-cost-box">' +
+            '<div>' +
+              '<div class="est-cost-label">Estimated Total</div>' +
+              '<div class="est-cost-sub">One-off visit &middot; ' + sizeLabel + '</div>' +
+            '</div>' +
+            '<div class="est-cost-amount">' + fmt(visitTotal).replace('.00','') + '</div>' +
+          '</div>';
+      }
+
+      document.getElementById('estimateDoc').innerHTML =
+        '<div class="est-header">' +
+          '<div>' +
+            '<div class="est-co-name">Kyran Walker</div>' +
+            '<div class="est-co-detail">Hailsham, East Sussex</div>' +
+            '<div class="est-co-detail">enquiry@kyranwalker.com</div>' +
+            '<div class="est-co-detail">07902 563971</div>' +
+          '</div>' +
+          '<div>' +
+            '<div class="est-title">ESTIMATE</div>' +
+            '<div class="est-ref">' + esc(S.ref) + '</div>' +
+          '</div>' +
+        '</div>' +
+
+        '<div class="est-meta">' +
+          '<div>' +
+            '<span class="est-meta-lbl">For</span>' +
+            customerLine + addrLine +
+          '</div>' +
+          '<div class="est-meta-right">' +
+            '<div><span class="est-meta-lbl">Date</span>' + (esc(S.date) || '&nbsp;') + '</div>' +
+            '<div><span class="est-meta-lbl">Type</span>' + esc(visitTypeLabel) + '</div>' +
+            '<div><span class="est-meta-lbl">Ref</span><span style="font-family:monospace;font-size:0.8rem;color:#333;">' + esc(S.ref) + '</span></div>' +
+          '</div>' +
+        '</div>' +
+
+        '<div class="est-section">Tasks per Visit</div>' +
+        '<table class="est-table">' +
+          '<thead><tr><th>Task</th><th>Est. time</th></tr></thead>' +
+          '<tbody>' + taskRows + '</tbody>' +
+          (visitMins > 0 ? '<tfoot><tr><td style="font-family:var(--font-head);font-weight:800;">Total time per visit</td><td style="font-family:var(--font-head);font-weight:800;font-size:0.95rem;">' + fmtTime(visitMins) + '</td></tr></tfoot>' : '') +
+        '</table>' +
+
+        '<div class="est-section">Pricing per Visit</div>' +
+        '<table class="est-table">' +
+          '<thead><tr><th>Item</th><th>Detail</th><th>Amount</th></tr></thead>' +
+          '<tbody>' +
+            '<tr><td>Labour</td><td style="color:#666;">' + labourDetail + '</td><td>' + fmt(labourCost) + '</td></tr>' +
+            matRows +
+          '</tbody>' +
+          '<tfoot>' +
+            '<tr>' +
+              '<td colspan="2" style="font-family:var(--font-head);font-weight:800;">Cost per visit</td>' +
+              '<td style="font-family:var(--font-head);font-weight:800;font-size:1rem;">' + fmt(visitTotal) + '</td>' +
+            '</tr>' +
+          '</tfoot>' +
+        '</table>' +
+
+        costBoxes +
+        notesBlock +
+
+        '<div class="est-footer">' +
+          '<p>This estimate is intended as a guide only and is not a formal quote.</p>' +
+          '<p>For a confirmed price, please contact Kyran Walker directly. No VAT applicable.</p>' +
+        '</div>';
+    }
+
+    async function downloadPDF() {
+      const btn = document.getElementById('downloadBtn');
+      btn.textContent = 'Generating...';
+      btn.disabled = true;
+      try {
+        await html2pdf().set({
+          margin: 12,
+          filename: (S.ref || 'estimate') + '.pdf',
+          image: { type: 'jpeg', quality: 0.98 },
+          html2canvas: { scale: 2, useCORS: true, logging: false },
+          jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+        }).from(document.getElementById('estimateDoc')).save();
+      } catch (e) {
+        alert('PDF generation failed. Use the Print button and choose Save as PDF instead.');
+      }
+      btn.innerHTML = '⬇️ &nbsp;Download PDF';
+      btn.disabled = false;
+    }
+
+    const today = new Date().toLocaleDateString('en-GB');
+    document.getElementById('jobDate').value    = today;
+    document.getElementById('jobRef').value     = S.ref;
+    document.getElementById('labourRate').value = S.labourRate;
+    S.date = today;
+
+    document.getElementById('matDesc').addEventListener('keydown', e => { if (e.key === 'Enter') document.getElementById('matCost').focus(); });
+    document.getElementById('matCost').addEventListener('keydown', e => { if (e.key === 'Enter') addMaterial(); });
+
+    update();
+  </script>
+
+  <script src="/js/contact-modal.js"></script>
+</body>
+</html>
