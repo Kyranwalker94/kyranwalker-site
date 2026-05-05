@@ -449,7 +449,7 @@
   <div class="tool-hero">
     <p class="section-label">Tools</p>
     <h1 class="section-title" style="margin-bottom:0;">Fence Paint Estimator</h1>
-    <p>Build a fence painting quote, add panel items on the left, list your materials at the bottom, and the estimate on the right updates in real time. Print or save as PDF when ready.</p>
+    <p>Use this tool to build your own fence painting estimate. Add your panels on the left, the estimate on the right updates live. Download or print it and include it with your enquiry — Kyran will use it to confirm the price in writing before any work begins.</p>
   </div>
 
   <div class="tool-layout">
@@ -463,7 +463,7 @@
       <div class="tool-card">
         <div class="tool-card-title">📋 &nbsp;<span>Job Details</span></div>
         <div class="tool-field">
-          <label class="tool-label">Customer name</label>
+          <label class="tool-label">Your name</label>
           <input class="tool-input" type="text" id="jobCustomer" placeholder="e.g. Mr and Mrs Smith" oninput="updateDetails()" />
         </div>
         <div class="tool-field">
@@ -577,8 +577,8 @@
 
       <!-- Estimate Notes -->
       <div class="tool-card">
-        <div class="tool-card-title">💬 &nbsp;<span>Notes for Customer</span></div>
-        <textarea class="tool-textarea" id="jobNotes" rows="3" placeholder="Access requirements, payment terms, any special conditions..." oninput="updateDetails()"></textarea>
+        <div class="tool-card-title">💬 &nbsp;<span>Notes for Kyran</span></div>
+        <textarea class="tool-textarea" id="jobNotes" rows="3" placeholder="Access requirements, anything specific about the job, or questions you have..." oninput="updateDetails()"></textarea>
       </div>
 
       <!-- Labour Rate -->
@@ -1005,8 +1005,8 @@
         ${notesBlock}
 
         <div class="est-footer">
-          <p>This estimate is valid for 30 days from the date shown above.</p>
-          <p>No VAT applicable. Payment due within 14 days of completion.</p>
+          <p>This is a guide estimate only and is not a formal quote.</p>
+          <p>Download or print this estimate and include it with your enquiry to enquiry@kyranwalker.com or call 07902 563971. Kyran will confirm the price in writing before any work begins. No VAT applicable.</p>
         </div>
       `;
     }

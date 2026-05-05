@@ -332,7 +332,7 @@
   <div class="tool-hero">
     <p class="section-label">Tools</p>
     <h1 class="section-title" style="margin-bottom:0;">Garden Maintenance Estimator</h1>
-    <p>Set your garden size, select the tasks included per visit, and choose one-off or regular. The estimate on the right updates in real time with per-visit cost and, for regular bookings, a monthly cost.</p>
+    <p>Use this tool to build your own garden maintenance estimate. Set your garden size, select what you need done per visit, and choose one-off or regular. Download or print it and include it with your enquiry — Kyran will use it to confirm the price in writing before any work begins.</p>
   </div>
 
   <div class="tool-layout">
@@ -343,7 +343,7 @@
       <div class="tool-card">
         <div class="tool-card-title">📋 &nbsp;<span>Visit Details</span></div>
         <div class="tool-field">
-          <label class="tool-label">Customer name</label>
+          <label class="tool-label">Your name</label>
           <input class="tool-input" type="text" id="jobCustomer" placeholder="e.g. Mr and Mrs Smith" oninput="update()" />
         </div>
         <div class="tool-field">
@@ -457,8 +457,8 @@
 
       <!-- Notes -->
       <div class="tool-card">
-        <div class="tool-card-title">💬 &nbsp;<span>Notes for Customer</span></div>
-        <textarea class="tool-textarea" id="jobNotes" rows="3" placeholder="Access instructions, gate codes, any specific requirements..." oninput="update()"></textarea>
+        <div class="tool-card-title">💬 &nbsp;<span>Notes for Kyran</span></div>
+        <textarea class="tool-textarea" id="jobNotes" rows="3" placeholder="Access instructions, gate codes, anything specific about the garden, or questions you have..." oninput="update()"></textarea>
       </div>
 
       <!-- Labour Rate -->
@@ -788,8 +788,8 @@
         notesBlock +
 
         '<div class="est-footer">' +
-          '<p>This estimate is intended as a guide only and is not a formal quote.</p>' +
-          '<p>For a confirmed price, please contact Kyran Walker directly. No VAT applicable.</p>' +
+          '<p>This is a guide estimate only and is not a formal quote.</p>' +
+          '<p>Download or print this estimate and include it with your enquiry to enquiry@kyranwalker.com or call 07902 563971. Kyran will confirm the price in writing before any work begins. No VAT applicable.</p>' +
         '</div>';
     }
 
