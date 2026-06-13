@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Request Something | Kyran's Plex</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+
+  <style>
+    .request-hero {
+      max-width: 620px;
+      margin: 0 auto;
+      padding: 4rem 2.5rem 2.5rem;
+      text-align: center;
+    }
+
+    .plex-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      background: rgba(229,160,13,0.1);
+      border: 1px solid rgba(229,160,13,0.25);
+      border-radius: 2rem;
+      padding: 0.4rem 1rem;
+      font-size: 0.82rem;
+      color: #e5a00d;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+
+    .plex-badge:hover { opacity: 0.75; }
+
+    .request-hero h1 {
+      font-family: var(--font-head);
+      font-size: clamp(1.8rem, 4.5vw, 2.8rem);
+      font-weight: 800;
+      line-height: 1.15;
+      margin-bottom: 0.85rem;
+    }
+
+    .request-hero p {
+      color: var(--muted);
+      font-size: 1rem;
+      line-height: 1.7;
+    }
+
+    .request-form-wrap {
+      max-width: 620px;
+      margin: 0 auto;
+      padding: 0 2.5rem 6rem;
+    }
+
+    .request-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 1.25rem;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .type-toggle {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+    }
+
+    .type-option {
+      position: relative;
+    }
+
+    .type-option input[type="radio"] {
+      position: absolute;
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .type-option label {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+      padding: 0.85rem;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 0.75rem;
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: 0.2s;
+      color: var(--muted);
+    }
+
+    .type-option input[type="radio"]:checked + label {
+      border-color: #e5a00d;
+      background: rgba(229,160,13,0.08);
+      color: #e5a00d;
+    }
+
+    .type-option label:hover { border-color: rgba(229,160,13,0.4); color: var(--text); }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+    }
+
+    .form-group label {
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .form-group input,
+    .form-group textarea {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 0.6rem;
+      color: var(--text);
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      padding: 0.8rem 1rem;
+      outline: none;
+      transition: border-color 0.2s;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 90px;
+      line-height: 1.5;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus { border-color: #e5a00d; }
+
+    .form-group input::placeholder,
+    .form-group textarea::placeholder { color: #555; }
+
+    .form-hint {
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin-top: 0.2rem;
+      opacity: 0.8;
+    }
+
+    .divider-line {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 0;
+    }
+
+    .submit-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .submit-note {
+      font-size: 0.78rem;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .submit-btn {
+      background: #e5a00d;
+      color: #0d0d0d;
+      border: none;
+      border-radius: 0.6rem;
+      font-family: var(--font-head);
+      font-weight: 700;
+      font-size: 0.9rem;
+      padding: 0.85rem 1.75rem;
+      cursor: pointer;
+      transition: opacity 0.2s;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .submit-btn:hover { opacity: 0.85; }
+    .submit-btn:disabled { opacity: 0.5; cursor: default; }
+
+    .success-state {
+      display: none;
+      text-align: center;
+      padding: 3rem 1rem;
+    }
+
+    .success-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+
+    .success-state h2 {
+      font-family: var(--font-head);
+      font-weight: 700;
+      font-size: 1.4rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .success-state p {
+      color: var(--muted);
+      font-size: 0.9rem;
+      line-height: 1.65;
+      margin-bottom: 1.5rem;
+    }
+
+    .another-btn {
+      background: none;
+      border: 1px solid var(--border);
+      border-radius: 0.6rem;
+      color: var(--muted);
+      font-family: var(--font-body);
+      font-size: 0.85rem;
+      padding: 0.65rem 1.25rem;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .another-btn:hover { border-color: var(--text); color: var(--text); }
+
+    .back-link {
+      display: block;
+      text-align: center;
+      margin-top: 2rem;
+      font-size: 0.85rem;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .back-link:hover { color: var(--text); }
+
+    @media (max-width: 600px) {
+      .request-hero, .request-form-wrap { padding-left: 1.5rem; padding-right: 1.5rem; }
+      .request-card { padding: 1.5rem; }
+      .submit-row { flex-direction: column-reverse; align-items: stretch; }
+      .submit-btn { text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html" class="nav-logo">Kyran<span>.</span></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="profile.html">Profile</a></li>
+      <li><a href="projects.html">Projects</a></li>
+      <li><a href="services.html" class="nav-cta">Services</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- HERO -->
+  <div class="request-hero">
+    <a href="plex.html" class="plex-badge">← Back to Plex setup</a>
+    <h1>Request a movie<br>or TV show</h1>
+    <p>Something you want to watch that isn't on the server? Let me know and I'll add it.</p>
+  </div>
+
+  <!-- FORM -->
+  <div class="request-form-wrap">
+    <div class="request-card">
+
+      <form id="requestForm" action="https://formspree.io/f/REQUEST_FORM_ID" method="POST">
+        <input type="hidden" name="_subject" value="Plex Content Request" />
+
+        <!-- Type toggle -->
+        <div class="form-group">
+          <label>What are you requesting?</label>
+          <div class="type-toggle">
+            <div class="type-option">
+              <input type="radio" name="type" id="typeMovie" value="Movie" checked />
+              <label for="typeMovie">🎬 Movie</label>
+            </div>
+            <div class="type-option">
+              <input type="radio" name="type" id="typeTV" value="TV Show" />
+              <label for="typeTV">📺 TV Show</label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Title -->
+        <div class="form-group">
+          <label for="title">Title <span style="color:var(--accent);font-size:0.85em;">*</span></label>
+          <input type="text" id="title" name="title" placeholder="e.g. Interstellar or Breaking Bad" required />
+        </div>
+
+        <!-- Year (optional) -->
+        <div class="form-group">
+          <label for="year">Year <span style="font-weight:400;text-transform:none;letter-spacing:0;">(optional)</span></label>
+          <input type="text" id="year" name="year" placeholder="e.g. 2014" maxlength="4" />
+          <span class="form-hint">Helps if there are multiple versions with the same name.</span>
+        </div>
+
+        <!-- Notes -->
+        <div class="form-group">
+          <label for="notes">Notes <span style="font-weight:400;text-transform:none;letter-spacing:0;">(optional)</span></label>
+          <textarea id="notes" name="notes" placeholder="e.g. specific season, quality preference, or just a recommendation..."></textarea>
+        </div>
+
+        <!-- Name -->
+        <div class="form-group">
+          <label for="requesterName">Your name <span style="font-weight:400;text-transform:none;letter-spacing:0;">(optional)</span></label>
+          <input type="text" id="requesterName" name="requested_by" placeholder="So I know who asked!" />
+        </div>
+
+        <hr class="divider-line" />
+
+        <div class="submit-row">
+          <p class="submit-note">I'll try to add requests within a few days. No guarantees on everything but I'll do my best.</p>
+          <button type="submit" class="submit-btn">Send request →</button>
+        </div>
+      </form>
+
+      <!-- Success state -->
+      <div class="success-state" id="successState">
+        <div class="success-icon">🎬</div>
+        <h2>Request sent!</h2>
+        <p>I'll get it added as soon as I can. Check back in a few days and it should be on the server.</p>
+        <button class="another-btn" onclick="resetForm()">Request something else</button>
+      </div>
+
+    </div>
+
+    <a href="plex.html" class="back-link">← Back to Plex setup</a>
+  </div>
+
+  <footer>
+    <span>© 2026 Kyran Walker</span>
+    <span>Built with HTML · CSS · JS</span>
+  </footer>
+
+  <script>
+    // Nav
+    const hamburger = document.getElementById('hamburger');
+    const navLinks  = document.getElementById('navLinks');
+    hamburger.addEventListener('click', () => navLinks.classList.toggle('open'));
+    navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
+
+    // Form submission
+    const form         = document.getElementById('requestForm');
+    const successState = document.getElementById('successState');
+
+    form.addEventListener('submit', async function (e) {
+      e.preventDefault();
+      const btn = form.querySelector('.submit-btn');
+      btn.textContent = 'Sending...';
+      btn.disabled = true;
+
+      try {
+        const res = await fetch(form.action, {
+          method: 'POST',
+          body: new FormData(form),
+          headers: { Accept: 'application/json' }
+        });
+
+        if (res.ok) {
+          form.style.display = 'none';
+          successState.style.display = 'block';
+        } else {
+          btn.textContent = 'Something went wrong - try again';
+          btn.disabled = false;
+        }
+      } catch {
+        btn.textContent = 'Something went wrong - try again';
+        btn.disabled = false;
+      }
+    });
+
+    function resetForm() {
+      form.reset();
+      form.style.display = 'block';
+      successState.style.display = 'none';
+      const btn = form.querySelector('.submit-btn');
+      btn.textContent = 'Send request →';
+      btn.disabled = false;
+    }
+  </script>
+
+</body>
+</html>
