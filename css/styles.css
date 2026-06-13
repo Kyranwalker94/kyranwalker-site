@@ -33,6 +33,7 @@ body {
   font-family: var(--font-body);
   font-weight: 300;
   overflow-x: hidden;
+  padding-top: 64px;
 }
 
 /* noise overlay */
