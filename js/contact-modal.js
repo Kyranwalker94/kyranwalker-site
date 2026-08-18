@@ -34,7 +34,6 @@
   var navLinks = document.getElementById('navLinks');
   if (navLinks) {
     var li  = document.createElement('li');
-    li.style.marginLeft = '-0.75rem';
     var btn = document.createElement('a');
     btn.className = 'nav-contact-btn';
     btn.textContent = 'Contact';
