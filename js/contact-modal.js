@@ -15,8 +15,6 @@
     '.contact-modal-option-detail{font-size:0.83rem;color:var(--text,#fff);line-height:1.5;}',
     '.contact-modal-ref{font-family:monospace;font-size:0.88rem;color:var(--accent,#c8f04d);letter-spacing:0.1em;text-transform:none;font-weight:400;}',
     '.contact-modal-btn{display:flex;align-items:center;justify-content:center;padding:0.48rem 0.75rem;border-radius:0.5rem;font-weight:600;font-size:0.78rem;text-decoration:none;border:1px solid var(--border,#2a2a2a);transition:0.15s;margin-top:0.3rem;cursor:pointer;}',
-    '.contact-modal-btn-call{background:var(--surface,#1a1a1a);color:var(--text,#fff);}',
-    '.contact-modal-btn-call:hover{background:var(--text,#fff);color:var(--bg,#0d0d0d);}',
     '.contact-modal-btn-email{background:var(--accent,#c8f04d);color:#000;border-color:var(--accent,#c8f04d);}',
     '.contact-modal-btn-email:hover{filter:brightness(1.08);}'
   ].join('');
@@ -51,11 +49,6 @@
     '<div class="contact-modal-card">' +
       '<button class="contact-modal-close">← Close</button>' +
       '<div class="contact-modal-title">General Enquiry</div>' +
-      '<div class="contact-modal-option">' +
-        '<div class="contact-modal-option-label">📞 Call &nbsp;<small>Mon-Sat · 8am-5pm</small></div>' +
-        '<div class="contact-modal-option-detail">07902 563971</div>' +
-        '<a href="tel:07902563971" class="contact-modal-btn contact-modal-btn-call">Call now</a>' +
-      '</div>' +
       '<div class="contact-modal-option">' +
         '<div class="contact-modal-option-label">✉️ Email &nbsp;<span class="contact-modal-ref">' + code + '</span></div>' +
         '<a href="mailto:enquiry@kyranwalker.com?subject=' + subject + '" class="contact-modal-btn contact-modal-btn-email">Email me</a>' +
