@@ -275,10 +275,10 @@ const TIMELINE = {
     },
     {
       start: 2026, end: 2026,
-      company: 'TBA',
-      role: 'In House Accountant',
-      location: 'TBA',
-      detail: 'Financial Controller with full ownership of transactional finance for a small business with £1m+ turnover, developing processes to support financial operations and growth.',
+      company: 'Self-Employed',
+      role: 'Interim Finance Consultant, Denver Services',
+      location: 'Hailsham / Remote',
+      detail: 'Short-term consultancy contract to clean up historic financial records, take ownership of transactional finance, and implement new procedures for a business with £1m+ turnover.',
     },
     {
       start: 2026, end: 2026,
