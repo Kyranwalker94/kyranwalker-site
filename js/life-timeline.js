@@ -273,6 +273,20 @@ const TIMELINE = {
       location: 'Hailsham / Remote',
       detail: 'Remote bookkeeping and self assessment support for individuals and small businesses, alongside a multi-service sole trader offering covering tech, home services, and web design.',
     },
+    {
+      start: 2026, end: 2026,
+      company: 'TBA',
+      role: 'In House Accountant',
+      location: 'TBA',
+      detail: 'Financial Controller with full ownership of transactional finance for a small business with £1m+ turnover, developing processes to support financial operations and growth.',
+    },
+    {
+      start: 2026, end: 2026,
+      company: 'Costain',
+      role: 'Cost Auditor',
+      location: 'Sussex / Kent / Isle of Wight',
+      detail: 'Standardising the JV cost audit procedure and acting as primary point of contact for all cost audits on the JV, working closely with Finance and Commercial teams to build audit-proof processes.',
+    },
   ],
 
   learning: [
