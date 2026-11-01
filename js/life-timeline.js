@@ -276,6 +276,13 @@ const TIMELINE = {
     {
       start: 2026, end: 2026,
       company: 'Self-Employed',
+      role: 'Fibre Optics Sub-Contractor, Kelly Group',
+      location: 'Hailsham / Remote',
+      detail: 'Contract work for Kelly Group on FTTP installations, drawing on four years of experience as an Advanced FTTP Engineer with Openreach.',
+    },
+    {
+      start: 2026, end: 2026,
+      company: 'Self-Employed',
       role: 'Interim Finance Consultant, Denver Services',
       location: 'Hailsham / Remote',
       detail: 'Short-term consultancy contract to clean up historic financial records, take ownership of transactional finance, and implement new procedures for a business with £1m+ turnover.',
