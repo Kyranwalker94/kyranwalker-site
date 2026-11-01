@@ -272,23 +272,10 @@ const TIMELINE = {
       role: 'Freelance Bookkeeper & Multi-Service Contractor',
       location: 'Hailsham / Remote',
       detail: 'Remote bookkeeping and self assessment support for individuals and small businesses, alongside a multi-service sole trader offering covering tech, home services, and web design.',
+      link: '../profile.html',
     },
     {
-      start: 2026, end: 2026,
-      company: 'Self-Employed',
-      role: 'Fibre Optics Sub-Contractor, Kelly Group',
-      location: 'Hailsham / Remote',
-      detail: 'Contract work for Kelly Group on FTTP installations, drawing on four years of experience as an Advanced FTTP Engineer with Openreach.',
-    },
-    {
-      start: 2026, end: 2026,
-      company: 'Self-Employed',
-      role: 'Interim Finance Consultant, Denver Services',
-      location: 'Hailsham / Remote',
-      detail: 'Short-term consultancy contract to clean up historic financial records, take ownership of transactional finance, and implement new procedures for a business with £1m+ turnover.',
-    },
-    {
-      start: 2026, end: 2026,
+      start: 2027, end: 2027,
       company: 'Costain',
       role: 'Cost Auditor',
       location: 'Sussex / Kent / Isle of Wight',
@@ -673,6 +660,7 @@ function renderWorking(entries) {
       <div class="tl-row"><span class="tl-row-icon">💼</span><span>${e.role}</span></div>
       <div class="tl-row"><span class="tl-row-icon">📍</span><span>${e.location}</span></div>
       ${e.detail ? `<p class="tl-detail">${e.detail}</p>` : ''}
+      ${e.link ? `<a href="${e.link}" class="tl-project-link">Read more on my profile</a>` : ''}
     </div>
   `).join('')}</div>`;
 }
