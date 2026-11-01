@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Our Allotment | Kyran Walker</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+
+  <nav>
+    <a href="../index.html" class="nav-logo">Kyran<span>.</span></a>
+        <ul class="nav-links" id="navLinks">
+      <li><a href="../projects.html" class="nav-contact-btn">Projects</a></li>
+      <li><a href="../profile.html" class="nav-cta">Profile</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <div class="project-detail-hero">
+    <a href="../projects.html" class="back-link">← Projects</a>
+    <div class="project-detail-tags">
+      <span class="project-tag">IRL</span>
+      <span class="project-tag status-wip">In Progress</span>
+    </div>
+    <h1>Our Allotment 🥔</h1>
+    <p>Taking on a family allotment at the end of 2026, clearing and covering the plot over winter with big plans to get it fully productive in 2027.</p>
+  </div>
+
+  <div class="project-detail-body">
+    <div class="project-detail-content">
+
+      <div class="content-block">
+        <h2>The project</h2>
+        <p>Towards the end of 2026 we inherited an allotment plot that's been in the family for as long as I've been alive, previously kept going by relatives and now passed on to the next generation. We're sharing it three ways with my Dad and my Aunt, splitting the watering, weeding, and general upkeep on a rota between us.</p>
+        <p>It's come to us a little late in the season to get much going before winter, so the priority for now has been clearing what was there and getting the ground ready, with the real growing starting properly in 2027. This page will track progress as that gets underway.</p>
+      </div>
+
+      <div class="content-block">
+        <h2>The plan</h2>
+        <ul class="content-list">
+          <li>Full assessment of the existing plot, beds, and any structures worth keeping</li>
+          <li>Clearance of overgrown areas ready for winter</li>
+          <li>Covering beds over winter to protect and prepare the soil</li>
+          <li>Shared rota with my Dad and Aunt for watering, weeding, and general maintenance</li>
+          <li>Full grow list planning for the 2027 season once the ground is ready</li>
+        </ul>
+      </div>
+
+      <div class="content-block">
+        <h2>Over winter</h2>
+        <p>With the plot cleared and covered, there isn't much happening at the allotment itself until spring. The onions, garlic, and broad beans we'd normally want going in now are instead being grown at home over winter (see <a href="our-garden.html">Our Garden</a>), with the allotment left resting ready for a proper first season in 2027.</p>
+      </div>
+
+      <div class="content-block">
+        <h2>Progress log</h2>
+        <div class="project-log-item">
+          <div class="project-log-header">
+            <span class="project-log-title">Phase 1: Taking on the plot</span>
+            <span class="project-tag status-active">Completed</span>
+          </div>
+          <p>Took over the allotment from the family and agreed a shared rota with my Dad and Aunt for ongoing upkeep.</p>
+        </div>
+        <div class="project-log-item">
+          <div class="project-log-header">
+            <span class="project-log-title">Phase 2: Winter clearance</span>
+            <span class="project-tag status-active">Completed</span>
+          </div>
+          <p>Cleared most of the plot and covered the beds ready for winter.</p>
+        </div>
+        <div class="project-log-item">
+          <div class="project-log-header">
+            <span class="project-log-title">Phase 3: Overwintering</span>
+            <span class="project-tag status-wip">In Progress</span>
+          </div>
+          <p>Plot resting under cover over winter while we focus on growing onions, garlic, and broad beans at home instead.</p>
+        </div>
+        <div class="project-log-item">
+          <div class="project-log-header">
+            <span class="project-log-title">Phase 4: 2027 growing season</span>
+            <span class="project-tag" style="background:var(--surface);border:1px solid var(--border);color:var(--muted);">Planned</span>
+          </div>
+          <p>Full grow list planning and first proper planting season, aiming to produce as many crops as the plot allows.</p>
+        </div>
+      </div>
+
+      <div class="content-block">
+        <p style="color:var(--muted);font-size:0.88rem;padding-top:1.5rem;border-top:1px solid var(--border);">This project is actively in progress, more detail, photos, and progress updates will be added throughout 2027 as the plot gets going.</p>
+      </div>
+
+    </div>
+
+    <div class="project-detail-sidebar">
+      <div class="sidebar-card">
+        <h3>Details</h3>
+        <div class="sidebar-row"><span>Started</span><span>2026</span></div>
+        <div class="sidebar-row"><span>Location</span><span>Hailsham</span></div>
+        <div class="sidebar-row"><span>Status</span><span>Overwintering</span></div>
+        <div class="sidebar-row"><span>Goal</span><span>Productive family allotment</span></div>
+      </div>
+      <div class="sidebar-card">
+        <h3>Working the plot</h3>
+        <div class="sidebar-row"><span>Dad</span><span>Co-grower</span></div>
+        <div class="sidebar-row"><span>Aunt</span><span>Co-grower</span></div>
+        <div class="sidebar-row"><span>Rota</span><span>Shared shifts</span></div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <span>© 2026 Kyran Walker</span>
+    <span>Built with HTML · CSS · JS</span>
+  </footer>
+
+  <script>
+    const hamburger = document.getElementById('hamburger');
+    const navLinks  = document.getElementById('navLinks');
+    hamburger.addEventListener('click', () => navLinks.classList.toggle('open'));
+    navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
+  </script>
+  <script src="/js/contact-modal.js"></script>
+</body>
+</html>

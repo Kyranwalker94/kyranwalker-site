@@ -225,7 +225,7 @@ const TIMELINE = {
       detail: 'Processed high-volume invoices, banking, and supplier payments across a multi-dealership group. Prepared accruals, prepayments journals, and ad hoc management reports for the MD.',
     },
     {
-      start: 2017, end: 2018,
+      start: 2017, end: 2017,
       company: 'Wynter Recruitment',
       role: 'Associate Recruitment Partner',
       location: 'Auckland, NZ',
@@ -267,7 +267,7 @@ const TIMELINE = {
       detail: 'Developed internal reporting tools and data processes to optimise FTTP deployment. Managed delayed order administration and coordinated across teams to streamline workflows.',
     },
     {
-      start: 2025, end: 2026,
+      start: 2026, end: 2026,
       company: 'Self-Employed',
       role: 'Freelance Bookkeeper & Multi-Service Contractor',
       location: 'Hailsham / Remote',
@@ -276,7 +276,7 @@ const TIMELINE = {
     },
     {
       start: 2027, end: 2027,
-      company: 'Costain',
+      company: 'TBA',
       role: 'Cost Auditor',
       location: 'Sussex / Kent / Isle of Wight',
       detail: 'Standardising the JV cost audit procedure and acting as primary point of contact for all cost audits on the JV, working closely with Finance and Commercial teams to build audit-proof processes.',
