@@ -576,11 +576,11 @@ const TIMELINE = {
       link: 'salsalator.html',
     },
     {
-      start: 2025, end: 2026,
+      start: 2026, end: 2026,
       title: 'kyranwalker.com Rebuild',
       emoji: '💻',
-      detail: 'Full rebuild of this portfolio site from WordPress to a clean static site with Cloudflare.',
-      link: '../index.html',
+      detail: 'Full rebuild of this portfolio site, moving off WordPress and Bluehost into a hand-built static site on Cloudflare that works as a virtual CV and portfolio.',
+      link: 'site-rebuild.html',
     },
   ],
 };

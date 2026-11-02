@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>kyranwalker.com Rebuild | Kyran Walker</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+
+  <nav>
+    <a href="../index.html" class="nav-logo">Kyran<span>.</span></a>
+        <ul class="nav-links" id="navLinks">
+      <li><a href="../projects.html" class="nav-contact-btn">Projects</a></li>
+      <li><a href="../profile.html" class="nav-cta">Profile</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <div class="project-detail-hero">
+    <a href="../projects.html" class="back-link">← Projects</a>
+    <div class="project-detail-tags">
+      <span class="project-tag">Web</span>
+      <span class="project-tag status-wip">In Progress</span>
+    </div>
+    <h1>kyranwalker.com Rebuild 💻</h1>
+    <p>This site. A full rebuild in 2026, moving off a dated WordPress install on Bluehost and into a hand-built static site that doubles as a virtual CV and a portfolio.</p>
+  </div>
+
+  <div class="project-detail-body">
+    <div class="project-detail-content">
+
+      <div class="content-block">
+        <h2>The project</h2>
+        <p>The old version of this site had been running on WordPress through Bluehost for years, built up in layers of plugins and page builder edits until it was slow to load and painful to change. Every small update meant wading through an admin panel I didn't fully trust, and the hosting bill kept creeping up on renewal.</p>
+        <p>In 2026 I pulled it all down and started again from scratch. The site now works as a proper virtual CV and portfolio, somewhere I can point anyone to and have it reflect exactly what I'm doing, not just for job applications, but for whatever self-employed work is the current focus. It's been through a few different versions of "what I do" this year alone, bookkeeping, fibre contracting, home and property services, and each time the site just gets updated rather than rebuilt.</p>
+      </div>
+
+      <div class="content-block">
+        <h2>Why rebuild</h2>
+        <ul class="content-list">
+          <li>WordPress and its plugins had gotten slow and increasingly annoying to maintain</li>
+          <li>Wanted full control over design and markup instead of fighting a theme</li>
+          <li>Needed something that could flex quickly between CV mode and services mode</li>
+          <li>Bluehost renewals kept creeping up for hosting a handful of static pages</li>
+          <li>Wanted to actually understand and own every part of the site, not just the content</li>
+        </ul>
+      </div>
+
+      <div class="content-block">
+        <h2>The stack</h2>
+        <p>Plain HTML, CSS, and vanilla JavaScript, no framework, no build step, no bundler. Each page is written by hand, which keeps things simple and means there's nothing to break between dependency updates because there aren't any.</p>
+        <ul class="content-list">
+          <li>A homepage, profile/CV page, and a filterable projects index</li>
+          <li>A library of quote and estimate tools for different side services, fence, van, bookkeeping, tech support, and more</li>
+          <li>Standalone project pages for things I've built or worked on, this one included</li>
+          <li>A life timeline page pulling from a single shared data file</li>
+          <li>A separate mini-site for a family dinner booking calendar</li>
+        </ul>
+      </div>
+
+      <div class="content-block">
+        <h2>Hosting & deployment</h2>
+        <p>The site moved off Bluehost entirely and is now hosted on Cloudflare, connected straight to the GitHub repo. There's no FTP, no manual uploads, and no renewal invoice creeping up every year, I push a commit to the main branch and Cloudflare builds and deploys the new version within moments. A couple of small bits of backend logic, like a leaderboard and some contact form handling, run as lightweight serverless functions rather than needing a full server anywhere.</p>
+      </div>
+
+      <div class="content-block">
+        <h2>How it's built</h2>
+        <p>Most of the code is hand-written, I like knowing exactly what every line of a page does, and vanilla HTML/CSS/JS is simple enough that there's rarely a good reason not to write it directly. For the fiddlier bits, chasing down a layout quirk, wiring up a Cloudflare function, or figuring out why something wasn't behaving as expected, I've used Claude as a sounding board along the way. It's a faster version of searching for the answer yourself when you're stuck on something specific, not a replacement for actually knowing the codebase.</p>
+      </div>
+
+      <div class="content-block">
+        <h2>Progress log</h2>
+        <div class="project-log-item">
+          <div class="project-log-header">
+            <span class="project-log-title">Phase 1: Planning & structure</span>
+            <span class="project-tag status-active">Completed</span>
+          </div>
+          <p>Mapped out what the new site actually needed to do, CV, portfolio, and flexible services content, before writing a line of it.</p>
+        </div>
+        <div class="project-log-item">
+          <div class="project-log-header">
+            <span class="project-log-title">Phase 2: Migration off WordPress</span>
+            <span class="project-tag status-active">Completed</span>
+          </div>
+          <p>Rebuilt every page from scratch and moved hosting from Bluehost to Cloudflare, connected directly to GitHub.</p>
+        </div>
+        <div class="project-log-item">
+          <div class="project-log-header">
+            <span class="project-log-title">Phase 3: Core pages</span>
+            <span class="project-tag status-active">Completed</span>
+          </div>
+          <p>Homepage, profile/CV page, projects index, and the first batch of project and tool pages.</p>
+        </div>
+        <div class="project-log-item">
+          <div class="project-log-header">
+            <span class="project-log-title">Phase 4: Ongoing iteration</span>
+            <span class="project-tag status-wip">In Progress</span>
+          </div>
+          <p>The site keeps evolving alongside whatever I'm actually doing, new roles, new projects, and new services getting added as they happen.</p>
+        </div>
+      </div>
+
+      <div class="content-block">
+        <p style="color:var(--muted);font-size:0.88rem;padding-top:1.5rem;border-top:1px solid var(--border);">Still actively maintained, this page included. It gets updated every time something on the site does.</p>
+      </div>
+
+    </div>
+
+    <div class="project-detail-sidebar">
+      <div class="sidebar-card">
+        <h3>Details</h3>
+        <div class="sidebar-row"><span>Started</span><span>2026</span></div>
+        <div class="sidebar-row"><span>Was</span><span>WordPress on Bluehost</span></div>
+        <div class="sidebar-row"><span>Now</span><span>Static HTML/CSS/JS</span></div>
+        <div class="sidebar-row"><span>Hosting</span><span>Cloudflare</span></div>
+        <div class="sidebar-row"><span>Status</span><span>Actively maintained</span></div>
+      </div>
+      <div class="sidebar-card">
+        <h3>What it does</h3>
+        <div class="sidebar-row"><span>Virtual CV</span><span>Yes</span></div>
+        <div class="sidebar-row"><span>Portfolio</span><span>Yes</span></div>
+        <div class="sidebar-row"><span>Service brochure</span><span>Yes</span></div>
+        <div class="sidebar-row"><span>Quote tools</span><span>Yes</span></div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <span>© 2026 Kyran Walker</span>
+    <span>Built with HTML · CSS · JS</span>
+  </footer>
+
+  <script>
+    const hamburger = document.getElementById('hamburger');
+    const navLinks  = document.getElementById('navLinks');
+    hamburger.addEventListener('click', () => navLinks.classList.toggle('open'));
+    navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
+  </script>
+  <script src="/js/contact-modal.js"></script>
+</body>
+</html>
